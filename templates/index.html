@@ -13,23 +13,32 @@
     <div id="header">
         <a href="/index">运维管理平台</a>
     </div>
-    <div></div>
 </div>
 
 <div>
     <div id="body-left">
         <div>
-            <a href="/am/hostinfo">资产管理</a>
-        </div>
-        <div>
-            <a href="/sms/prod">验证码查询</a>
+            <div class="menu-taile">CMDB</div>
+            <div>
+                <h3>资产管理</h3>
+                <div>
+                    <a href="/am/hostinfo" >资产列表</a>
+                </div>
+            </div>
+
+            <div>
+                <h3>验证码查询</h3>
+                <div>
+                    <a href="/sms/prod">生产环境</a>
+                </div>
+            </div>
         </div>
     </div>
-</div>
 
-<div id="body-right">
-{% block text %}
-{% endblock %}
+    <div id="body-right">
+        {% block text %}
+        {% endblock %}
+    </div>
 </div>
 
 <script src="/static/jquery-3.3.1.js"></script>
