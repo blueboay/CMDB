@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>主机信息</title>
+    <link rel="stylesheet" type="text/css" href="/static/index.css">
+    <link rel="stylesheet" type="text/css" href="/static/public.css">
+    {% block head %}
+    {% endblock %}
+</head>
+<body>
+<div>
+    <div id="header">
+        <a href="/index">运维管理平台</a>
+    </div>
+    <div></div>
+</div>
+
+<div>
+    <div id="body-left">
+        <div>
+            <a href="/am/hostinfo">资产管理</a>
+        </div>
+        <div>
+            <a href="/sms/prod">验证码查询</a>
+        </div>
+    </div>
+</div>
+
+<div id="body-right">
+{% block text %}
+{% endblock %}
+</div>
+
+<script src="/static/jquery-3.3.1.js"></script>
+</body>
+</html>

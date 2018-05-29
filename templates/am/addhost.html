@@ -1,0 +1,78 @@
+{% extends 'index.html' %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="/static/am/addhost.css">
+{%  endblock %}
+
+{% block text %}
+<form action="/am/addhost", method="post">
+    <p>
+        <label for="id_ServerName" class="name">服务器名称：</label>
+        <input type="text" name="ServerName" id="id_ServerName">
+    </p>
+    <p>
+        <label for="id_IP" class="name">IP地址：</label>
+        <input type="text" name="IP" id="id_IP">
+    </p>
+    <p>
+        <label for="id_RemotePort" class="name">远程端口：</label>
+        <input type="text" name="RemotePort" id="id_RemotePort">
+    </p>
+    <p>
+        <label for="id_SuperUser" class="name">超级用户名：</label>
+        <input type="text" name="SuperUser" id="id_SuperUser">
+    </p>
+    <p>
+        <label for="id_SuperUserPass" class="name">超级用户密码：</label>
+        <input type="password" name="SuperUserPass" id="id_SuperUserPass">
+    </p>
+    <p>
+        <label for="id_Environment" class="name">使用环境：</label>
+        <input type="text" name="Environment" id="id_Environment">
+    </p>
+    <p>
+        <label for="id_OSType" class="name">操作系统类型：</label>
+        <input type="text" name="OSType" id="id_OSType">
+    </p>
+    <p>
+        <label for="id_OSVersion" class="name">操作系统版本：</label>
+        <input type="text" name="OSVersion" id="id_OSVersion">
+    </p>
+    <p>
+        <span class="name">是否加入监控</span>
+        <label for="id_ZabbixY">是</label>
+        <input type="radio" name="Zabbix" id="id_ZabbixY">
+        <label for="id_ZabbixN">否</label>
+        <input type="radio" name="Zabbix" id="id_ZabbixN">
+    </p>
+    <p>
+        <span class="name">是否加入自动化运维：</span>
+        <label for="id_SaltY">是</label>
+        <input type="radio" name="Salt" id="id_SaltY">
+        <label for="id_SaltN">否</label>
+        <input type="radio" name="Salt" id="id_SaltN">
+
+    </p>
+    <p>
+        <span class="name">是否加入堡垒机：</span>
+        <label for="id_JumpserverY">是</label>
+        <input type="radio" name="Jumpserver" id="id_JumpserverY">
+        <label for="id_JumpserverN">否</label>
+        <input type="radio" name="Jumpserver" id="id_JumpserverN">
+    </p>
+    <p>
+        <span class="name">是否记录密码：</span>
+        <label for="id_KeepassY">是</label>
+        <input type="radio" name="Keepass" id="id_KeepassY">
+        <label for="id_KeepassN">否</label>
+        <input type="radio" name="Keepass" id="id_KeepassN">
+    </p>
+    <p>
+        <label for="id_Note" class="name">备注信息：</label>
+        <textarea name="Note" id="id_Note"></textarea>
+    </p>
+    <p>
+        <input type="submit" value="提交">
+    </p>
+</form>
+{% endblock %}

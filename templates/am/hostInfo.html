@@ -1,0 +1,74 @@
+{% extends 'index.html' %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="/static/table.css">
+{% endblock %}
+
+{% block text %}
+<h3>主机信息如下：</h3>
+<table class="altrowstable" id="alternatecolor">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>服务器名称</th>
+            <th>IP地址</th>
+            <th>远程端口号</th>
+            <th>超级用户名</th>
+            <th>超级用户密码</th>
+            <th>使用环境</th>
+            <th>操作系统类型</th>
+            <th>操作系统版本</th>
+            <th>是否加入监控</th>
+            <th>是否加入自动化运维</th>
+            <th>是否加入堡垒机</th>
+            <th>是否记录密码</th>
+            <th>备注信息</th>
+        </tr>
+    </thead>
+    <tbody>
+         {% for i in data %}
+             <tr>
+                 <td>{{ forloop.counter }}</td>
+                 <td>{{ i.ServerName }}</td>
+                 <td>{{ i.IP }}</td>
+                 <td>{{ i.RemotePort }}</td>
+                 <td>{{ i.SuperUser }}</td>
+                 <td>{{ i.SuperUserPass }}</td>
+                 <td>{{ i.Environment }}</td>
+                 <td>{{ i.OSType }}</td>
+                 <td>{{ i.OSVersion }}</td>
+                 <td>{{ i.Zabbix }}</td>
+                 <td>{{ i.Salt }}</td>
+                 <td>{{ i.Jumpserver }}</td>
+                 <td>{{ i.Keepass }}</td>
+                 <td>{{ i.Note }}</td>
+             </tr>
+         {% endfor %}
+    </tbody>
+</table>
+<div>
+    <a href="/am/addhost">新增</a>
+</div>
+
+<script>
+    function altRows(id){
+        if(document.getElementsByTagName){
+
+            var table = document.getElementById(id);
+            var rows = table.getElementsByTagName("tr");
+
+            for(var i=0;i<rows.length;i++){
+                if(i % 2 === 0){
+                    rows[i].className = "evenrowcolor";
+                }else{
+                    rows[i].className = "oddrowcolor";
+                }
+            }
+        }
+    }
+
+    window.onload=function(){
+        altRows('alternatecolor');
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'index.html' %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="/static/sms/sms.css">
+{%  endblock %}
+
+{% block text %}
+<div class="searchBox">
+    <form action="/sms/prod" method="post">
+        <div>
+            <input id="box" type="text" name="number" placeholder="在此输入电话号码" autofocus>
+        </div>
+        <div class="test" id="sub" onmouseover="on(this);" onmouseout="move(this);" onclick="return sub();" onmousedown="on(this);" onmouseup="move(this);">提交</div>
+    </form>
+</div>
+
+<script>
+    function on(ths) {
+        $(ths).css("background-color", "#3075dc");
+    }
+    function move(ths) {
+        $(ths).css("background-color", "#3385ff");
+    }
+    function sub() {
+        var v = $("#box").val().trim();
+        if ( v === "" ){
+            console.log("电话不能为空");
+            return false;
+        }else if (isNaN(v) || v.length !== 11){
+            console.log("请输入正确的电话号码");
+            return false;
+        }else{
+            $("form").submit();
+        }
+    }
+</script>
+{% endblock %}

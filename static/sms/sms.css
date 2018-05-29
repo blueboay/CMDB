@@ -1,0 +1,29 @@
+.searchBox{
+    position: fixed;
+    top: 35%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+div form div{
+    float: left;
+}
+#box{
+    width: 300px;
+    border-top: 1px solid #b8b8b8;
+    border-bottom: 1px solid #b8b8b8;
+    border-left: 1px solid #b8b8b8;
+    height: 30px;
+}
+#sub{
+    height: 35px;
+    background-color: #3385ff;
+    color: white;
+    width: 75px;
+    text-align: center;
+    cursor: pointer;
+    line-height: 35px
+}

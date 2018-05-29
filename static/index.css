@@ -1,0 +1,41 @@
+/*
+最顶部样式
+*/
+#header{
+    height: 40px;
+    padding: 10px 40px;
+    background-color: #417690;
+    line-height: 40px;
+}
+#header a{
+    color: #f5dd5d;
+    font-weight: 300;
+    font-size: 24px;
+}
+#header + div{
+    background-color: white;
+    height: 2px;
+}
+/*
+中间左侧样式
+*/
+#body-left{
+    width: 13%;
+    float: left;
+}
+#body-left > div{
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+}
+#body-left a{
+    font-size: 18px;
+    color: black;
+}
+/*
+中间右侧样式
+*/
+#body-right{
+    float: left;
+    width: 87%;
+}
