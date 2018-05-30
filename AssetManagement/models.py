@@ -23,3 +23,11 @@ class HostInfo(models.Model):
     class Meta:
         verbose_name_plural = "主机信息"
         verbose_name = "主机信息"
+
+class HostENV(models.Model):
+    EnvName = models.CharField("环境名称", max_length=32)
+    Note = models.CharField('备注信息', max_length=1024, null=True, blank=True)
+
+class HostGroup(models.Model):
+    GroupName = models.CharField("分组名称", max_length=32)
+    Note = models.CharField('备注信息', max_length=1024, null=True, blank=True)

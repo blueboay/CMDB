@@ -1,0 +1,54 @@
+{% extends 'index.html' %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="/static/table.css">
+{% endblock %}
+
+{% block text %}
+<h3>主机环境如下：</h3>
+<table class="altrowstable" id="alternatecolor">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>环境名称</th>
+            <th>环境说明</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+         {% for i in data %}
+             <tr>
+                 <td>{{ forloop.counter }}</td>
+                 <td>{{ i.EnvName }}</td>
+                 <td>{{ i.Note }}</td>
+                 <td>编辑</td>
+             </tr>
+         {% endfor %}
+    </tbody>
+</table>
+{#<div>#}
+{#    <a href="/am/addhostenv">新增环境</a>#}
+{#</div>#}
+
+<script>
+    function altRows(id){
+        if(document.getElementsByTagName){
+
+            var table = document.getElementById(id);
+            var rows = table.getElementsByTagName("tr");
+
+            for(var i=0;i<rows.length;i++){
+                if(i % 2 === 0){
+                    rows[i].className = "evenrowcolor";
+                }else{
+                    rows[i].className = "oddrowcolor";
+                }
+            }
+        }
+    }
+
+    window.onload=function(){
+        altRows('alternatecolor');
+    }
+</script>
+{% endblock %}
