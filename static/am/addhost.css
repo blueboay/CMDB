@@ -2,13 +2,20 @@
     display: block;
     padding: 4px 10px 0 0;
     float: left;
-    width: 160px;
+    width: 167px;
     word-wrap: break-word;
     line-height: 1;
 }
 input[type=text], textarea, input[type=password]{
     border: 1px solid #ccc;
+    width: 167px;
     border-radius: 4px;
     padding: 5px 6px;
     margin-top: 0;
+}
+select{
+    border-radius: 4px;
+    padding: 6px 12px;
+    width: 180px;
+    font-size: 14px;
 }

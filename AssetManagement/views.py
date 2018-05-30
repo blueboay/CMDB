@@ -57,3 +57,23 @@ def addhost(request):
             Note=request.POST["Note"],
         )
     return render(request, "am/addhost.html")
+
+def addhostgroup(request):
+    print(request.POST)
+    if request.method == "POST":
+        data = request.POST
+        models.HostGroup.objects.create(
+            GroupName=request.POST["GroupName"],
+            Note=request.POST["Note"],
+        )
+    return render(request, "am/addhostgroup.html")
+
+def addenvgroup(request):
+    print(request.POST)
+    if request.method == "POST":
+        data = request.POST
+        models.HostENV.objects.create(
+            EnvName=request.POST["EnvName"],
+            Note=request.POST["Note"],
+        )
+    return render(request, "am/addenvgroup.html")

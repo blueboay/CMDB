@@ -1,0 +1,21 @@
+{% extends 'index.html' %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="/static/am/addhost.css">
+{%  endblock %}
+
+{% block text %}
+<form action="/am/addenvgroup", method="post">
+    <p>
+        <label for="id_EnvName" class="name">环境名称：</label>
+        <input type="text" name="EnvName" id="id_EnvName">
+    </p>
+    <p>
+        <label for="id_Note" class="name">备注：</label>
+        <textarea name="Note" id="id_Note"></textarea>
+    </p>
+    <p>
+        <input type="submit" value="提交">
+    </p>
+</form>
+{% endblock %}

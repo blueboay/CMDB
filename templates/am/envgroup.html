@@ -11,7 +11,7 @@
         <tr>
             <th>ID</th>
             <th>环境名称</th>
-            <th>环境说明</th>
+            <th>备注</th>
             <th>操作</th>
         </tr>
     </thead>
@@ -26,9 +26,9 @@
          {% endfor %}
     </tbody>
 </table>
-{#<div>#}
-{#    <a href="/am/addhostenv">新增环境</a>#}
-{#</div>#}
+<div>
+    <a href="/am/addenvgroup">新增环境</a>
+</div>
 
 <script>
     function altRows(id){

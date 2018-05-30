@@ -26,9 +26,16 @@
         <label for="id_SuperUserPass" class="name">超级用户密码：</label>
         <input type="password" name="SuperUserPass" id="id_SuperUserPass">
     </p>
+{#    <p>#}
+{#        <label for="id_Environment" class="name">使用环境：</label>#}
+{#        <input type="text" name="Environment" id="id_Environment">#}
+{#    </p>#}
     <p>
-        <label for="id_Environment" class="name">使用环境：</label>
-        <input type="text" name="Environment" id="id_Environment">
+        <label class="name">使用环境：</label>
+        <select>
+            <option>阿里云</option>
+            <option>下沙电信</option>
+        </select>
     </p>
     <p>
         <label for="id_OSType" class="name">操作系统类型：</label>
@@ -68,7 +75,7 @@
         <input type="radio" name="Keepass" id="id_KeepassN">
     </p>
     <p>
-        <label for="id_Note" class="name">备注信息：</label>
+        <label for="id_Note" class="name">备注：</label>
         <textarea name="Note" id="id_Note"></textarea>
     </p>
     <p>
