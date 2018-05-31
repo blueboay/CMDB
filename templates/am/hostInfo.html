@@ -16,6 +16,7 @@
             <th>超级用户名</th>
             <th>超级用户密码</th>
             <th>使用环境</th>
+            <th>主机分组</th>
             <th>操作系统类型</th>
             <th>操作系统版本</th>
             <th>是否加入监控</th>
@@ -23,6 +24,7 @@
             <th>是否加入堡垒机</th>
             <th>是否记录密码</th>
             <th>备注信息</th>
+            <th>操作</th>
         </tr>
     </thead>
     <tbody>
@@ -35,6 +37,7 @@
                  <td>{{ i.SuperUser }}</td>
                  <td>{{ i.SuperUserPass }}</td>
                  <td>{{ i.Environment }}</td>
+                 <td>{{ i.HostGroup }}</td>
                  <td>{{ i.OSType }}</td>
                  <td>{{ i.OSVersion }}</td>
                  <td>{{ i.Zabbix }}</td>
@@ -42,6 +45,7 @@
                  <td>{{ i.Jumpserver }}</td>
                  <td>{{ i.Keepass }}</td>
                  <td>{{ i.Note }}</td>
+                 <td>编辑</td>
              </tr>
          {% endfor %}
     </tbody>

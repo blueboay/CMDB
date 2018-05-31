@@ -18,7 +18,8 @@ def hostinfo(request):
     return render(request, 'am/hostInfo.html', {'data': data})
 
 def addhost(request):
-    print(request.POST)
+    envData = models.HostENV.objects.all()
+    hostGroupData = models.HostGroup.objects.all()
     if request.method == "POST":
         data = request.POST
         if "Zabbix" in request.POST:
@@ -56,10 +57,9 @@ def addhost(request):
             Keepass=KeepassDate,
             Note=request.POST["Note"],
         )
-    return render(request, "am/addhost.html")
+    return render(request, "am/addhost.html", {"envData": envData, "hostGroupData": hostGroupData})
 
 def addhostgroup(request):
-    print(request.POST)
     if request.method == "POST":
         data = request.POST
         models.HostGroup.objects.create(
@@ -69,7 +69,6 @@ def addhostgroup(request):
     return render(request, "am/addhostgroup.html")
 
 def addenvgroup(request):
-    print(request.POST)
     if request.method == "POST":
         data = request.POST
         models.HostENV.objects.create(
@@ -77,3 +76,12 @@ def addenvgroup(request):
             Note=request.POST["Note"],
         )
     return render(request, "am/addenvgroup.html")
+
+def edithost(request):
+    if request.method == "GET":
+        n = request.GET
+        data = models.HostGroup.objects.get(id=n["hgroup"])
+        return render(request, "am/edithost.html", {"data": data})
+
+def delhost(request):
+    return HttpResponse("Not")

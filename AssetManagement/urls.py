@@ -8,4 +8,6 @@ urlpatterns = [
     path('hostgroup', views.hostgroup),
     path('addhostgroup', views.addhostgroup),
     path('addenvgroup', views.addenvgroup),
+    path('edit', views.edithost),
+    path('del', views.delhost),
 ]

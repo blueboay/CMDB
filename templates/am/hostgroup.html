@@ -1,7 +1,8 @@
 {% extends 'index.html' %}
 
 {% block head %}
-<link rel="stylesheet" type="text/css" href="/static/table.css">
+    <link rel="stylesheet" type="text/css" href="/static/table.css">
+    <link rel="stylesheet" type="text/css" href="/static/am/hostgroup.css">
 {% endblock %}
 
 {% block text %}
@@ -17,17 +18,20 @@
     </thead>
     <tbody>
          {% for i in data %}
-             <tr>
+             <tr id="{{ forloop.counter }}">
                  <td>{{ forloop.counter }}</td>
                  <td>{{ i.GroupName }}</td>
                  <td>{{ i.Note }}</td>
-                 <td>编辑</td>
+                 <td>
+                     <a id="edit" href="edit?hgroup={{ i.id }}">编辑</a>
+                     <a id="del" href="del?hgroup={{ i.id }}">删除</a>
+                 </td>
              </tr>
          {% endfor %}
     </tbody>
 </table>
-<div>
-    <a href="/am/addhostgroup">新增分组</a>
+<div style="margin-top: 10px">
+    <a id="add" href="/am/addhostgroup">新增分组</a>
 </div>
 
 <script>
@@ -49,6 +53,11 @@
 
     window.onload=function(){
         altRows('alternatecolor');
+{#        var editBtn = $("[id^=edit_]");#}
+{#        editBtn.on('click', function () {#}
+{#           console.log("test")#}
+{#       })#}
     }
+
 </script>
 {% endblock %}

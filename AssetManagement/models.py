@@ -16,6 +16,7 @@ class HostInfo(models.Model):
     Jumpserver = models.BooleanField('是否加入堡垒机')
     Keepass = models.BooleanField('是否记录密码')
     Note = models.CharField('备注信息', max_length=1024, null=True, blank=True)
+    HostGroup = models.CharField('主机分组', max_length=32, default="")
 
     def __str__(self):
         return self.ServerName

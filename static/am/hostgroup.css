@@ -1,0 +1,46 @@
+#edit{
+    background-color: #23c6c8;
+    color: #FFFFFF;
+     margin-bottom: 5px;
+    padding: 1px 5px;
+    font-size: 12px;
+    line-height: 1.5;
+    display: inline-block;
+    vertical-align: middle;
+    cursor: pointer;
+    border-radius: 3px;
+}
+#del{
+    background-color: #ed5565;
+    color: #FFFFFF;
+    margin-bottom: 5px;
+    padding: 1px 5px;
+    font-size: 12px;
+    line-height: 1.5;
+    display: inline-block;
+    vertical-align: middle;
+    cursor: pointer;
+    border-radius: 3px;
+}
+#add{
+    background-color: #18a689;
+    color: #FFFFFF;
+    border-radius: 3px;
+    padding: 5px 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    vertical-align: middle;
+    cursor: pointer;
+    display: inline-block;
+}
+#delall{
+    background-color: #ed5565;
+    color: #FFFFFF;
+    border-radius: 3px;
+    padding: 5px 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    vertical-align: middle;
+    cursor: pointer;
+    display: inline-block;
+}

@@ -26,15 +26,21 @@
         <label for="id_SuperUserPass" class="name">超级用户密码：</label>
         <input type="password" name="SuperUserPass" id="id_SuperUserPass">
     </p>
-{#    <p>#}
-{#        <label for="id_Environment" class="name">使用环境：</label>#}
-{#        <input type="text" name="Environment" id="id_Environment">#}
-{#    </p>#}
     <p>
         <label class="name">使用环境：</label>
         <select>
-            <option>阿里云</option>
-            <option>下沙电信</option>
+            <option selected="selected">==请选择==</option>
+            {% for i in envData %}>
+                <option>{{ i.EnvName }}</option>
+            {% endfor %}
+        </select>
+    </p>
+    <p>
+        <label class="name">主机分组：</label>
+        <select size="4" multiple>
+            {% for i in hostGroupData %}>
+                <option>{{ i.GroupName }}</option>
+            {% endfor %}
         </select>
     </p>
     <p>
