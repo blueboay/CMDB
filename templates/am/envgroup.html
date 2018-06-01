@@ -1,7 +1,8 @@
 {% extends 'index.html' %}
 
 {% block head %}
-<link rel="stylesheet" type="text/css" href="/static/table.css">
+    <link rel="stylesheet" type="text/css" href="/static/table.css">
+    <link rel="stylesheet" type="text/css" href="/static/am/hostgroup.css"></link>
 {% endblock %}
 
 {% block text %}
@@ -21,13 +22,16 @@
                  <td>{{ forloop.counter }}</td>
                  <td>{{ i.EnvName }}</td>
                  <td>{{ i.Note }}</td>
-                 <td>编辑</td>
+                 <td>
+                     <a id="edit" href="edit?envgroup={{ i.id }}">编辑</a>
+                     <a id="del" href="del?envgroup={{ i.id }}">删除</a>
+                 </td>
              </tr>
          {% endfor %}
     </tbody>
 </table>
-<div>
-    <a href="/am/addenvgroup">新增环境</a>
+<div id="newadd">
+    <a id="add" href="/am/addenvgroup">新增环境</a>
 </div>
 
 <script>

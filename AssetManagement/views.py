@@ -80,8 +80,29 @@ def addenvgroup(request):
 def edithost(request):
     if request.method == "GET":
         n = request.GET
-        data = models.HostGroup.objects.get(id=n["hgroup"])
-        return render(request, "am/edithost.html", {"data": data})
+        for i in n.items():
+            if i[0] == "hgroup":
+                data = models.HostGroup.objects.get(id=n["hgroup"])
+                return render(request, "am/edithostgroup.html", {"data": data})
+            elif i[0] == "envgroup":
+                data = models.HostENV.objects.get(id=n["envgroup"])
+                return render(request, "am/editenvgroup.html", {"data": data})
+            elif i[0] == "host":
+                pass
+            else:
+                pass
 
 def delhost(request):
-    return HttpResponse("Not")
+    if request.method == "GET":
+        n = request.GET
+        for i in n.items():
+            if i[0] == "hgroup":
+                models.HostGroup.objects.filter(id=n['hgroup']).delete()
+                return HttpResponse("删除成功")
+            elif i[0] == "envgroup":
+                models.HostENV.objects.filter(id=n['envgroup']).delete()
+                return HttpResponse("删除成功")
+            elif i[0] == "host":
+                pass
+            else:
+                pass
