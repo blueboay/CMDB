@@ -5,7 +5,7 @@
 {%  endblock %}
 
 {% block text %}
-<form action="/am/addenvgroup", method="post">
+<form action="/am/changeenvgroup?id={{ data.id }}", method="post">
     <p>
         <label for="id_EnvName" class="name">环境名称：</label>
         <input type="text" name="EnvName" id="id_EnvName" value={{ data.EnvName }}>

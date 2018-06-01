@@ -68,6 +68,16 @@ def addhostgroup(request):
         )
     return render(request, "am/addhostgroup.html")
 
+def changehostgroup(request):
+    if request.method == "POST":
+        data = request.POST
+        n = request.GET
+        models.HostGroup.objects.filter(id=n["id"]).update(
+            GroupName=request.POST["GroupName"],
+            Note=request.POST["Note"],
+        )
+        return HttpResponse('OK')
+
 def addenvgroup(request):
     if request.method == "POST":
         data = request.POST
@@ -76,6 +86,16 @@ def addenvgroup(request):
             Note=request.POST["Note"],
         )
     return render(request, "am/addenvgroup.html")
+
+def changeenvgroup(request):
+    if request.method == "POST":
+        data = request.POST
+        n = request.GET
+        models.HostENV.objects.filter(id=n["id"]).update(
+            EnvName=request.POST["EnvName"],
+            Note=request.POST["Note"],
+        )
+        return HttpResponse('OK')
 
 def edithost(request):
     if request.method == "GET":
@@ -88,9 +108,10 @@ def edithost(request):
                 data = models.HostENV.objects.get(id=n["envgroup"])
                 return render(request, "am/editenvgroup.html", {"data": data})
             elif i[0] == "host":
-                pass
+                data = models.HostInfo.objects.get(id=n["host"])
+                return render(request, "am/edithost.html", {"data": data})
             else:
-                pass
+                return HttpResponse("请求错误")
 
 def delhost(request):
     if request.method == "GET":
@@ -103,6 +124,7 @@ def delhost(request):
                 models.HostENV.objects.filter(id=n['envgroup']).delete()
                 return HttpResponse("删除成功")
             elif i[0] == "host":
-                pass
+                models.HostInfo.objects.filter(id=n['host']).delete()
+                return HttpResponse("删除成功")
             else:
-                pass
+                return HttpResponse("请求错误")
