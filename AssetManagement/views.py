@@ -22,26 +22,28 @@ def addhost(request):
     hostGroupData = models.HostGroup.objects.all()
     if request.method == "POST":
         data = request.POST
+        Groups = data.getlist("HostGroup")
+        for i in Groups:
+            models.HostAndHGroup.objects.create(
+                ServerName = request.POST["ServerName"],
+                GroupName = i,
+            )
         if "Zabbix" in request.POST:
-            ZabbixDate = True
+            ZabbixDate = "Yes"
         else:
-            ZabbixDate = False
-
+            ZabbixDate = "NO"
         if "Salt" in request.POST:
-            SaltDate = True
+            SaltDate = "Yes"
         else:
-            SaltDate = False
-
+            SaltDate = "NO"
         if "Jumpserver" in request.POST:
-            JumpserverDate = True
+            JumpserverDate = "Yes"
         else:
-            JumpserverDate = False
-
+            JumpserverDate = "NO"
         if "Keepass" in request.POST:
-            KeepassDate = True
+            KeepassDate = "Yes"
         else:
-            KeepassDate = False
-
+            KeepassDate = "NO"
         models.HostInfo.objects.create(
             ServerName=request.POST["ServerName"],
             IP=request.POST["IP"],

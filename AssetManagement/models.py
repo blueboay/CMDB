@@ -11,12 +11,11 @@ class HostInfo(models.Model):
     Environment = models.CharField('使用环境', max_length=32)
     OSType = models.CharField('操作系统类型', max_length=32)
     OSVersion = models.CharField('操作系统版本', max_length=32)
-    Zabbix = models.BooleanField('是否加入监控')
-    Salt = models.BooleanField('是否加入自动化运维')
-    Jumpserver = models.BooleanField('是否加入堡垒机')
-    Keepass = models.BooleanField('是否记录密码')
+    Zabbix = models.CharField('是否加入监控', max_length=32)
+    Salt = models.CharField('是否加入自动化运维', max_length=32)
+    Jumpserver = models.CharField('是否加入堡垒机', max_length=32)
+    Keepass = models.CharField('是否记录密码', max_length=32)
     Note = models.CharField('备注信息', max_length=1024, null=True, blank=True)
-    HostGroup = models.CharField('主机分组', max_length=32, default="")
 
     def __str__(self):
         return self.ServerName
@@ -30,5 +29,9 @@ class HostENV(models.Model):
     Note = models.CharField('备注信息', max_length=1024, null=True, blank=True)
 
 class HostGroup(models.Model):
-    GroupName = models.CharField("分组名称", max_length=32)
+    GroupName = models.CharField("分组名称", max_length=32, default="")
     Note = models.CharField('备注信息', max_length=1024, null=True, blank=True)
+
+class HostAndHGroup(models.Model):
+    ServerName = models.CharField('服务器名称', max_length=32)
+    GroupName = models.CharField("分组名称", max_length=32)

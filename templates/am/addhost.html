@@ -28,8 +28,8 @@
     </p>
     <p>
         <label class="name">使用环境：</label>
-        <select>
-            <option selected="selected">==请选择==</option>
+        <select name="Environment">
+            <option></option>
             {% for i in envData %}>
                 <option>{{ i.EnvName }}</option>
             {% endfor %}
@@ -37,7 +37,7 @@
     </p>
     <p>
         <label class="name">主机分组：</label>
-        <select size="4" multiple>
+        <select name="HostGroup" size="4" multiple>
             {% for i in hostGroupData %}>
                 <option>{{ i.GroupName }}</option>
             {% endfor %}
