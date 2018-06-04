@@ -8,30 +8,34 @@
 <form action="/am/addhost", method="post">
     <p>
         <label for="id_ServerName" class="name">服务器名称：</label>
-        <input type="text" name="ServerName" id="id_ServerName">
+        <input type="text" name="ServerName" id="id_ServerName" value="{{ data.ServerName }}">
     </p>
     <p>
         <label for="id_IP" class="name">IP地址：</label>
-        <input type="text" name="IP" id="id_IP">
+        <input type="text" name="IP" id="id_IP" value="{{ data.IP }}">
     </p>
     <p>
         <label for="id_RemotePort" class="name">远程端口：</label>
-        <input type="text" name="RemotePort" id="id_RemotePort">
+        <input type="text" name="RemotePort" id="id_RemotePort" value="{{ data.RemotePort }}">
     </p>
     <p>
         <label for="id_SuperUser" class="name">超级用户名：</label>
-        <input type="text" name="SuperUser" id="id_SuperUser">
+        <input type="text" name="SuperUser" id="id_SuperUser" value="{{ data.SuperUser }}">
     </p>
     <p>
         <label for="id_SuperUserPass" class="name">超级用户密码：</label>
-        <input type="password" name="SuperUserPass" id="id_SuperUserPass">
+        <input type="password" name="SuperUserPass" id="id_SuperUserPass" value="{{ data.SuperUserPass }}">
     </p>
     <p>
         <label class="name">使用环境：</label>
-        <select>
-            <option selected="selected">==请选择==</option>
+        <select name="Environment">
+            <option>===请选择===</option>
             {% for i in envData %}>
-                <option>{{ i.EnvName }}</option>
+                {% if data.Environment == i.EnvName %}
+                    <option selected="selected">{{ i.EnvName }}</option>
+                {% else %}
+                    <option>{{ i.EnvName }}</option>
+                {% endif %}
             {% endfor %}
         </select>
     </p>
@@ -45,11 +49,11 @@
     </p>
     <p>
         <label for="id_OSType" class="name">操作系统类型：</label>
-        <input type="text" name="OSType" id="id_OSType">
+        <input type="text" name="OSType" id="id_OSType" value="{{ data.OSType }}">
     </p>
     <p>
         <label for="id_OSVersion" class="name">操作系统版本：</label>
-        <input type="text" name="OSVersion" id="id_OSVersion">
+        <input type="text" name="OSVersion" id="id_OSVersion" value="{{ data.OSVersion }}">
     </p>
     <p>
         <span class="name">是否加入监控</span>

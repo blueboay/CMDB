@@ -10,7 +10,7 @@ urlpatterns = [
     path('addhostgroup', views.addhostgroup),
     path('addenvgroup', views.addenvgroup),
 
-    path('edit', views.edithost),
+    path('edit', views.edit),
     path('del', views.delhost),
 
     path('changeenvgroup', views.changeenvgroup),
