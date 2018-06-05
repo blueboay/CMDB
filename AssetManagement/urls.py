@@ -15,4 +15,5 @@ urlpatterns = [
 
     path('changeenvgroup', views.changeenvgroup),
     path('changehostgroup', views.changehostgroup),
+    path('changehostinfo', views.changehostinfo),
 ]

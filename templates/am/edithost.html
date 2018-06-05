@@ -5,7 +5,7 @@
 {%  endblock %}
 
 {% block text %}
-<form action="/am/addhost", method="post">
+<form action="/am/changehostinfo?id={{ data.id }}", method="post">
     <p>
         <label for="id_ServerName" class="name">服务器名称：</label>
         <input type="text" name="ServerName" id="id_ServerName" value="{{ data.ServerName }}">
@@ -41,9 +41,13 @@
     </p>
     <p>
         <label class="name">主机分组：</label>
-        <select size="4" multiple>
+        <select name="HostGroup" size="5" multiple>
             {% for i in hostGroupData %}>
-                <option>{{ i.GroupName }}</option>
+                {% if i.GroupName in usegroupdata %}
+                    <option selected="selected">{{ i.GroupName }}</option>
+                {% else %}
+                    <option>{{ i.GroupName }}</option>
+                {% endif %}
             {% endfor %}
         </select>
     </p>
@@ -57,32 +61,60 @@
     </p>
     <p>
         <span class="name">是否加入监控</span>
-        <label for="id_ZabbixY">是</label>
-        <input type="radio" name="Zabbix" id="id_ZabbixY">
-        <label for="id_ZabbixN">否</label>
-        <input type="radio" name="Zabbix" id="id_ZabbixN">
+        {% if ZabbixData.0.Zabbix == "True" %}
+            <label for="id_ZabbixY">是</label>
+            <input type="radio" name="Zabbix" id="id_ZabbixY" value="True" checked="checked">
+            <label for="id_ZabbixN">否</label>
+            <input type="radio" name="Zabbix" id="id_ZabbixN" value="False">
+        {% else %}
+            <label for="id_ZabbixY">是</label>
+            <input type="radio" name="Zabbix" id="id_ZabbixY" value="True">
+            <label for="id_ZabbixN">否</label>
+            <input type="radio" name="Zabbix" id="id_ZabbixN" value="False" checked="checked">
+        {% endif %}
     </p>
     <p>
         <span class="name">是否加入自动化运维：</span>
-        <label for="id_SaltY">是</label>
-        <input type="radio" name="Salt" id="id_SaltY">
-        <label for="id_SaltN">否</label>
-        <input type="radio" name="Salt" id="id_SaltN">
+        {% if SaltData.0.Salt == "True" %}
+            <label for="id_SaltY">是</label>
+            <input type="radio" name="Salt" id="id_SaltY" value="True" checked="checked">
+            <label for="id_SaltN">否</label>
+            <input type="radio" name="Salt" id="id_SaltN" value="False">
+        {% else %}
+            <label for="id_SaltY">是</label>
+            <input type="radio" name="Salt" id="id_SaltY" value="True">
+            <label for="id_SaltN">否</label>
+            <input type="radio" name="Salt" id="id_SaltN" value="False" checked="checked">
+        {% endif %}
 
     </p>
     <p>
         <span class="name">是否加入堡垒机：</span>
-        <label for="id_JumpserverY">是</label>
-        <input type="radio" name="Jumpserver" id="id_JumpserverY">
-        <label for="id_JumpserverN">否</label>
-        <input type="radio" name="Jumpserver" id="id_JumpserverN">
+        {% if JumpserverData.0.Jumpserver == "True" %}
+            <label for="id_JumpserverY">是</label>
+            <input type="radio" name="Jumpserver" id="id_JumpserverY" value="True" checked="checked">
+            <label for="id_JumpserverN">否</label>
+            <input type="radio" name="Jumpserver" id="id_JumpserverN" value="False">
+        {% else %}
+            <label for="id_JumpserverY">是</label>
+            <input type="radio" name="Jumpserver" id="id_JumpserverY" value="True">
+            <label for="id_JumpserverN">否</label>
+            <input type="radio" name="Jumpserver" id="id_JumpserverN" value="False" checked="checked">
+        {% endif %}
     </p>
     <p>
         <span class="name">是否记录密码：</span>
-        <label for="id_KeepassY">是</label>
-        <input type="radio" name="Keepass" id="id_KeepassY">
-        <label for="id_KeepassN">否</label>
-        <input type="radio" name="Keepass" id="id_KeepassN">
+        {% if KeepassData.0.Keepass == "True" %}
+            <label for="id_KeepassY">是</label>
+            <input type="radio" name="Keepass" id="id_KeepassY" value="True" checked="checked">
+            <label for="id_KeepassN">否</label>
+            <input type="radio" name="Keepass" id="id_KeepassN" value="False">
+        {% else %}
+            <label for="id_KeepassY">是</label>
+            <input type="radio" name="Keepass" id="id_KeepassY" value="True">
+            <label for="id_KeepassN">否</label>
+            <input type="radio" name="Keepass" id="id_KeepassN" value="False" checked="checked">
+        {% endif %}
     </p>
     <p>
         <label for="id_Note" class="name">备注：</label>

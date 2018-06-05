@@ -28,22 +28,6 @@ def addhost(request):
                 ServerName = request.POST["ServerName"],
                 GroupName = i,
             )
-        if "Zabbix" in request.POST:
-            ZabbixDate = "Yes"
-        else:
-            ZabbixDate = "NO"
-        if "Salt" in request.POST:
-            SaltDate = "Yes"
-        else:
-            SaltDate = "NO"
-        if "Jumpserver" in request.POST:
-            JumpserverDate = "Yes"
-        else:
-            JumpserverDate = "NO"
-        if "Keepass" in request.POST:
-            KeepassDate = "Yes"
-        else:
-            KeepassDate = "NO"
         models.HostInfo.objects.create(
             ServerName=request.POST["ServerName"],
             IP=request.POST["IP"],
@@ -53,13 +37,43 @@ def addhost(request):
             Environment=request.POST["Environment"],
             OSType=request.POST["OSType"],
             OSVersion=request.POST["OSVersion"],
-            Zabbix=ZabbixDate,
-            Salt=SaltDate,
-            Jumpserver=JumpserverDate,
-            Keepass=KeepassDate,
+            Zabbix=request.POST["Zabbix"],
+            Salt=request.POST["Salt"],
+            Jumpserver=request.POST["Jumpserver"],
+            Keepass=request.POST["Keepass"],
             Note=request.POST["Note"],
         )
     return render(request, "am/addhost.html", {"envData": envData, "hostGroupData": hostGroupData})
+
+def changehostinfo(request):
+    if request.method == "POST":
+        data = request.POST
+        n = request.GET
+        oldName = models.HostInfo.objects.filter(id=n["id"]).values("ServerName")[0]["ServerName"]
+        models.HostAndHGroup.objects.filter(ServerName=oldName).delete()
+        Groups = data.getlist("HostGroup")
+        for i in Groups:
+            models.HostAndHGroup.objects.create(
+                ServerName = request.POST["ServerName"],
+                GroupName = i,
+            )
+        models.HostAndHGroup.objects.filter(ServerName=oldName).update(ServerName=request.POST["ServerName"])
+        models.HostInfo.objects.filter(id=n["id"]).update(
+            ServerName = request.POST["ServerName"],
+            IP=request.POST["IP"],
+            RemotePort=request.POST["RemotePort"],
+            SuperUser=request.POST["SuperUser"],
+            SuperUserPass=request.POST["SuperUserPass"],
+            Environment=request.POST["Environment"],
+            OSType=request.POST["OSType"],
+            OSVersion=request.POST["OSVersion"],
+            Zabbix=request.POST["Zabbix"],
+            Salt=request.POST["Salt"],
+            Jumpserver=request.POST["Jumpserver"],
+            Keepass=request.POST["Keepass"],
+            Note=request.POST["Note"],
+        )
+        return HttpResponse("OK")
 
 def addhostgroup(request):
     if request.method == "POST":
@@ -74,6 +88,8 @@ def changehostgroup(request):
     if request.method == "POST":
         data = request.POST
         n = request.GET
+        oldName = models.HostGroup.objects.filter(id=n["id"]).values("GroupName")[0]["GroupName"]
+        models.HostAndHGroup.objects.filter(GroupName=oldName).update(GroupName=request.POST["GroupName"])
         models.HostGroup.objects.filter(id=n["id"]).update(
             GroupName=request.POST["GroupName"],
             Note=request.POST["Note"],
@@ -117,8 +133,20 @@ def edit(request):
             elif i[0] == "host":
                 data = models.HostInfo.objects.get(id=n["host"])
                 envData = models.HostENV.objects.all()
-                print(data.Environment)
-                return render(request, "am/edithost.html", {"data": data, "envData": envData})
+                groupdata = models.HostGroup.objects.all()
+                usegroupdata =  models.HostInfo.objects.filter(id=n["host"]).values("ServerName")
+                usegroupdata = usegroupdata[0]["ServerName"]
+                usegroupdata = models.HostAndHGroup.objects.filter(ServerName=usegroupdata).values("GroupName")
+                list1 = []
+                for i in usegroupdata:
+                    list1.append(i["GroupName"])
+                ZabbixData = models.HostInfo.objects.filter(id=n["host"]).values("Zabbix")
+                SaltData = models.HostInfo.objects.filter(id=n["host"]).values("Salt")
+                JumpserverData = models.HostInfo.objects.filter(id=n["host"]).values("Jumpserver")
+                KeepassData = models.HostInfo.objects.filter(id=n["host"]).values("Keepass")
+                return render(request,
+                              "am/edithost.html",
+                              {"data": data,"envData": envData, "hostGroupData": groupdata, "usegroupdata": list1, "ZabbixData": ZabbixData, "SaltData": SaltData, "JumpserverData": JumpserverData, "KeepassData": KeepassData})
             else:
                 return HttpResponse("请求错误")
 
