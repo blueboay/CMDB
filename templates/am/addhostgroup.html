@@ -9,13 +9,30 @@
     <p>
         <label for="id_GroupName" class="name">分组名称：</label>
         <input type="text" name="GroupName" id="id_GroupName">
+        <span id="info_GroupName" class="info info2">请您输入分组名称</span>
     </p>
     <p>
         <label for="id_Note" class="name">备注：</label>
         <textarea name="Note" id="id_Note"></textarea>
     </p>
     <p>
-        <input type="submit" value="提交">
+        <input type="submit" id="sub" value="提交">
     </p>
 </form>
+{% endblock %}
+
+{% block js %}
+    <script>
+        var elm = document.getElementById("sub");
+        elm.onclick = function () {
+            var envName = document.getElementById("id_GroupName").value;
+            if (envName === ""){
+                $("#info_GroupName").removeClass("info");
+                return false;
+            }
+        };
+        $("#id_GroupName").focus(function () {
+            $("#info_GroupName").addClass("info");
+        })
+    </script>
 {% endblock %}

@@ -9,22 +9,27 @@
     <p>
         <label for="id_ServerName" class="name">服务器名称：</label>
         <input type="text" name="ServerName" id="id_ServerName">
+        <span id="info_ServerName" class="info info2">请您输入服务器名称</span>
     </p>
     <p>
         <label for="id_IP" class="name">IP地址：</label>
         <input type="text" name="IP" id="id_IP">
+        <span id="info_IP" class="info info2">请您输入IP地址</span>
     </p>
     <p>
         <label for="id_RemotePort" class="name">远程端口：</label>
         <input type="text" name="RemotePort" id="id_RemotePort">
+        <span id="info_RemotePort" class="info info2">请您输入远程端口</span>
     </p>
     <p>
         <label for="id_SuperUser" class="name">超级用户名：</label>
         <input type="text" name="SuperUser" id="id_SuperUser">
+        <span id="info_SuperUser" class="info info2">请您输入超级用户名</span>
     </p>
     <p>
         <label for="id_SuperUserPass" class="name">超级用户密码：</label>
         <input type="password" name="SuperUserPass" id="id_SuperUserPass">
+        <span id="info_SuperUserPass" class="info info2">请您输入超级用户密码</span>
     </p>
     <p>
         <label class="name">使用环境：</label>
@@ -34,6 +39,7 @@
                 <option>{{ i.EnvName }}</option>
             {% endfor %}
         </select>
+        <span id="info_Environment" class="info info2">请您选择主机运行环境</span>
     </p>
     <p>
         <label class="name">主机分组：</label>
@@ -42,14 +48,17 @@
                 <option>{{ i.GroupName }}</option>
             {% endfor %}
         </select>
+        <span id="info_HostGroup" class="info info2">请您至少选择一个主机分组</span>
     </p>
     <p>
         <label for="id_OSType" class="name">操作系统类型：</label>
         <input type="text" name="OSType" id="id_OSType">
+        <span id="info_OSType" class="info info2">请您输入操作系统类型</span>
     </p>
     <p>
         <label for="id_OSVersion" class="name">操作系统版本：</label>
         <input type="text" name="OSVersion" id="id_OSVersion">
+        <span id="info_OSVersion" class="info info2">请您输入操作系统版本</span>
     </p>
     <p>
         <span class="name">是否加入监控</span>
@@ -57,6 +66,7 @@
         <input type="radio" name="Zabbix" id="id_ZabbixY" value="True">
         <label for="id_ZabbixN">否</label>
         <input type="radio" name="Zabbix" id="id_ZabbixN" value="False">
+        <span id="info_OSVersion" class="info info2">请您选择是或否</span>
     </p>
     <p>
         <span class="name">是否加入自动化运维：</span>
@@ -64,6 +74,7 @@
         <input type="radio" name="Salt" id="id_SaltY" value="True">
         <label for="id_SaltN">否</label>
         <input type="radio" name="Salt" id="id_SaltN" value="False">
+        <span id="info_OSVersion" class="info info2">请您选择是或否</span>
 
     </p>
     <p>
@@ -72,6 +83,7 @@
         <input type="radio" name="Jumpserver" id="id_JumpserverY" value="True">
         <label for="id_JumpserverN">否</label>
         <input type="radio" name="Jumpserver" id="id_JumpserverN" value="False">
+        <span id="info_OSVersion" class="info info2">请您选择是或否</span>
     </p>
     <p>
         <span class="name">是否记录密码：</span>
@@ -79,6 +91,7 @@
         <input type="radio" name="Keepass" id="id_KeepassY" value="True">
         <label for="id_KeepassN">否</label>
         <input type="radio" name="Keepass" id="id_KeepassN" value="False">
+        <span id="info_OSVersion" class="info info2">请您选择是或否</span>
     </p>
     <p>
         <label for="id_Note" class="name">备注：</label>
@@ -87,5 +100,20 @@
     <p>
         <input type="submit" value="提交">
     </p>
+    <p>
+        <a id="sub">测试提交</a>
+    </p>
 </form>
+{% endblock %}
+
+{% block js %}
+    <script>
+    function getServerName() {
+        var data = $("#id_ServerName").val();
+        console.log(data);
+    }
+
+    var sub = document.getElementById("sub");
+    sub.onclick = getServerName();
+    </script>
 {% endblock %}
