@@ -3,6 +3,7 @@ from AssetManagement import views
 
 urlpatterns = [
     path('hostinfo', views.hostinfo),
+    path('hostinfo2', views.hostinfo2),
     path('envgroup', views.envgroup),
     path('hostgroup', views.hostgroup),
 

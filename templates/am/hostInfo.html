@@ -10,22 +10,15 @@
 <table class="altrowstable" id="alternatecolor">
     <thead>
         <tr>
-            <th>ID</th>
-            <th>服务器名称</th>
-            <th>IP地址</th>
-{#            <th>远程端口号</th>#}
-{#            <th>超级用户名</th>#}
-{#            <th>超级用户密码</th>#}
-{#            <th>使用环境</th>#}
-{#            <th>主机分组</th>#}
-{#            <th>操作系统类型</th>#}
-{#            <th>操作系统版本</th>#}
-            <th>是否加入监控</th>
-            <th>是否加入自动化运维</th>
-            <th>是否加入堡垒机</th>
-            <th>是否记录密码</th>
-            <th>备注信息</th>
-            <th>操作</th>
+            <th style="width: 20px">ID</th>
+            <th style="width: 160px">服务器名称</th>
+            <th style="width: 110px">IP地址</th>
+            <th style="width: 70px">监控</th>
+            <th style="width: 70px">自动化运维</th>
+            <th style="width: 70px">堡垒机</th>
+            <th style="width: 70px">密码记录</th>
+            <th style="width: 270px">备注信息</th>
+            <th style="width: 160px">操作</th>
         </tr>
     </thead>
     <tbody>
@@ -34,20 +27,13 @@
                  <td>{{ forloop.counter }}</td>
                  <td>{{ i.ServerName }}</td>
                  <td>{{ i.IP }}</td>
-{#                 <td>{{ i.RemotePort }}</td>#}
-{#                 <td>{{ i.SuperUser }}</td>#}
-{#                 <td>{{ i.SuperUserPass }}</td>#}
-{#                 <td>{{ i.Environment }}</td>#}
-{#                 <td>{{ i.HostGroup }}</td>#}
-{#                 <td>{{ i.OSType }}</td>#}
-{#                 <td>{{ i.OSVersion }}</td>#}
                  <td>{{ i.Zabbix }}</td>
                  <td>{{ i.Salt }}</td>
                  <td>{{ i.Jumpserver }}</td>
                  <td>{{ i.Keepass }}</td>
                  <td>{{ i.Note }}</td>
                  <td>
-                     <a id="edit" href="">详细信息</a>
+                     <a id="edit" href="/am/hostinfo2?name={{ i.id }}">详细信息</a>
                      <a id="edit" href="edit?host={{ i.id }}">编辑</a>
                      <a id="del" href="del?host={{ i.id }}">删除</a>
                  </td>

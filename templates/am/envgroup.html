@@ -19,10 +19,10 @@
     <tbody>
          {% for i in data %}
              <tr>
-                 <td>{{ forloop.counter }}</td>
-                 <td>{{ i.EnvName }}</td>
-                 <td>{{ i.Note }}</td>
-                 <td>
+                 <td style="width: 20px">{{ forloop.counter }}</td>
+                 <td style="width: 160px">{{ i.EnvName }}</td>
+                 <td style="width: 270px">{{ i.Note }}</td>
+                 <td style="width: 80px">
                      <a id="edit" href="edit?envgroup={{ i.id }}">编辑</a>
                      <a id="del" href="del?envgroup={{ i.id }}">删除</a>
                  </td>

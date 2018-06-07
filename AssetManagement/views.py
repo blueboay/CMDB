@@ -17,6 +17,11 @@ def hostinfo(request):
     data = models.HostInfo.objects.all()
     return render(request, 'am/hostInfo.html', {'data': data})
 
+def hostinfo2(request):
+    n = request.GET
+    data = models.HostInfo.objects.filter(id=n["name"]).values()
+    return render(request, 'am/hostinfo2.html', {"data": data})
+
 def addhost(request):
     envData = models.HostENV.objects.all()
     hostGroupData = models.HostGroup.objects.all()
@@ -43,7 +48,7 @@ def addhost(request):
             Keepass=request.POST["Keepass"],
             Note=request.POST["Note"],
         )
-    return render(request, "am/addhost.html", {"envData": envData, "hostGroupData": hostGroupData})
+        return render(request, "am/addhost.html", {"envData": envData, "hostGroupData": hostGroupData})
 
 def changehostinfo(request):
     if request.method == "POST":
