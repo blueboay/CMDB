@@ -1,35 +1,36 @@
 {% extends 'index.html' %}
 
 {% block head %}
-<link rel="stylesheet" type="text/css" href="/static/am/addhost.css">
+    <link rel="stylesheet" type="text/css" href="/static/am/addhost.css">
+    <style>
+    label.error{
+        font-size: 12px;
+        color: #fc4343;
+    }
+    </style>
 {%  endblock %}
 
 {% block text %}
-<form action="/am/addhost", method="post" id="cform">
+<form action="/am/addhost", method="post" id="commentForm">
     <p>
         <label for="id_ServerName" class="name">服务器名称：</label>
-        <input type="text" name="ServerName" id="id_ServerName">
-        <span id="info_ServerName" class="info info2">请您输入服务器名称</span>
+        <input type="text" name="ServerName" id="id_ServerName" required>
     </p>
     <p>
         <label for="id_IP" class="name">IP地址：</label>
-        <input type="text" name="IP" id="id_IP">
-        <span id="info_IP" class="info info2">请您输入IP地址</span>
+        <input type="text" name="IP" id="id_IP" required>
     </p>
     <p>
         <label for="id_RemotePort" class="name">远程端口：</label>
-        <input type="text" name="RemotePort" id="id_RemotePort">
-        <span id="info_RemotePort" class="info info2">请您输入远程端口</span>
+        <input type="text" name="RemotePort" id="id_RemotePort" required>
     </p>
     <p>
         <label for="id_SuperUser" class="name">超级用户名：</label>
-        <input type="text" name="SuperUser" id="id_SuperUser">
-        <span id="info_SuperUser" class="info info2">请您输入超级用户名</span>
+        <input type="text" name="SuperUser" id="id_SuperUser" required>
     </p>
     <p>
         <label for="id_SuperUserPass" class="name">超级用户密码：</label>
-        <input type="password" name="SuperUserPass" id="id_SuperUserPass">
-        <span id="info_SuperUserPass" class="info info2">请您输入超级用户密码</span>
+        <input type="password" name="SuperUserPass" id="id_SuperUserPass" required>
     </p>
     <p>
         <label class="name">使用环境：</label>
@@ -39,7 +40,6 @@
                 <option>{{ i.EnvName }}</option>
             {% endfor %}
         </select>
-        <span id="info_Environment" class="info info2">请您选择主机运行环境</span>
     </p>
     <p>
         <label class="name">主机分组：</label>
@@ -48,17 +48,14 @@
                 <option>{{ i.GroupName }}</option>
             {% endfor %}
         </select>
-        <span id="info_HostGroup" class="info info2">请您至少选择一个主机分组</span>
     </p>
     <p>
         <label for="id_OSType" class="name">操作系统类型：</label>
-        <input type="text" name="OSType" id="id_OSType">
-        <span id="info_OSType" class="info info2">请您输入操作系统类型</span>
+        <input type="text" name="OSType" id="id_OSType" required>
     </p>
     <p>
         <label for="id_OSVersion" class="name">操作系统版本：</label>
         <input type="text" name="OSVersion" id="id_OSVersion">
-        <span id="info_OSVersion" class="info info2">请您输入操作系统版本</span>
     </p>
     <p>
         <span class="name">是否加入监控</span>
@@ -66,7 +63,6 @@
         <input type="radio" name="Zabbix" id="id_ZabbixY" value="True">
         <label for="id_ZabbixN">否</label>
         <input type="radio" name="Zabbix" id="id_ZabbixN" value="False">
-        <span id="info_OSVersion" class="info info2">请您选择是或否</span>
     </p>
     <p>
         <span class="name">是否加入自动化运维：</span>
@@ -74,7 +70,6 @@
         <input type="radio" name="Salt" id="id_SaltY" value="True">
         <label for="id_SaltN">否</label>
         <input type="radio" name="Salt" id="id_SaltN" value="False">
-        <span id="info_OSVersion" class="info info2">请您选择是或否</span>
 
     </p>
     <p>
@@ -83,7 +78,6 @@
         <input type="radio" name="Jumpserver" id="id_JumpserverY" value="True">
         <label for="id_JumpserverN">否</label>
         <input type="radio" name="Jumpserver" id="id_JumpserverN" value="False">
-        <span id="info_OSVersion" class="info info2">请您选择是或否</span>
     </p>
     <p>
         <span class="name">是否记录密码：</span>
@@ -91,7 +85,6 @@
         <input type="radio" name="Keepass" id="id_KeepassY" value="True">
         <label for="id_KeepassN">否</label>
         <input type="radio" name="Keepass" id="id_KeepassN" value="False">
-        <span id="info_OSVersion" class="info info2">请您选择是或否</span>
     </p>
     <p>
         <label for="id_Note" class="name">备注：</label>
@@ -100,14 +93,98 @@
     <p>
         <input type="submit" value="提交">
     </p>
-    <p>
-        <a id="sub" onclick="form_submit();">测试提交</a>
-    </p>
 </form>
 {% endblock %}
 
 {% block js %}
     <script>
-
+        $().ready(function() {
+            $("#commentForm").validate({
+                rules: {
+                    ServerName: {
+                        required: true
+                    },
+                    IP: {
+                        required: true
+                    },
+                    RemotePort: {
+                        required: true,
+                        digits: true
+                    },
+                    SuperUser: {
+                        required: true
+                    },
+                    SuperUserPass: {
+                        required: true
+                    },
+                    OSType: {
+                        required: true
+                    },
+                    OSVersion: {
+                        required: true
+                    },
+                    Environment: {
+                        required: true
+                    },
+                    HostGroup: {
+                        required: true
+                    },
+                    Zabbix: {
+                        required: true
+                    },
+                    Salt: {
+                        required: true
+                    },
+                    Jumpserver: {
+                        required: true
+                    },
+                    Keepass: {
+                        required: true
+                    }
+                },
+                messages: {
+                    ServerName: {
+                        required: "请输入主机显示名称"
+                    },
+                    IP: {
+                        required: "请输入主要对应IP地址"
+                    },
+                    RemotePort: {
+                        required: "请输入远程访问主机端口",
+                        digits: "请输入合法的端口，必须为正整数"
+                    },
+                    SuperUser: {
+                        required: "请输入远程访问主机超级用户名"
+                    },
+                    SuperUserPass: {
+                        required: "请输入远程访问主机超级用户密码"
+                    },
+                    OSType: {
+                        required: "请输入主机操作系统类型，如：Windows,Linux"
+                    },
+                    OSVersion: {
+                        required: "请输入主机操作系统版本"
+                    },
+                    Environment: {
+                        required: "123"
+                    },
+                    HostGroup: {
+                        required: "请至少选中一项"
+                    },
+                    Zabbix: {
+                        required: "请至少任选其一"
+                    },
+                    Salt: {
+                        required: "请至少任选其一"
+                    },
+                    Jumpserver: {
+                        required: "请至少任选其一"
+                    },
+                    Keepass: {
+                        required: "请至少任选其一"
+                    }
+                }
+            });
+        });
     </script>
 {% endblock %}

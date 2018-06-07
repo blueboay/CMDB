@@ -5,17 +5,34 @@
 {%  endblock %}
 
 {% block text %}
-<form action="/am/changeenvgroup?id={{ data.id }}", method="post">
+<form action="/am/changeenvgroup?id={{ data.id }}", method="post" id="commentForm">
     <p>
         <label for="id_EnvName" class="name">环境名称：</label>
         <input type="text" name="EnvName" id="id_EnvName" value={{ data.EnvName }}>
+        <span id="info_EnvName" class="info info2">请您输入环境名称</span>
     </p>
     <p>
         <label for="id_Note" class="name">备注：</label>
         <textarea name="Note" id="id_Note">{{ data.Note }}</textarea>
     </p>
     <p>
-        <input type="submit" value="保存">
+        <input type="submit" id="sub" value="保存">
     </p>
 </form>
+{% endblock %}
+
+{% block js %}
+    <script>
+        var elm = document.getElementById("sub");
+        elm.onclick = function () {
+            var envName = document.getElementById("id_EnvName").value;
+            if (envName === ""){
+                $("#info_EnvName").removeClass("info");
+                return false
+            }
+        };
+        $("#id_EnvName").focus(function () {
+            $("#info_EnvName").addClass("info");
+        })
+    </script>
 {% endblock %}
