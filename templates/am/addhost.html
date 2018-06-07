@@ -5,7 +5,7 @@
 {%  endblock %}
 
 {% block text %}
-<form action="/am/addhost", method="post">
+<form action="/am/addhost", method="post" id="cform">
     <p>
         <label for="id_ServerName" class="name">服务器名称：</label>
         <input type="text" name="ServerName" id="id_ServerName">
@@ -33,7 +33,7 @@
     </p>
     <p>
         <label class="name">使用环境：</label>
-        <select name="Environment">
+        <select name="Environment" id="id_Environment">
             <option>===请选择===</option>
             {% for i in envData %}>
                 <option>{{ i.EnvName }}</option>
@@ -43,7 +43,7 @@
     </p>
     <p>
         <label class="name">主机分组：</label>
-        <select name="HostGroup" size="4" multiple>
+        <select name="HostGroup" size="4" multiple id="id_HostGroup">
             {% for i in hostGroupData %}>
                 <option>{{ i.GroupName }}</option>
             {% endfor %}
@@ -101,19 +101,13 @@
         <input type="submit" value="提交">
     </p>
     <p>
-        <a id="sub">测试提交</a>
+        <a id="sub" onclick="form_submit();">测试提交</a>
     </p>
 </form>
 {% endblock %}
 
 {% block js %}
     <script>
-    function getServerName() {
-        var data = $("#id_ServerName").val();
-        console.log(data);
-    }
 
-    var sub = document.getElementById("sub");
-    sub.onclick = getServerName();
     </script>
 {% endblock %}

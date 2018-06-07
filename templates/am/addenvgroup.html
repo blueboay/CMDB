@@ -9,7 +9,7 @@
         <p>
             <label for="id_EnvName" class="name">环境名称：</label>
             <input type="text" name="EnvName" id="id_EnvName">
-            <span id="info_EnvName" class="info info2">请您输入环境名称</span>
+            <span id="info_EnvName" class="info">请您输入环境名称</span>
         </p>
         <p>
             <label for="id_Note" class="name">备注：</label>
@@ -20,7 +20,7 @@
         </p>
     </form>
 {% endblock %}
-
+{#    <script src="/static/jquery-3.3.1.js"></script>#}
 {% block js %}
     <script>
         var elm = document.getElementById("sub");
@@ -28,11 +28,11 @@
             var envName = document.getElementById("id_EnvName").value;
             if (envName === ""){
                 $("#info_EnvName").removeClass("info");
-                return false;
+                return false
             }
-        };
+        }
         $("#id_EnvName").focus(function () {
-            $("#info_EnvName").addClass("info");
+        $("#info_EnvName").addClass("info");
         })
     </script>
 {% endblock %}
