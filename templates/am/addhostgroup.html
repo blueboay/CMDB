@@ -27,20 +27,5 @@
 {% endblock %}
 
 {% block js %}
-    <script>
-        $().ready(function() {
-            $("#commentForm").validate({
-                rules: {
-                    GroupName: {
-                        required: true
-                    }
-                },
-                messages: {
-                    GroupName: {
-                        required: "请输入分组名称"
-                    }
-                }
-            });
-        });
-    </script>
+    <script src="/static/am/addHostGroup_editHostGroup.js"></script>
 {% endblock %}
