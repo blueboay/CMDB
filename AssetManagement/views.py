@@ -14,10 +14,17 @@ def hostGroupInfo(request):
     return render(request, 'am/hostGroupInfo.html', {'data': data})
 
 def hostInfo(request):
+    searchdata = request.POST
     data = models.HostInfo.objects.all()
     hostData = models.HostGroup.objects.all()
     envData = models.HostENV.objects.all()
-    return render(request, 'am/hostInfo.html', {'data': data, "hostData": hostData, "envData": envData})
+    if request.method == "POST":
+        if searchdata["ENVName"] != "环境" or searchdata["GroupName"] != "分组" or searchdata["Other"] != "":
+            data = models.HostInfo.objects.filter(Environment=searchdata["ENVName"])
+            print(data)
+            return HttpResponse("OK")
+    else:
+        return render(request, 'am/hostInfo.html', {'data': data, "hostData": hostData, "envData": envData})
 
 def hostMoreInfo(request):
     n = request.GET
@@ -53,11 +60,6 @@ def addHost(request):
             Note=request.POST["Note"],
         )
     return render(request, "am/addhost.html", {"envData": envData, "hostGroupData": hostGroupData})
-
-def search(request):
-    data = request.POST
-    print(data)
-    return HttpResponse("OK")
 
 def changeHostInfo(request):
     if request.method == "POST":
