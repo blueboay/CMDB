@@ -23,15 +23,15 @@
                  <td>{{ i.GroupName }}</td>
                  <td>{{ i.Note }}</td>
                  <td>
-                     <a id="edit" href="edit?hgroup={{ i.id }}">编辑</a>
-                     <a id="del" href="del?hgroup={{ i.id }}">删除</a>
+                     <a id="edit" href="{% url "edit" %}?hostGroup={{ i.id }}">编辑</a>
+                     <a id="del" href="{% url "delete" %}?hostGroup={{ i.id }}">删除</a>
                  </td>
              </tr>
          {% endfor %}
     </tbody>
 </table>
 <div id="newadd">
-    <a id="add" href="/am/addhostgroup">新增分组</a>
+    <a id="add" href="{% url "addHostGroup" %}">新增分组</a>
 </div>
 
 <script>

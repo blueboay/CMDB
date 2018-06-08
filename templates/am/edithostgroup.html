@@ -1,7 +1,7 @@
 {% extends 'am/addhostgroup.html' %}
 
 {% block text %}
-<form action="/am/changehostgroup?id={{ data.id }}", method="post" id="commentForm">
+<form action="{% url "changeHostGroup" %}?id={{ data.id }}", method="post" id="commentForm">
     <p>
         <label for="id_GroupName" class="name">分组名称：</label>
         <input type="text" name="GroupName" id="id_GroupName" value={{ data.GroupName }}>

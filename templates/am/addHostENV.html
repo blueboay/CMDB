@@ -5,7 +5,7 @@
 {%  endblock %}
 
 {% block text %}
-    <form action="/am/addenvgroup", method="post" id="commentForm">
+    <form action="{%  url "addHostENV" %}", method="post" id="commentForm">
         <p>
             <label for="id_EnvName" class="name">环境名称：</label>
             <input type="text" name="EnvName" id="id_EnvName" required>

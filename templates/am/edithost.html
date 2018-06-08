@@ -11,7 +11,7 @@
 {%  endblock %}
 
 {% block text %}
-<form action="/am/changehostinfo?id={{ data.id }}", method="post" id="commentForm">
+<form action="{% url "changeHostInfo" %}?id={{ data.id }}", method="post" id="commentForm">
     <p>
         <label for="id_ServerName" class="name">服务器名称：</label>
         <input type="text" name="ServerName" id="id_ServerName" value="{{ data.ServerName }}">

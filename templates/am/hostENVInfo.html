@@ -23,15 +23,15 @@
                  <td>{{ i.EnvName }}</td>
                  <td>{{ i.Note }}</td>
                  <td>
-                     <a id="edit" href="edit?envgroup={{ i.id }}">编辑</a>
-                     <a id="del" href="del?envgroup={{ i.id }}">删除</a>
+                     <a id="edit" href="{% url "edit" %}?hostENVGroup={{ i.id }}">编辑</a>
+                     <a id="del" href="{% url "delete" %}?hostENVGroup={{ i.id }}">删除</a>
                  </td>
              </tr>
          {% endfor %}
     </tbody>
 </table>
 <div id="newadd">
-    <a id="add" href="/am/addenvgroup">新增环境</a>
+    <a id="add" href="{% url "addHostENV" %}">新增环境</a>
 </div>
 
 <script>

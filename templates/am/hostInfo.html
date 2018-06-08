@@ -33,16 +33,16 @@
                  <td>{{ i.Keepass }}</td>
                  <td>{{ i.Note }}</td>
                  <td>
-                     <a id="edit" href="/am/hostinfo2?name={{ i.id }}">详细信息</a>
-                     <a id="edit" href="edit?host={{ i.id }}">编辑</a>
-                     <a id="del" href="del?host={{ i.id }}">删除</a>
+                     <a id="edit" href="{% url "hostMoreInfo" %}?host={{ i.id }}">详细信息</a>
+                     <a id="edit" href="{% url "edit" %}?host={{ i.id }}">编辑</a>
+                     <a id="del" href="{% url "delete" %}?host={{ i.id }}">删除</a>
                  </td>
              </tr>
          {% endfor %}
     </tbody>
 </table>
 <div id="newadd">
-    <a id="add" href="/am/addhost">新增主机</a>
+    <a id="add" href="{% url "addHost" %}">新增主机</a>
 </div>
 
 <script>

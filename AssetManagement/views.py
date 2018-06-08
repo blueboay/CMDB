@@ -5,26 +5,26 @@ from AssetManagement import models
 def index(request):
     return render(request, 'index.html')
 
-def envgroup(request):
+def hostENVInfo(request):
     data = models.HostENV.objects.all()
-    return render(request, 'am/envgroup.html', {'data': data})
+    return render(request, 'am/hostENVInfo.html', {'data': data})
 
-def hostgroup(request):
+def hostGroupInfo(request):
     data = models.HostGroup.objects.all()
-    return render(request, 'am/hostgroup.html', {'data': data})
+    return render(request, 'am/hostGroupInfo.html', {'data': data})
 
-def hostinfo(request):
+def hostInfo(request):
     data = models.HostInfo.objects.all()
     return render(request, 'am/hostInfo.html', {'data': data})
 
-def hostinfo2(request):
+def hostMoreInfo(request):
     n = request.GET
-    data = models.HostInfo.objects.filter(id=n["name"]).values()
-    servername = models.HostInfo.objects.filter(id=n["name"]).values("ServerName")[0]["ServerName"]
+    data = models.HostInfo.objects.filter(id=n["host"]).values()
+    servername = models.HostInfo.objects.filter(id=n["host"]).values("ServerName")[0]["ServerName"]
     groupData = models.HostAndHGroup.objects.filter(ServerName=servername).values("GroupName")
-    return render(request, 'am/hostinfo2.html', {"data": data, "groupData": groupData})
+    return render(request, 'am/hostMoreInfo.html', {"data": data, "groupData": groupData})
 
-def addhost(request):
+def addHost(request):
     envData = models.HostENV.objects.all()
     hostGroupData = models.HostGroup.objects.all()
     if request.method == "POST":
@@ -52,7 +52,7 @@ def addhost(request):
         )
     return render(request, "am/addhost.html", {"envData": envData, "hostGroupData": hostGroupData})
 
-def changehostinfo(request):
+def changeHostInfo(request):
     if request.method == "POST":
         data = request.POST
         n = request.GET
@@ -82,7 +82,7 @@ def changehostinfo(request):
         )
         return HttpResponse("OK")
 
-def addhostgroup(request):
+def addHostGroup(request):
     if request.method == "POST":
         data = request.POST
         models.HostGroup.objects.create(
@@ -91,7 +91,7 @@ def addhostgroup(request):
         )
     return render(request, "am/addhostgroup.html")
 
-def changehostgroup(request):
+def changeHostGroup(request):
     if request.method == "POST":
         data = request.POST
         n = request.GET
@@ -103,16 +103,16 @@ def changehostgroup(request):
         )
         return HttpResponse('OK')
 
-def addenvgroup(request):
+def addHostENV(request):
     if request.method == "POST":
         data = request.POST
         models.HostENV.objects.create(
             EnvName=request.POST["EnvName"],
             Note=request.POST["Note"],
         )
-    return render(request, "am/addenvgroup.html")
+    return render(request, "am/addHostENV.html")
 
-def changeenvgroup(request):
+def changeHostENV(request):
     if request.method == "POST":
         data = request.POST
         n = request.GET
@@ -131,12 +131,12 @@ def edit(request):
     if request.method == "GET":
         n = request.GET
         for i in n.items():
-            if i[0] == "hgroup":
-                data = models.HostGroup.objects.get(id=n["hgroup"])
-                return render(request, "am/edithostgroup.html", {"data": data})
-            elif i[0] == "envgroup":
-                data = models.HostENV.objects.get(id=n["envgroup"])
-                return render(request, "am/editenvgroup.html", {"data": data})
+            if i[0] == "hostGroup":
+                data = models.HostGroup.objects.get(id=n["hostGroup"])
+                return render(request, "am/editHostGroup.html", {"data": data})
+            elif i[0] == "hostENVGroup":
+                data = models.HostENV.objects.get(id=n["hostENVGroup"])
+                return render(request, "am/editHostENV.html", {"data": data})
             elif i[0] == "host":
                 data = models.HostInfo.objects.get(id=n["host"])
                 envData = models.HostENV.objects.all()
@@ -152,20 +152,20 @@ def edit(request):
                 JumpserverData = models.HostInfo.objects.filter(id=n["host"]).values("Jumpserver")
                 KeepassData = models.HostInfo.objects.filter(id=n["host"]).values("Keepass")
                 return render(request,
-                              "am/edithost.html",
+                              "am/editHost.html",
                               {"data": data,"envData": envData, "hostGroupData": groupdata, "usegroupdata": list1, "ZabbixData": ZabbixData, "SaltData": SaltData, "JumpserverData": JumpserverData, "KeepassData": KeepassData})
             else:
                 return HttpResponse("请求错误")
 
-def delhost(request):
+def delete(request):
     if request.method == "GET":
         n = request.GET
         for i in n.items():
-            if i[0] == "hgroup":
-                models.HostGroup.objects.filter(id=n['hgroup']).delete()
+            if i[0] == "hostGroup":
+                models.HostGroup.objects.filter(id=n['hostGroup']).delete()
                 return HttpResponse("删除成功")
-            elif i[0] == "envgroup":
-                models.HostENV.objects.filter(id=n['envgroup']).delete()
+            elif i[0] == "hostENVGroup":
+                models.HostENV.objects.filter(id=n['hostENVGroup']).delete()
                 return HttpResponse("删除成功")
             elif i[0] == "host":
                 nm = models.HostInfo.objects.filter(id=n['host']).values("ServerName")[0]["ServerName"]
