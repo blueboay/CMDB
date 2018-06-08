@@ -24,3 +24,6 @@ table.altrowstable td {
 .evenrowcolor{
     background-color:#c3dde0;
 }
+table {
+    margin-top: 10px;
+}

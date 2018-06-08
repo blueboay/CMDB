@@ -3,10 +3,74 @@
 {% block head %}
     <link rel="stylesheet" type="text/css" href="/static/table.css">
     <link rel="stylesheet" type="text/css" href="/static/am/button.css">
+    <style>
+    #opeartion{
+        background-color: white;
+    }
+    #opeartion-add{
+        float: left;
+        width: 10%;
+    }
+    #opeartion-filter{
+        float: left;
+        width: 30%;
+        height: 28px;
+    }
+    #opeartion-search{
+        float: left;
+        width: 30%;
+        height: 28px;
+    }
+    #opeartion-search input[type="text"]{
+        height: 22px
+    }
+    select{
+        padding: 4px 12px;
+        font-size: 14px;
+        width: 100px;
+    }
+    input[type="submit"]{
+        background-color: #18a689;
+        border-color: #18a689;
+        color: #FFFFFF;
+        padding: 3px 10px;
+        font-size: 12px;
+        height: 27px
+    }
+
+    </style>
 {% endblock %}
 
 {% block body-right %}
     <h3>主机信息如下：</h3>
+    <div id="opeartion">
+        <div id="opeartion-add">
+            <a id="addButton" href="{% url "addHost" %}">新增主机</a>
+        </div>
+        <form action="{% url "search" %}" method="post">
+            <div id="opeartion-filter">
+                <select name="ENVName">
+                    <option>环境</option>
+                    {% for i in envData %}
+                        <option>{{ i.EnvName }}</option>
+                    {% endfor %}
+                </select>
+                <select name="GroupName">
+                    <option>分组</option>
+                    {% for i in hostData %}
+                        <option>{{ i.GroupName }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div id="opeartion-search">
+                <input type="text" name="Other" placeholder="可填写主机名或IP地址">
+                <input type="submit" value="-搜索-">
+            </div>
+            <div style="clear:both;"></div>
+        </form>
+
+    </div>
+
     <table class="altrowstable" id="alternatecolor">
         <thead>
             <tr>
@@ -41,8 +105,5 @@
              {% endfor %}
         </tbody>
     </table>
-    <div>
-        <a id="addButton" href="{% url "addHost" %}">新增主机</a>
-    </div>
     <script src="/static/tables.js"></script>
 {% endblock %}

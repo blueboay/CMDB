@@ -7,6 +7,9 @@
 
 {% block body-right %}
     <h3>主机环境如下：</h3>
+    <div>
+        <a id="addButton" href="{% url "addHostENV" %}">新增环境</a>
+    </div>
     <table class="altrowstable" id="alternatecolor">
         <thead>
             <tr>
@@ -30,8 +33,5 @@
              {% endfor %}
         </tbody>
     </table>
-    <div>
-        <a id="addButton" href="{% url "addHostENV" %}">新增环境</a>
-    </div>
     <script src="/static/tables.js"></script>
 {% endblock %}

@@ -15,7 +15,9 @@ def hostGroupInfo(request):
 
 def hostInfo(request):
     data = models.HostInfo.objects.all()
-    return render(request, 'am/hostInfo.html', {'data': data})
+    hostData = models.HostGroup.objects.all()
+    envData = models.HostENV.objects.all()
+    return render(request, 'am/hostInfo.html', {'data': data, "hostData": hostData, "envData": envData})
 
 def hostMoreInfo(request):
     n = request.GET
@@ -51,6 +53,11 @@ def addHost(request):
             Note=request.POST["Note"],
         )
     return render(request, "am/addhost.html", {"envData": envData, "hostGroupData": hostGroupData})
+
+def search(request):
+    data = request.POST
+    print(data)
+    return HttpResponse("OK")
 
 def changeHostInfo(request):
     if request.method == "POST":
