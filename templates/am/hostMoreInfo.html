@@ -1,7 +1,7 @@
 {% extends 'index.html' %}
 
 {% block head %}
-    <link rel="stylesheet" type="text/css" href="/static/am/hostgroup.css">
+    <link rel="stylesheet" type="text/css" href="/static/button.css">
     <style>
     #left{
         width: 400px;
@@ -19,11 +19,11 @@
     </style>
 {% endblock %}
 
-{% block text %}
+{% block body-right %}
     <h3>{{ data.0.ServerName }}&nbsp;主机详细信息如下：</h3>
     <div>
-        <a id="add" href="/am/hostinfo">返回</a>
-        <a id="add" href="/am/edit?host={{ data.0.id }}">编辑</a>
+        <a id="backButton" href="{% url "hostInfo" %}">返回</a>
+        <a id="editButton" href="{% url "edit" %}?host={{ data.0.id }}">编辑</a>
     </div>
     <div style="margin-top: 10px">
         <div id="left">

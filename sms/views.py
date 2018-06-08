@@ -2,7 +2,7 @@ from django.shortcuts import render, HttpResponse
 
 # Create your views here.
 
-def sms(request):
+def prod(request):
     if request.method == "POST":
         number = request.POST["number"]
         test = search(number)

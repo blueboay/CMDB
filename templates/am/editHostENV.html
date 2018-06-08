@@ -4,7 +4,7 @@
 <link rel="stylesheet" type="text/css" href="/static/am/addhost.css">
 {%  endblock %}
 
-{% block text %}
+{% block body-right %}
 <form action="{% url "changeHostENV" %}?id={{ data.id }}", method="post" id="commentForm">
     <p>
         <label for="id_EnvName" class="name">环境名称：</label>

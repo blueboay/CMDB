@@ -1,4 +1,4 @@
-#edit{
+#edit, #moreInfo{
     background-color: #23c6c8;
     color: #FFFFFF;
      margin-bottom: 5px;
@@ -22,7 +22,7 @@
     cursor: pointer;
     border-radius: 3px;
 }
-#add{
+#addButton, #editButton, #backButton{
     background-color: #18a689;
     color: #FFFFFF;
     border-radius: 3px;
@@ -32,8 +32,6 @@
     vertical-align: middle;
     cursor: pointer;
     display: inline-block;
-}
-#newadd{
     margin-top: 10px;
 }
 

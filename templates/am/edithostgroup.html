@@ -1,6 +1,6 @@
 {% extends 'am/addhostgroup.html' %}
 
-{% block text %}
+{% block body-right %}
 <form action="{% url "changeHostGroup" %}?id={{ data.id }}", method="post" id="commentForm">
     <p>
         <label for="id_GroupName" class="name">分组名称：</label>

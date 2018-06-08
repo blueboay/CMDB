@@ -20,7 +20,7 @@ from AssetManagement import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('index', views.index),
+    path('index', views.index, name="index"),
     path('am/', include('AssetManagement.urls')),
     path('sms/', include('sms.urls')),
 ]

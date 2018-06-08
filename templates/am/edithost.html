@@ -10,7 +10,7 @@
     </style>
 {%  endblock %}
 
-{% block text %}
+{% block body-right %}
 <form action="{% url "changeHostInfo" %}?id={{ data.id }}", method="post" id="commentForm">
     <p>
         <label for="id_ServerName" class="name">服务器名称：</label>

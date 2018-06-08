@@ -2,62 +2,36 @@
 
 {% block head %}
     <link rel="stylesheet" type="text/css" href="/static/table.css">
-    <link rel="stylesheet" type="text/css" href="/static/am/hostgroup.css">
+    <link rel="stylesheet" type="text/css" href="/static/button.css">
 {% endblock %}
 
-{% block text %}
-<h3>主机分组如下：</h3>
-<table class="altrowstable" id="alternatecolor">
-    <thead>
-        <tr>
-            <th style="width: 20px">ID</th>
-            <th style="width: 160px">分组名称</th>
-            <th style="width: 270px">备注</th>
-            <th style="width: 80px">操作</th>
-        </tr>
-    </thead>
-    <tbody>
-         {% for i in data %}
-             <tr id="{{ forloop.counter }}">
-                 <td>{{ forloop.counter }}</td>
-                 <td>{{ i.GroupName }}</td>
-                 <td>{{ i.Note }}</td>
-                 <td>
-                     <a id="edit" href="{% url "edit" %}?hostGroup={{ i.id }}">编辑</a>
-                     <a id="del" href="{% url "delete" %}?hostGroup={{ i.id }}">删除</a>
-                 </td>
-             </tr>
-         {% endfor %}
-    </tbody>
-</table>
-<div id="newadd">
-    <a id="add" href="{% url "addHostGroup" %}">新增分组</a>
-</div>
-
-<script>
-    function altRows(id){
-        if(document.getElementsByTagName){
-
-            var table = document.getElementById(id);
-            var rows = table.getElementsByTagName("tr");
-
-            for(var i=0;i<rows.length;i++){
-                if(i % 2 === 0){
-                    rows[i].className = "evenrowcolor";
-                }else{
-                    rows[i].className = "oddrowcolor";
-                }
-            }
-        }
-    }
-
-    window.onload=function(){
-        altRows('alternatecolor');
-{#        var editBtn = $("[id^=edit_]");#}
-{#        editBtn.on('click', function () {#}
-{#           console.log("test")#}
-{#       })#}
-    }
-
-</script>
+{% block body-right %}
+    <h3>主机分组如下：</h3>
+    <table class="altrowstable" id="alternatecolor">
+        <thead>
+            <tr>
+                <th style="width: 20px">ID</th>
+                <th style="width: 160px">分组名称</th>
+                <th style="width: 270px">备注</th>
+                <th style="width: 80px">操作</th>
+            </tr>
+        </thead>
+        <tbody>
+             {% for i in data %}
+                 <tr id="{{ forloop.counter }}">
+                     <td>{{ forloop.counter }}</td>
+                     <td>{{ i.GroupName }}</td>
+                     <td>{{ i.Note }}</td>
+                     <td>
+                         <a id="edit" href="{% url "edit" %}?hostGroup={{ i.id }}">编辑</a>
+                         <a id="del" href="{% url "delete" %}?hostGroup={{ i.id }}">删除</a>
+                     </td>
+                 </tr>
+             {% endfor %}
+        </tbody>
+    </table>
+    <div>
+        <a id="addButton" href="{% url "addHostGroup" %}">新增分组</a>
+    </div>
+    <script src="/static/tables.js"></script>
 {% endblock %}

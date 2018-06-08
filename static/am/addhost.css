@@ -19,10 +19,3 @@ select{
     width: 180px;
     font-size: 14px;
 }
-.info2 {
-    font-size: 12px;
-    color: #fc4343;
-}
-.info {
-    display: none;
-}

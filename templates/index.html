@@ -11,7 +11,7 @@
 <body>
 <div>
     <div id="header">
-        <a href="/index">运维管理平台</a>
+        <a href="{% url "index" %}">运维管理平台</a>
     </div>
 </div>
 
@@ -35,14 +35,14 @@
             <div>
                 <h3>验证码查询</h3>
                 <div>
-                    <a href="/sms/prod">生产环境</a>
+                    <a href="{% url "prod" %}">生产环境</a>
                 </div>
             </div>
         </div>
     </div>
 
     <div id="body-right">
-        {% block text %}
+        {% block body-right %}
         {% endblock %}
     </div>
 </div>
