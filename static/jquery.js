@@ -6,7 +6,8 @@ var parts = document.location.search.slice( 1 ).split( "&" ),
 	src = scripts[ scripts.length - 1].src,
 	i = 0,
 	current,
-	version = "1.11.1",
+	// version = "1.11.1",
+	version = "3.3.1",
 	file = "http://code.jquery.com/jquery-git.js";
 
 for ( ; i < length; i++ ) {
@@ -17,7 +18,7 @@ for ( ; i < length; i++ ) {
 	}
 }
 
-if (version != "git") {
+if (version !== "git") {
 	file = src.replace(/jquery\.js$/, "jquery-" + version + ".js");
 }
 
