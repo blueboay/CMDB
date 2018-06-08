@@ -10,19 +10,19 @@
 <table class="altrowstable" id="alternatecolor">
     <thead>
         <tr>
-            <th>ID</th>
-            <th>环境名称</th>
-            <th>备注</th>
-            <th>操作</th>
+            <th style="width: 20px">ID</th>
+            <th style="width: 160px">环境名称</th>
+            <th style="width: 270px">备注</th>
+            <th style="width: 80px">操作</th>
         </tr>
     </thead>
     <tbody>
          {% for i in data %}
              <tr>
-                 <td style="width: 20px">{{ forloop.counter }}</td>
-                 <td style="width: 160px">{{ i.EnvName }}</td>
-                 <td style="width: 270px">{{ i.Note }}</td>
-                 <td style="width: 80px">
+                 <td>{{ forloop.counter }}</td>
+                 <td>{{ i.EnvName }}</td>
+                 <td>{{ i.Note }}</td>
+                 <td>
                      <a id="edit" href="edit?envgroup={{ i.id }}">编辑</a>
                      <a id="del" href="del?envgroup={{ i.id }}">删除</a>
                  </td>

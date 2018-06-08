@@ -1,10 +1,92 @@
 {% extends 'index.html' %}
 
 {% block head %}
-{#    <link rel="stylesheet" type="text/css" href="/static/table.css">#}
-{#    <link rel="stylesheet" type="text/css" href="/static/am/hostgroup.css">#}
+    <link rel="stylesheet" type="text/css" href="/static/am/hostgroup.css">
+    <style>
+    #left{
+        width: 400px;
+        float: left;
+    }
+    #right{
+        width: 400px;
+        float: left;
+    }
+    span{
+        width: 150px;
+        background-color: white;
+        display:inline-block;
+    }
+    </style>
 {% endblock %}
 
 {% block text %}
-<h3>{{ data.0.ServerName }}&nbsp;主机详细信息如下：</h3>
+    <h3>{{ data.0.ServerName }}&nbsp;主机详细信息如下：</h3>
+    <div>
+        <a id="add" href="/am/hostinfo">返回</a>
+        <a id="add" href="/am/edit?host={{ data.0.id }}">编辑</a>
+    </div>
+    <div style="margin-top: 10px">
+        <div id="left">
+            <p>
+                <span>服务器名称：</span>
+                <span>{{ data.0.ServerName }}</span>
+            </p>
+            <p>
+                <span>IP地址：</span>
+                <span>{{ data.0.IP }}</span>
+            </p>
+            <p>
+                <span>远程端口：</span>
+                <span>{{ data.0.RemotePort }}</span>
+            </p>
+            <p>
+                <span>超级用户名：</span>
+                <span>{{ data.0.SuperUser }}</span>
+            </p>
+            <p>
+                <span>超级用户密码：</span>
+                <span>{{ data.0.SuperUserPass }}</span>
+            </p>
+            <p>
+                <span>操作系统类型：</span>
+                <span>{{ data.0.OSType }}</span>
+            </p>
+            <p>
+                <span>操作系统版本：</span>
+                <span>{{ data.0.OSVersion }}</span>
+            </p>
+            <p>
+                <span>备注信息：</span>
+                <span>{{ data.0.Note }}</span>
+            </p>
+        </div>
+        <div id="right">
+            <p>
+                <span>使用环境：</span>
+                <span>{{ data.0.Environment }}</span>
+            </p>
+            <p>
+                <span>加入监控：</span>
+                <span>{{ data.0.Zabbix }}</span>
+            </p>
+            <p>
+                <span>加入运维：</span>
+                <span>{{ data.0.Salt }}</span>
+            </p>
+            <p>
+                <span>加入堡垒机：</span>
+                <span>{{ data.0.Jumpserver }}</span>
+            </p>
+            <p>
+                <span>记录密码：</span>
+                <span>{{ data.0.Keepass }}</span>
+            </p>
+            <p>
+                <span>主机分组：</span>
+                {% for i in groupData %}
+                    <a style="padding: 0 10px 0 0;font-size: 15px">{{ i.GroupName }}</a>
+                {% endfor %}
+            </p>
+        </div>
+    </div>
 {% endblock %}
