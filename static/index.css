@@ -22,10 +22,17 @@
 }
 #body-left > div{
     width: 85%;
+    background-color: white;
+    border-right-color: #e8e7e3;
+    border-right-style: solid;
+    border-right-width: 1px;
+    border-left-color: #e8e7e3;
+    border-left-style: solid;
+    border-left-width: 1px;
 }
-a{
+p{
     padding: 5px 0 5px 15px;
-    font-size: 14px;
+    font-size: 17px;
 }
 .menu-taile{
     background-color: #e8e7e3;

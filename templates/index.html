@@ -5,6 +5,14 @@
     <title>主机信息</title>
     <link rel="stylesheet" type="text/css" href="/static/index.css">
     <link rel="stylesheet" type="text/css" href="/static/public.css">
+    <style>
+        .backgroundColor {
+            background-color: #d4e3e5;
+        }
+        .checkedColor {
+            background-color: #a9c6c9;
+        }
+    </style>
     {% block head %}
     {% endblock %}
 </head>
@@ -21,22 +29,22 @@
             <div class="menu-taile">CMDB</div>
             <div>
                 <h3>资产管理</h3>
-                <div>
-                    <a href="{% url "hostInfo" %}" >资产列表</a>
-                </div>
-                <div>
-                    <a href="{% url "hostGroupInfo" %}" >主机分组</a>
-                </div>
-                <div>
-                    <a href="{% url "hostENVInfo" %}" >环境分组</a>
-                </div>
+                <a href="{% url "hostInfo" %}">
+                    <p>资产列表</p>
+                </a>
+                <a href="{% url "hostGroupInfo" %}">
+                    <p>主机分组</p>
+                </a>
+                <a href="{% url "hostENVInfo" %}">
+                    <p>环境分组</p>
+                </a>
             </div>
 
             <div>
                 <h3>验证码查询</h3>
-                <div>
-                    <a href="{% url "prod" %}">生产环境</a>
-                </div>
+                <a href="{% url "prod" %}">
+                    <p>生产环境</p>
+                </a>
             </div>
         </div>
     </div>
@@ -51,6 +59,15 @@
 <script src="/static/jquery.validate.min.js"></script>
 <script src="/static/messages_zh.js"></script>
 {% block js %}
+    <script>
+    $("#body-left p").mouseover(function () {
+        $(this).addClass("backgroundColor");
+    });
+
+    $("#body-left p").mouseout(function () {
+        $(this).removeClass("backgroundColor");
+    });
+    </script>
 {% endblock %}
 </body>
 </html>
