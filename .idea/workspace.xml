@@ -3,12 +3,10 @@
   <component name="BookmarkManager">
     <bookmark url="file://$PROJECT_DIR$/templates/index.html" line="15" />
     <bookmark url="file://$PROJECT_DIR$/templates/index.html" line="55" />
-    <bookmark url="file://$PROJECT_DIR$/AssetManagement/views.py" line="161" />
+    <bookmark url="file://$PROJECT_DIR$/AssetManagement/views.py" line="176" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d892a79e-fea1-44b9-b31c-f88fd54eac36" name="默认的" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AssetManagement/models.py" afterPath="$PROJECT_DIR$/AssetManagement/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AssetManagement/urls.py" afterPath="$PROJECT_DIR$/AssetManagement/urls.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AssetManagement/views.py" afterPath="$PROJECT_DIR$/AssetManagement/views.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -26,8 +24,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/AssetManagement/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="322">
-              <caret line="47" column="0" lean-forward="true" selection-start-line="47" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
+            <state relative-caret-position="373">
+              <caret line="222" column="43" lean-forward="true" selection-start-line="222" selection-start-column="43" selection-end-line="222" selection-end-column="43" />
               <folding>
                 <element signature="e#0#49#0" expanded="true" />
               </folding>
@@ -625,8 +623,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/AssetManagement/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="322">
-          <caret line="47" column="0" lean-forward="true" selection-start-line="47" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
+        <state relative-caret-position="373">
+          <caret line="222" column="43" lean-forward="true" selection-start-line="222" selection-start-column="43" selection-end-line="222" selection-end-column="43" />
           <folding>
             <element signature="e#0#49#0" expanded="true" />
           </folding>
