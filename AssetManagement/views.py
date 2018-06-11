@@ -2,47 +2,60 @@ from django.shortcuts import render, HttpResponse
 from AssetManagement import models
 
 # Create your views here.
+
+# 获取主机信息，主机环境，主机分组表所有数据
+hostInfoData = models.HostInfo.objects.all()
+HostGroupData = models.HostGroup.objects.all()
+HostENVData = models.HostENV.objects.all()
+
+
+# 主页
 def index(request):
     return render(request, 'index.html')
 
-def hostENVInfo(request):
-    data = models.HostENV.objects.all()
-    return render(request, 'am/hostENVInfo.html', {'data': data})
 
-def hostGroupInfo(request):
-    data = models.HostGroup.objects.all()
-    return render(request, 'am/hostGroupInfo.html', {'data': data})
+# 环境分组
+def host_environment_info(request):
+    return render(request, 'am/hostENVInfo.html', {'data': HostENVData})
 
-def hostInfo(request):
-    searchdata = request.POST
-    data = models.HostInfo.objects.all()
-    hostData = models.HostGroup.objects.all()
-    envData = models.HostENV.objects.all()
+
+# 主机分组
+def host_group_info(request):
+    return render(request, 'am/hostGroupInfo.html', {'data': HostGroupData})
+
+
+# 资产列表
+def host_info(request):
+    data = request.POST
     if request.method == "POST":
-        if searchdata["ENVName"] != "环境" or searchdata["GroupName"] != "分组" or searchdata["Other"] != "":
-            data = models.HostInfo.objects.filter(Environment=searchdata["ENVName"])
-            print(data)
+        if data["ENVName"] != "环境" or data["GroupName"] != "分组" or data["Other"] != "":
             return HttpResponse("OK")
+        else:
+            return HttpResponse("Error")
     else:
-        return render(request, 'am/hostInfo.html', {'data': data, "hostData": hostData, "envData": envData})
+        return render(request, 'am/hostInfo.html', {'data': hostInfoData,
+                                                    "hostData": HostGroupData,
+                                                    "envData": HostENVData})
 
-def hostMoreInfo(request):
+
+# 资产列表详细信息
+def host_more_info(request):
     n = request.GET
     data = models.HostInfo.objects.filter(id=n["host"]).values()
     servername = models.HostInfo.objects.filter(id=n["host"]).values("ServerName")[0]["ServerName"]
-    groupData = models.HostAndHGroup.objects.filter(ServerName=servername).values("GroupName")
-    return render(request, 'am/hostMoreInfo.html', {"data": data, "groupData": groupData})
+    group_data = models.HostAndHGroup.objects.filter(ServerName=servername).values("GroupName")
+    return render(request, 'am/hostMoreInfo.html', {"data": data, "groupData": group_data})
 
-def addHost(request):
-    envData = models.HostENV.objects.all()
-    hostGroupData = models.HostGroup.objects.all()
+
+# 添加主机
+def add_host(request):
     if request.method == "POST":
         data = request.POST
-        Groups = data.getlist("HostGroup")
-        for i in Groups:
+        groups = data.getlist("HostGroup")
+        for i in groups:
             models.HostAndHGroup.objects.create(
-                ServerName = request.POST["ServerName"],
-                GroupName = i,
+                ServerName=request.POST["ServerName"],
+                GroupName=i,
             )
         models.HostInfo.objects.create(
             ServerName=request.POST["ServerName"],
@@ -59,23 +72,25 @@ def addHost(request):
             Keepass=request.POST["Keepass"],
             Note=request.POST["Note"],
         )
-    return render(request, "am/addhost.html", {"envData": envData, "hostGroupData": hostGroupData})
+    return render(request, "am/addhost.html", {"envData": HostENVData, "hostGroupData": HostGroupData})
 
-def changeHostInfo(request):
+
+# 编辑主机信息
+def change_host_info(request):
     if request.method == "POST":
         data = request.POST
         n = request.GET
-        oldName = models.HostInfo.objects.filter(id=n["id"]).values("ServerName")[0]["ServerName"]
-        models.HostAndHGroup.objects.filter(ServerName=oldName).delete()
-        Groups = data.getlist("HostGroup")
-        for i in Groups:
+        old_name = models.HostInfo.objects.filter(id=n["id"]).values("ServerName")[0]["ServerName"]
+        models.HostAndHGroup.objects.filter(ServerName=old_name).delete()
+        groups = data.getlist("HostGroup")
+        for i in groups:
             models.HostAndHGroup.objects.create(
-                ServerName = request.POST["ServerName"],
-                GroupName = i,
+                ServerName=request.POST["ServerName"],
+                GroupName=i,
             )
-        models.HostAndHGroup.objects.filter(ServerName=oldName).update(ServerName=request.POST["ServerName"])
+        models.HostAndHGroup.objects.filter(ServerName=old_name).update(ServerName=request.POST["ServerName"])
         models.HostInfo.objects.filter(id=n["id"]).update(
-            ServerName = request.POST["ServerName"],
+            ServerName=request.POST["ServerName"],
             IP=request.POST["IP"],
             RemotePort=request.POST["RemotePort"],
             SuperUser=request.POST["SuperUser"],
@@ -91,51 +106,57 @@ def changeHostInfo(request):
         )
         return HttpResponse("OK")
 
-def addHostGroup(request):
+
+# 添加主机分组
+def add_host_group(request):
     if request.method == "POST":
-        data = request.POST
         models.HostGroup.objects.create(
             GroupName=request.POST["GroupName"],
             Note=request.POST["Note"],
         )
     return render(request, "am/addhostgroup.html")
 
-def changeHostGroup(request):
+
+# 更改主机分组
+def change_host_group(request):
     if request.method == "POST":
-        data = request.POST
         n = request.GET
-        oldName = models.HostGroup.objects.filter(id=n["id"]).values("GroupName")[0]["GroupName"]
-        models.HostAndHGroup.objects.filter(GroupName=oldName).update(GroupName=request.POST["GroupName"])
+        old_name = models.HostGroup.objects.filter(id=n["id"]).values("GroupName")[0]["GroupName"]
+        models.HostAndHGroup.objects.filter(GroupName=old_name).update(GroupName=request.POST["GroupName"])
         models.HostGroup.objects.filter(id=n["id"]).update(
             GroupName=request.POST["GroupName"],
             Note=request.POST["Note"],
         )
         return HttpResponse('OK')
 
-def addHostENV(request):
+
+# 添加环境
+def add_host_environment(request):
     if request.method == "POST":
-        data = request.POST
         models.HostENV.objects.create(
             EnvName=request.POST["EnvName"],
             Note=request.POST["Note"],
         )
     return render(request, "am/addHostENV.html")
 
-def changeHostENV(request):
+
+# 更改环境
+def change_host_environment(request):
     if request.method == "POST":
-        data = request.POST
         n = request.GET
-        oldData = models.HostENV.objects.filter(id=n["id"]).values("EnvName")
-        oldData = oldData[0]["EnvName"]
-        newData = request.POST["EnvName"]
+        old_data = models.HostENV.objects.filter(id=n["id"]).values("EnvName")
+        old_data = old_data[0]["EnvName"]
+        new_data = request.POST["EnvName"]
         models.HostENV.objects.filter(id=n["id"]).update(
             EnvName=request.POST["EnvName"],
             Note=request.POST["Note"],
         )
-        if oldData != newData:
-            models.HostInfo.objects.filter(Environment=oldData).update(Environment=newData)
+        if old_data != new_data:
+            models.HostInfo.objects.filter(Environment=old_data).update(Environment=new_data)
         return HttpResponse('OK')
 
+
+# 编辑功能
 def edit(request):
     if request.method == "GET":
         n = request.GET
@@ -148,24 +169,29 @@ def edit(request):
                 return render(request, "am/editHostENV.html", {"data": data})
             elif i[0] == "host":
                 data = models.HostInfo.objects.get(id=n["host"])
-                envData = models.HostENV.objects.all()
-                groupdata = models.HostGroup.objects.all()
                 usegroupdata =  models.HostInfo.objects.filter(id=n["host"]).values("ServerName")
                 usegroupdata = usegroupdata[0]["ServerName"]
                 usegroupdata = models.HostAndHGroup.objects.filter(ServerName=usegroupdata).values("GroupName")
                 list1 = []
-                for i in usegroupdata:
-                    list1.append(i["GroupName"])
-                ZabbixData = models.HostInfo.objects.filter(id=n["host"]).values("Zabbix")
-                SaltData = models.HostInfo.objects.filter(id=n["host"]).values("Salt")
-                JumpserverData = models.HostInfo.objects.filter(id=n["host"]).values("Jumpserver")
-                KeepassData = models.HostInfo.objects.filter(id=n["host"]).values("Keepass")
-                return render(request,
-                              "am/editHost.html",
-                              {"data": data,"envData": envData, "hostGroupData": groupdata, "usegroupdata": list1, "ZabbixData": ZabbixData, "SaltData": SaltData, "JumpserverData": JumpserverData, "KeepassData": KeepassData})
+                for x in usegroupdata:
+                    list1.append(x["GroupName"])
+                zabbix_data = models.HostInfo.objects.filter(id=n["host"]).values("Zabbix")
+                salt_data = models.HostInfo.objects.filter(id=n["host"]).values("Salt")
+                jumpserver_data = models.HostInfo.objects.filter(id=n["host"]).values("Jumpserver")
+                keepass_data = models.HostInfo.objects.filter(id=n["host"]).values("Keepass")
+                return render(request, "am/editHost.html", {"data": data,
+                                                            "envData": HostENVData,
+                                                            "hostGroupData": HostGroupData,
+                                                            "usegroupdata": list1,
+                                                            "ZabbixData": zabbix_data,
+                                                            "SaltData": salt_data,
+                                                            "JumpserverData": jumpserver_data,
+                                                            "KeepassData": keepass_data})
             else:
                 return HttpResponse("请求错误")
 
+
+# 册除功能
 def delete(request):
     if request.method == "GET":
         n = request.GET

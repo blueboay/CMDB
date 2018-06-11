@@ -2,19 +2,19 @@ from django.urls import path
 from AssetManagement import views
 
 urlpatterns = [
-    path('hostInfo', views.hostInfo, name="hostInfo"),
-    path('hostMoreInfo', views.hostMoreInfo, name="hostMoreInfo"),
-    path('hostENVInfo', views.hostENVInfo, name="hostENVInfo"),
-    path('hostGroupInfo', views.hostGroupInfo, name="hostGroupInfo"),
+    path('hostInfo', views.host_info, name="hostInfo"),
+    path('hostMoreInfo', views.host_more_info, name="hostMoreInfo"),
+    path('hostENVInfo', views.host_environment_info, name="hostENVInfo"),
+    path('hostGroupInfo', views.host_group_info, name="hostGroupInfo"),
 
-    path('addHost', views.addHost, name="addHost"),
-    path('addHostGroup', views.addHostGroup, name="addHostGroup"),
-    path('addHostENV', views.addHostENV, name="addHostENV"),
+    path('addHost', views.add_host, name="addHost"),
+    path('addHostGroup', views.add_host_group, name="addHostGroup"),
+    path('addHostENV', views.add_host_environment, name="addHostENV"),
 
     path('edit', views.edit, name="edit"),
     path('delete', views.delete, name="delete"),
 
-    path('changeHostENV', views.changeHostENV, name="changeHostENV"),
-    path('changeHostGroup', views.changeHostGroup, name="changeHostGroup"),
-    path('changeHostInfo', views.changeHostInfo, name="changeHostInfo"),
+    path('changeHostENV', views.change_host_environment, name="changeHostENV"),
+    path('changeHostGroup', views.change_host_group, name="changeHostGroup"),
+    path('changeHostInfo', views.change_host_info, name="changeHostInfo"),
 ]

@@ -2,6 +2,7 @@ from django.db import models
 
 # Create your models here.
 
+
 class HostInfo(models.Model):
     ServerName = models.CharField('服务器名称', max_length=32)
     IP = models.CharField('IP地址', max_length=64)
@@ -24,13 +25,16 @@ class HostInfo(models.Model):
         verbose_name_plural = "主机信息"
         verbose_name = "主机信息"
 
+
 class HostENV(models.Model):
     EnvName = models.CharField("环境名称", max_length=32)
     Note = models.CharField('备注信息', max_length=1024, null=True, blank=True)
 
+
 class HostGroup(models.Model):
     GroupName = models.CharField("分组名称", max_length=32, default="")
     Note = models.CharField('备注信息', max_length=1024, null=True, blank=True)
+
 
 class HostAndHGroup(models.Model):
     ServerName = models.CharField('服务器名称', max_length=32)
