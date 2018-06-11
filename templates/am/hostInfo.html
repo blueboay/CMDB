@@ -70,40 +70,41 @@
         </form>
 
     </div>
-
-    <table class="altrowstable" id="alternatecolor">
-        <thead>
-            <tr>
-                <th style="width: 20px">ID</th>
-                <th style="width: 160px">服务器名称</th>
-                <th style="width: 110px">IP地址</th>
-                <th style="width: 70px">监控</th>
-                <th style="width: 70px">自动化运维</th>
-                <th style="width: 70px">堡垒机</th>
-                <th style="width: 70px">密码记录</th>
-                <th style="width: 270px">备注信息</th>
-                <th style="width: 160px">操作</th>
-            </tr>
-        </thead>
-        <tbody>
-             {% for i in data %}
-                 <tr>
-                     <td>{{ forloop.counter }}</td>
-                     <td>{{ i.ServerName }}</td>
-                     <td>{{ i.IP }}</td>
-                     <td>{{ i.Zabbix }}</td>
-                     <td>{{ i.Salt }}</td>
-                     <td>{{ i.Jumpserver }}</td>
-                     <td>{{ i.Keepass }}</td>
-                     <td>{{ i.Note }}</td>
-                     <td>
-                         <a id="moreInfo" href="{% url "hostMoreInfo" %}?host={{ i.id }}">详细信息</a>
-                         <a id="edit" href="{% url "edit" %}?host={{ i.id }}">编辑</a>
-                         <a id="del" href="{% url "delete" %}?host={{ i.id }}">删除</a>
-                     </td>
-                 </tr>
-             {% endfor %}
-        </tbody>
-    </table>
+    {% block search_data %}
+        <table class="altrowstable" id="alternatecolor">
+            <thead>
+                <tr>
+                    <th style="width: 20px">ID</th>
+                    <th style="width: 160px">服务器名称</th>
+                    <th style="width: 110px">IP地址</th>
+                    <th style="width: 70px">监控</th>
+                    <th style="width: 70px">自动化运维</th>
+                    <th style="width: 70px">堡垒机</th>
+                    <th style="width: 70px">密码记录</th>
+                    <th style="width: 270px">备注信息</th>
+                    <th style="width: 160px">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                 {% for i in data %}
+                     <tr>
+                         <td>{{ forloop.counter }}</td>
+                         <td>{{ i.ServerName }}</td>
+                         <td>{{ i.IP }}</td>
+                         <td>{{ i.Zabbix }}</td>
+                         <td>{{ i.Salt }}</td>
+                         <td>{{ i.Jumpserver }}</td>
+                         <td>{{ i.Keepass }}</td>
+                         <td>{{ i.Note }}</td>
+                         <td>
+                             <a id="moreInfo" href="{% url "hostMoreInfo" %}?host={{ i.id }}">详细信息</a>
+                             <a id="edit" href="{% url "edit" %}?host={{ i.id }}">编辑</a>
+                             <a id="del" href="{% url "delete" %}?host={{ i.id }}">删除</a>
+                         </td>
+                     </tr>
+                 {% endfor %}
+            </tbody>
+        </table>
+    {% endblock %}
     <script src="/static/tables.js"></script>
 {% endblock %}

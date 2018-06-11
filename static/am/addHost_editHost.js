@@ -66,7 +66,7 @@ $().ready(function() {
                 required: "请输入主机操作系统版本"
             },
             Environment: {
-                required: "123"
+                required: "请选择使用环境"
             },
             HostGroup: {
                 required: "请至少选中一项"

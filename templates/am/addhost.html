@@ -35,7 +35,7 @@
     <p>
         <label class="name">使用环境：</label>
         <select name="Environment" id="id_Environment">
-            <option>===请选择===</option>
+            <option style='display: none'></option>
             {% for i in envData %}>
                 <option>{{ i.EnvName }}</option>
             {% endfor %}
@@ -63,6 +63,7 @@
         <input type="radio" name="Zabbix" id="id_ZabbixY" value="True">
         <label for="id_ZabbixN">否</label>
         <input type="radio" name="Zabbix" id="id_ZabbixN" value="False">
+        <label for="Zabbix" class="error"></label>
     </p>
     <p>
         <span class="name">是否加入自动化运维：</span>
@@ -70,6 +71,7 @@
         <input type="radio" name="Salt" id="id_SaltY" value="True">
         <label for="id_SaltN">否</label>
         <input type="radio" name="Salt" id="id_SaltN" value="False">
+        <label for="Salt" class="error"></label>
 
     </p>
     <p>
@@ -78,6 +80,7 @@
         <input type="radio" name="Jumpserver" id="id_JumpserverY" value="True">
         <label for="id_JumpserverN">否</label>
         <input type="radio" name="Jumpserver" id="id_JumpserverN" value="False">
+        <label for="Jumpserver" class="error"></label>
     </p>
     <p>
         <span class="name">是否记录密码：</span>
@@ -85,6 +88,7 @@
         <input type="radio" name="Keepass" id="id_KeepassY" value="True">
         <label for="id_KeepassN">否</label>
         <input type="radio" name="Keepass" id="id_KeepassN" value="False">
+        <label for="Keepass" class="error"></label>
     </p>
     <p>
         <label for="id_Note" class="name">备注：</label>
@@ -98,4 +102,7 @@
 
 {% block js %}
     <script src="/static/am/addHost_editHost.js"></script>
+    <script>
+
+    </script>
 {% endblock %}

@@ -42,16 +42,17 @@ def host_group_info(request):
 
 # 资产列表
 def host_info(request):
+    all_data = render(request, 'am/hostInfo.html', {'data': get_host_data(),
+                                                        "hostData": get_group_data(),
+                                                        "envData": get_env_data()})
     post_data = request.POST
     if request.method == "POST":
         if post_data["ENVName"] != "环境" or post_data["GroupName"] != "分组" or post_data["Other"] != "":
-            return HttpResponse("OK")
+            return HttpResponse("此功能尚未开发完成...")
         else:
-            return HttpResponse("Error")
+            return all_data
     else:
-        return render(request, 'am/hostInfo.html', {'data': get_host_data(),
-                                                    "hostData": get_group_data(),
-                                                    "envData": get_env_data()})
+        return all_data
 
 
 # 资产列表详细信息

@@ -35,7 +35,6 @@
     <p>
         <label class="name">使用环境：</label>
         <select name="Environment">
-            <option>===请选择===</option>
             {% for i in envData %}>
                 {% if data.Environment == i.EnvName %}
                     <option selected="selected">{{ i.EnvName }}</option>
