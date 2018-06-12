@@ -11,7 +11,7 @@
 {%  endblock %}
 
 {% block body-right %}
-<form action="{%  url "addHost" %}", method="post" id="commentForm">
+<form action="{%  url "addHost" %}" method="post" id="commentForm">
     <p>
         <label for="id_ServerName" class="name">服务器名称：</label>
         <input type="text" name="ServerName" id="id_ServerName">
@@ -33,7 +33,7 @@
         <input type="password" name="SuperUserPass" id="id_SuperUserPass">
     </p>
     <p>
-        <label class="name">使用环境：</label>
+        <label for="id_Environment" class="name">使用环境：</label>
         <select name="Environment" id="id_Environment">
             <option style='display: none'></option>
             {% for i in envData %}>
@@ -42,7 +42,7 @@
         </select>
     </p>
     <p>
-        <label class="name">主机分组：</label>
+        <label for="id_HostGroup" class="name">主机分组：</label>
         <select name="HostGroup" size="4" multiple id="id_HostGroup">
             {% for i in hostGroupData %}>
                 <option>{{ i.GroupName }}</option>

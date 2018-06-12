@@ -1,7 +1,36 @@
 from django.shortcuts import render, HttpResponse
 from AssetManagement import models
+import pyDes
+import base64
 
 # Create your views here.
+Key = "Gogenius"
+Iv = "Gogen123"
+
+
+# 加密
+def encrypt_str(data):
+    # 加密方法
+    method = pyDes.des(Key, pyDes.CBC, Iv, pad=None, padmode=pyDes.PAD_PKCS5)
+    # 执行加密码
+    k = method.encrypt(data)
+    # 转base64编码并返回
+    return base64.b64encode(k)
+
+
+# 解密
+def decrypt_str(data):
+    method = pyDes.des(Key, pyDes.CBC, Iv, pad=None, padmode=pyDes.PAD_PKCS5)
+    # 对base64编码解密
+    k = base64.b64decode(data)
+    # 再执行Des解码并返回
+    return method.decrypt(k)
+
+
+# 获取主机超级用户密码并改成bytes类型
+def get_password(data):
+    password = models.HostInfo.objects.filter(id=data).values()[0]["SuperUserPass"]
+    return password.encode("UTF-8")
 
 
 # 获取主机信息所有数据
@@ -43,8 +72,8 @@ def host_group_info(request):
 # 资产列表
 def host_info(request):
     all_data = render(request, 'am/hostInfo.html', {'data': get_host_data(),
-                                                        "hostData": get_group_data(),
-                                                        "envData": get_env_data()})
+                                                    "hostData": get_group_data(),
+                                                    "envData": get_env_data()})
     post_data = request.POST
     if request.method == "POST":
         if post_data["ENVName"] != "环境" or post_data["GroupName"] != "分组" or post_data["Other"] != "":
@@ -61,7 +90,13 @@ def host_more_info(request):
     host_data = models.HostInfo.objects.filter(id=get_data["host"]).values()
     server_name = get_host_name(get_data["host"])
     group_data = models.HostAndHGroup.objects.filter(ServerName=server_name).values("GroupName")
-    return render(request, 'am/hostMoreInfo.html', {"data": host_data, "groupData": group_data})
+
+    # 将获取的密码进行解密，再转换成str类型
+    decrypt_password = (decrypt_str(get_password(get_data["host"]))).decode("UTF-8")
+
+    return render(request, 'am/hostMoreInfo.html', {"data": host_data,
+                                                    "groupData": group_data,
+                                                    "password": decrypt_password})
 
 
 # 添加主机
@@ -79,7 +114,8 @@ def add_host(request):
             IP=request.POST["IP"],
             RemotePort=request.POST["RemotePort"],
             SuperUser=request.POST["SuperUser"],
-            SuperUserPass=request.POST["SuperUserPass"],
+            #  存入数据库前先进行加密，再更改为str类型
+            SuperUserPass=(encrypt_str(request.POST["SuperUserPass"])).decode("UTF-8"),
             Environment=request.POST["Environment"],
             OSType=request.POST["OSType"],
             OSVersion=request.POST["OSVersion"],
@@ -111,7 +147,8 @@ def change_host_info(request):
             IP=request.POST["IP"],
             RemotePort=request.POST["RemotePort"],
             SuperUser=request.POST["SuperUser"],
-            SuperUserPass=request.POST["SuperUserPass"],
+            #  存入数据库前先进行加密，再更改为str类型
+            SuperUserPass=(encrypt_str(request.POST["SuperUserPass"])).decode("UTF-8"),
             Environment=request.POST["Environment"],
             OSType=request.POST["OSType"],
             OSVersion=request.POST["OSVersion"],
@@ -194,6 +231,10 @@ def edit(request):
                 salt_data = models.HostInfo.objects.filter(id=get_data["host"]).values("Salt")
                 jumpserver_data = models.HostInfo.objects.filter(id=get_data["host"]).values("Jumpserver")
                 keepass_data = models.HostInfo.objects.filter(id=get_data["host"]).values("Keepass")
+
+                # 将获取的密码进行解密，再转换成str类型
+                decrypt_password = (decrypt_str(get_password(get_data["host"]))).decode("UTF-8")
+
                 return render(request, "am/editHost.html", {"data": data,
                                                             "envData": get_env_data(),
                                                             "hostGroupData": get_group_data(),
@@ -201,7 +242,8 @@ def edit(request):
                                                             "ZabbixData": zabbix_data,
                                                             "SaltData": salt_data,
                                                             "JumpserverData": jumpserver_data,
-                                                            "KeepassData": keepass_data})
+                                                            "KeepassData": keepass_data,
+                                                            "password": decrypt_password})
             else:
                 return HttpResponse("请求错误")
 
