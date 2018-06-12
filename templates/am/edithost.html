@@ -133,4 +133,24 @@
 
 {% block js %}
     <script src="/static/am/addHost_editHost.js"></script>
+    <script>
+    $(function () {
+        $("#id_ServerName").blur(function () {
+            var data = $("#id_ServerName").val();
+            if (data !== ""){
+                $.ajax({
+                    url: "/am/check",
+                    type: "post",
+                    data: {"host_name": data},
+                    success: function (arg) {
+                        console.log(arg);
+                    },
+                    fail: function () {
+                        console.log("Error");
+                    }
+                });
+            }
+        });
+    });
+    </script>
 {% endblock %}

@@ -54,6 +54,30 @@ def get_host_name(host_id):
     return server_name
 
 
+# 检查主机名，分组名，环境名是否重复
+def check(request):
+    post_data = request.POST
+    for i in post_data:
+        name = post_data[i]
+        if i == "host_name":
+            if models.HostInfo.objects.filter(ServerName=name):
+                return HttpResponse("Error")
+            else:
+                return HttpResponse("OK")
+        elif i == "group_name":
+            if models.HostGroup.objects.filter(ServerName=name):
+                return HttpResponse("Error")
+            else:
+                return HttpResponse("OK")
+        elif i == "env_name":
+            if models.HostENV.objects.filter(ServerName=name):
+                return HttpResponse("Error")
+            else:
+                return HttpResponse("OK")
+        else:
+            pass
+
+
 # 主页
 def index(request):
     return render(request, 'index.html')
