@@ -5,13 +5,14 @@
     <p>
         <label for="id_EnvName" class="name">环境名称：</label>
         <input type="text" name="EnvName" id="id_EnvName" value={{ data.EnvName }}>
+        <span id="id_error_info" class="error_info">此名称已经被使用</span>
     </p>
     <p>
         <label for="id_Note" class="name">备注：</label>
         <textarea name="Note" id="id_Note">{{ data.Note }}</textarea>
     </p>
     <p>
-        <input type="submit" id=" value="保存">
+        <input type="submit" id="sub" value="保存">
     </p>
 </form>
 {% endblock %}

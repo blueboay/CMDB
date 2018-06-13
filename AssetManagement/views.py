@@ -69,11 +69,11 @@ def check(request):
                 return HttpResponse("Error")
             else:
                 return HttpResponse("OK")
-        elif i == "EnvName":
+        elif i == "env_name":
             if models.HostENV.objects.filter(EnvName=name):
-                return HttpResponse("false")
+                return HttpResponse("Error")
             else:
-                return HttpResponse("true")
+                return HttpResponse("OK")
         else:
             pass
 
@@ -115,7 +115,7 @@ def host_more_info(request):
     server_name = get_host_name(get_data["host"])
     group_data = models.HostAndHGroup.objects.filter(ServerName=server_name).values("GroupName")
 
-    # 将获取的密码进行解密，再转换成str类型
+    # 将获取的密码进行解密，再更改为UTF-8
     decrypt_password = (decrypt_str(get_password(get_data["host"]))).decode("UTF-8")
 
     return render(request, 'am/hostMoreInfo.html', {"data": host_data,
@@ -138,7 +138,7 @@ def add_host(request):
             IP=request.POST["IP"],
             RemotePort=request.POST["RemotePort"],
             SuperUser=request.POST["SuperUser"],
-            #  存入数据库前先进行加密，再更改为str类型
+            #  存入数据库前先进行加密，再更改为UTF-8
             SuperUserPass=(encrypt_str(request.POST["SuperUserPass"])).decode("UTF-8"),
             Environment=request.POST["Environment"],
             OSType=request.POST["OSType"],
@@ -171,7 +171,7 @@ def change_host_info(request):
             IP=request.POST["IP"],
             RemotePort=request.POST["RemotePort"],
             SuperUser=request.POST["SuperUser"],
-            #  存入数据库前先进行加密，再更改为str类型
+            #  存入数据库前先进行加密，再更改为UTF-8
             SuperUserPass=(encrypt_str(request.POST["SuperUserPass"])).decode("UTF-8"),
             Environment=request.POST["Environment"],
             OSType=request.POST["OSType"],
@@ -256,7 +256,7 @@ def edit(request):
                 jumpserver_data = models.HostInfo.objects.filter(id=get_data["host"]).values("Jumpserver")
                 keepass_data = models.HostInfo.objects.filter(id=get_data["host"]).values("Keepass")
 
-                # 将获取的密码进行解密，再转换成str类型
+                # 将获取的密码进行解密，再更改为UTF-8
                 decrypt_password = (decrypt_str(get_password(get_data["host"]))).decode("UTF-8")
 
                 return render(request, "am/editHost.html", {"data": data,
