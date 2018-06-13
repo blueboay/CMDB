@@ -3,9 +3,12 @@
 {% block head %}
     <link rel="stylesheet" type="text/css" href="/static/am/addhost.css">
     <style>
-    label.error{
+    label.error, #id_error_info{
         font-size: 12px;
         color: #fc4343;
+    }
+    .error_info{
+        display: none;
     }
     </style>
 {%  endblock %}
@@ -15,6 +18,7 @@
     <p>
         <label for="id_ServerName" class="name">服务器名称：</label>
         <input type="text" name="ServerName" id="id_ServerName">
+        <span id="id_error_info" class="error_info">名称已使用</span>
     </p>
     <p>
         <label for="id_IP" class="name">IP地址：</label>
@@ -95,31 +99,11 @@
         <textarea name="Note" id="id_Note"></textarea>
     </p>
     <p>
-        <input type="submit" value="提交">
+        <input type="submit" id="sub" value="提交">
     </p>
 </form>
 {% endblock %}
 
 {% block js %}
     <script src="/static/am/addHost_editHost.js"></script>
-    <script>
-    $(function () {
-        $("#id_ServerName").blur(function () {
-            var data = $("#id_ServerName").val();
-            if (data !== ""){
-                $.ajax({
-                    url: "/am/check",
-                    type: "post",
-                    data: {"host_name": data},
-                    success: function (arg) {
-                        console.log(arg);
-                    },
-                    fail: function () {
-                        console.log("Error");
-                    }
-                });
-            }
-        });
-    });
-    </script>
 {% endblock %}

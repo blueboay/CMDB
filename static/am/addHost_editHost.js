@@ -86,3 +86,29 @@ $().ready(function() {
         }
     });
 });
+
+$(function () {
+    var old_data = $("#id_ServerName").val();
+    $("#id_ServerName").change(function () {
+        var data = $("#id_ServerName").val();
+        if (data !== old_data){
+            $.ajax({
+                url: "/am/check",
+                type: "post",
+                data: {"host_name": data},
+                success: function (arg) {
+                    if (arg === "Error"){
+                        $("#id_error_info").removeClass("error_info");
+                        return false;
+                    }else if (arg === "OK") {
+                        $("#id_error_info").addClass("error_info");
+                    }else{
+                        console.log("other");
+                    }
+                },
+                fail: function () {
+                }
+            })
+        }
+    })
+});
