@@ -3,25 +3,29 @@
 {% block head %}
     <link rel="stylesheet" type="text/css" href="/static/am/addhost.css">
     <style>
-    label.error{
+    label.error, #id_error_info{
         font-size: 12px;
         color: #fc4343;
+    }
+    .error_info {
+        display: none;
     }
     </style>
 {%  endblock %}
 
 {% block body-right %}
-<form action="{%  url "addHostGroup" %}", method="post" id="commentForm">
+<form action="{%  url "addHostGroup" %}" method="post" id="commentForm">
     <p>
         <label for="id_GroupName" class="name">分组名称：</label>
         <input type="text" name="GroupName" id="id_GroupName">
+        <span id="id_error_info" class="error_info">分组名称已使用</span>
     </p>
     <p>
         <label for="id_Note" class="name">备注：</label>
         <textarea name="Note" id="id_Note"></textarea>
     </p>
     <p>
-        <input type="submit" value="提交">
+        <input type="submit" id="sub" value="提交">
     </p>
 </form>
 {% endblock %}

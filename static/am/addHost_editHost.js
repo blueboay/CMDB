@@ -44,7 +44,7 @@ $().ready(function() {
         },
         messages: {
             ServerName: {
-                required: "请输入主机显示名称"
+                required: "请输入主机名称"
             },
             IP: {
                 required: "请输入主要对应IP地址"
@@ -103,12 +103,22 @@ $(function () {
                     }else if (arg === "OK") {
                         $("#id_error_info").addClass("error_info");
                     }else{
-                        console.log("other");
+                        console.log("OK");
                     }
                 },
                 fail: function () {
                 }
             })
+        }else {
+            $("#id_error_info").addClass("error_info");
         }
     })
+});
+
+$("#sub").click(function () {
+    if ($("#id_error_info").is(".error_info")){
+        console.log("OK");
+    }else {
+        return false;
+    }
 });

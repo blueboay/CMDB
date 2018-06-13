@@ -1,27 +1,18 @@
-{% extends 'index.html' %}
-
-{% block head %}
-    <link rel="stylesheet" type="text/css" href="/static/am/addhost.css">
-    <style>
-    label.error{
-        font-size: 12px;
-        color: #fc4343;
-    }
-    </style>
-{%  endblock %}
+{% extends 'am/addHostENV.html' %}
 
 {% block body-right %}
-<form action="{% url "changeHostENV" %}?id={{ data.id }}", method="post" id="commentForm">
+<form action="{% url "changeHostENV" %}?id={{ data.id }}" method="post" id="commentForm">
     <p>
         <label for="id_EnvName" class="name">环境名称：</label>
         <input type="text" name="EnvName" id="id_EnvName" value={{ data.EnvName }}>
+        <span id="id_error_info" class="error_info">环境名称已使用</span>
     </p>
     <p>
         <label for="id_Note" class="name">备注：</label>
         <textarea name="Note" id="id_Note">{{ data.Note }}</textarea>
     </p>
     <p>
-        <input type="submit" value="保存">
+        <input type="submit" id="sub" value="保存">
     </p>
 </form>
 {% endblock %}

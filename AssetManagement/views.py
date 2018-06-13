@@ -65,12 +65,12 @@ def check(request):
             else:
                 return HttpResponse("OK")
         elif i == "group_name":
-            if models.HostGroup.objects.filter(ServerName=name):
+            if models.HostGroup.objects.filter(GroupName=name):
                 return HttpResponse("Error")
             else:
                 return HttpResponse("OK")
         elif i == "env_name":
-            if models.HostENV.objects.filter(ServerName=name):
+            if models.HostENV.objects.filter(EnvName=name):
                 return HttpResponse("Error")
             else:
                 return HttpResponse("OK")
