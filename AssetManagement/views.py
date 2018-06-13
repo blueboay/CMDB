@@ -69,11 +69,11 @@ def check(request):
                 return HttpResponse("Error")
             else:
                 return HttpResponse("OK")
-        elif i == "env_name":
+        elif i == "EnvName":
             if models.HostENV.objects.filter(EnvName=name):
-                return HttpResponse("Error")
+                return HttpResponse("false")
             else:
-                return HttpResponse("OK")
+                return HttpResponse("true")
         else:
             pass
 
