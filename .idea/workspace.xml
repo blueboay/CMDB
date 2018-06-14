@@ -3,18 +3,11 @@
   <component name="BookmarkManager">
     <bookmark url="file://$PROJECT_DIR$/templates/index.html" line="15" />
     <bookmark url="file://$PROJECT_DIR$/templates/index.html" line="55" />
-    <bookmark url="file://$PROJECT_DIR$/AssetManagement/views.py" line="267" />
+    <bookmark url="file://$PROJECT_DIR$/AssetManagement/views.py" line="266" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d892a79e-fea1-44b9-b31c-f88fd54eac36" name="默认的" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AssetManagement/views.py" afterPath="$PROJECT_DIR$/AssetManagement/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/am/addHostENV_editHostENV.js" afterPath="$PROJECT_DIR$/static/am/addHostENV_editHostENV.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/am/addHostGroup_editHostGroup.js" afterPath="$PROJECT_DIR$/static/am/addHostGroup_editHostGroup.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/am/addHost_editHost.js" afterPath="$PROJECT_DIR$/static/am/addHost_editHost.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/am/hostENVInfo.html" afterPath="$PROJECT_DIR$/templates/am/hostENVInfo.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/am/hostGroupInfo.html" afterPath="$PROJECT_DIR$/templates/am/hostGroupInfo.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/am/hostInfo.html" afterPath="$PROJECT_DIR$/templates/am/hostInfo.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -33,11 +26,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/AssetManagement/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="312">
-              <caret line="99" column="22" lean-forward="false" selection-start-line="99" selection-start-column="12" selection-end-line="99" selection-end-column="22" />
+            <state relative-caret-position="320">
+              <caret line="318" column="17" lean-forward="true" selection-start-line="318" selection-start-column="17" selection-end-line="318" selection-end-column="17" />
               <folding>
                 <element signature="e#0#49#0" expanded="true" />
               </folding>
@@ -49,7 +42,7 @@
         <entry file="file://$PROJECT_DIR$/templates/am/hostGroupInfo.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="335">
-              <caret line="60" column="34" lean-forward="true" selection-start-line="60" selection-start-column="34" selection-end-line="60" selection-end-column="34" />
+              <caret line="60" column="34" lean-forward="false" selection-start-line="60" selection-start-column="34" selection-end-line="60" selection-end-column="34" />
               <folding />
             </state>
           </provider>
@@ -65,11 +58,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="hostENVInfo.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="hostENVInfo.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/am/hostENVInfo.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="335">
-              <caret line="59" column="34" lean-forward="true" selection-start-line="59" selection-start-column="34" selection-end-line="59" selection-end-column="34" />
+            <state relative-caret-position="795">
+              <caret line="58" column="41" lean-forward="true" selection-start-line="58" selection-start-column="41" selection-end-line="58" selection-end-column="41" />
               <folding />
             </state>
           </provider>
@@ -149,10 +142,10 @@
         <option value="$PROJECT_DIR$/static/am/addHostENV_editHostENV.js" />
         <option value="$PROJECT_DIR$/static/am/addHostGroup_editHostGroup.js" />
         <option value="$PROJECT_DIR$/static/am/addHost_editHost.js" />
-        <option value="$PROJECT_DIR$/AssetManagement/views.py" />
         <option value="$PROJECT_DIR$/templates/am/hostGroupInfo.html" />
         <option value="$PROJECT_DIR$/templates/am/hostInfo.html" />
         <option value="$PROJECT_DIR$/templates/am/hostENVInfo.html" />
+        <option value="$PROJECT_DIR$/AssetManagement/views.py" />
       </list>
     </option>
   </component>
@@ -725,20 +718,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/AssetManagement/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="312">
-          <caret line="99" column="22" lean-forward="false" selection-start-line="99" selection-start-column="12" selection-end-line="99" selection-end-column="22" />
-          <folding>
-            <element signature="e#0#49#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/am/hostGroupInfo.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="335">
-          <caret line="60" column="34" lean-forward="true" selection-start-line="60" selection-start-column="34" selection-end-line="60" selection-end-column="34" />
+          <caret line="60" column="34" lean-forward="false" selection-start-line="60" selection-start-column="34" selection-end-line="60" selection-end-column="34" />
           <folding />
         </state>
       </provider>
@@ -753,9 +736,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/am/hostENVInfo.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="335">
-          <caret line="59" column="34" lean-forward="true" selection-start-line="59" selection-start-column="34" selection-end-line="59" selection-end-column="34" />
+        <state relative-caret-position="795">
+          <caret line="58" column="41" lean-forward="true" selection-start-line="58" selection-start-column="41" selection-end-line="58" selection-end-column="41" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AssetManagement/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="320">
+          <caret line="318" column="17" lean-forward="true" selection-start-line="318" selection-start-column="17" selection-end-line="318" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#49#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

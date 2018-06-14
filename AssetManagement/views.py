@@ -239,7 +239,6 @@ def change_host_group(request):
 # 添加环境
 def add_host_environment(request):
     if request.method == "POST":
-        print(request.POST)
         models.HostENV.objects.create(
             EnvName=request.POST["EnvName"],
             Note=request.POST["Note"],
@@ -307,11 +306,16 @@ def delete(request):
         get_data = request.GET
         for i in get_data.items():
             if i[0] == "hostGroup":
-                return HttpResponse(del_group(get_data['hostGroup']))
+                del_group(get_data['hostGroup'])
+                return render(request, 'am/hostGroupInfo.html', {'data': get_group_data()})
             elif i[0] == "hostENVGroup":
-                return HttpResponse(del_env(get_data['hostENVGroup']))
+                del_env(get_data['hostENVGroup'])
+                return render(request, 'am/hostENVInfo.html', {'data': get_env_data()})
             elif i[0] == "host":
-                return HttpResponse(del_host(get_data['host']))
+                del_host(get_data['host'])
+                return render(request, 'am/hostInfo.html', {'data': get_host_data(),
+                                                     "hostData": get_group_data(),
+                                                     "envData": get_env_data()})
             else:
                 return HttpResponse("请求错误")
     if request.method == "POST":
