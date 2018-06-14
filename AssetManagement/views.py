@@ -54,6 +54,12 @@ def get_host_name(host_id):
     return server_name
 
 
+# 获取分组名
+def get_group_name(group_id):
+    group_name = models.HostGroup.objects.filter(id=group_id).values("GroupName")[0]["GroupName"]
+    return group_name
+
+
 # 检查主机名，分组名，环境名是否重复
 def check(request):
     post_data = request.POST
@@ -76,6 +82,28 @@ def check(request):
                 return HttpResponse("OK")
         else:
             pass
+
+
+# 删除主机
+def del_host(nid):
+    server_name = get_host_name(nid)
+    models.HostAndHGroup.objects.filter(ServerName=server_name).delete()
+    models.HostInfo.objects.filter(id=nid).delete()
+    return "successful"
+
+
+# 删除分组
+def del_group(nid):
+    group_name = get_group_name(nid)
+    models.HostAndHGroup.objects.filter(GroupName=group_name).delete()
+    models.HostGroup.objects.filter(id=nid).delete()
+    return "successful"
+
+
+# 删除环境
+def del_env(nid):
+    models.HostENV.objects.filter(id=nid).delete()
+    return "successful"
 
 
 # 主页
@@ -211,6 +239,7 @@ def change_host_group(request):
 # 添加环境
 def add_host_environment(request):
     if request.method == "POST":
+        print(request.POST)
         models.HostENV.objects.create(
             EnvName=request.POST["EnvName"],
             Note=request.POST["Note"],
@@ -278,32 +307,24 @@ def delete(request):
         get_data = request.GET
         for i in get_data.items():
             if i[0] == "hostGroup":
-                models.HostGroup.objects.filter(id=get_data['hostGroup']).delete()
-                return HttpResponse("删除成功")
+                return HttpResponse(del_group(get_data['hostGroup']))
             elif i[0] == "hostENVGroup":
-                models.HostENV.objects.filter(id=get_data['hostENVGroup']).delete()
-                return HttpResponse("删除成功")
+                return HttpResponse(del_env(get_data['hostENVGroup']))
             elif i[0] == "host":
-                server_name = get_host_name(get_data['host'])
-                models.HostAndHGroup.objects.filter(ServerName=server_name).delete()
-                models.HostInfo.objects.filter(id=get_data['host']).delete()
-                return HttpResponse("删除成功")
+                return HttpResponse(del_host(get_data['host']))
             else:
                 return HttpResponse("请求错误")
     if request.method == "POST":
         post_data = request.POST
-        for i in post_data:
-            if i == "host":
-                for i in post_data.getlist("host"):
-                    models.HostInfo.objects.filter(id=i).delete()
-            elif i == "host_env":
-                for i in post_data.getlist("host_env"):
-                    models.HostENV.objects.filter(id=i).delete()
-            elif i == "host_group":
-                for i in post_data.getlist("host_group"):
-                    models.HostGroup.objects.filter(id=i).delete()
+        for name in post_data:
+            if name == "host":
+                for nid in post_data.getlist("host"):
+                    return HttpResponse(del_host(nid))
+            elif name == "host_env":
+                for nid in post_data.getlist("host_env"):
+                    return HttpResponse(del_env(nid))
+            elif name == "host_group":
+                for nid in post_data.getlist("host_group"):
+                    return HttpResponse(del_group(nid))
             else:
                 pass
-
-
-        return HttpResponse("123")

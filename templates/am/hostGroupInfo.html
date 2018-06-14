@@ -59,7 +59,9 @@
                 data: {"host_group": data},
                 traditional: true,
                 success: function (arg) {
-                    console.log(123);
+                    if (arg === "successful"){
+                        location.reload();
+                    }
                 },
                 fail: function () {
                 }

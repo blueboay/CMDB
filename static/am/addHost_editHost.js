@@ -121,7 +121,12 @@ $(function () {
 });
 
 $("#sub").click(function () {
-    if ($("#id_error_info1， #id_error_info2").is(".error_info")){
+    if ($("#id_error_info1").is(".error_info")){
+        console.log("OK");
+    }else {
+        return false;
+    }
+    if ($("#id_error_info2").is(".error_info")){
         console.log("OK");
     }else {
         return false;
