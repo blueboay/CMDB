@@ -33,4 +33,16 @@
     cursor: pointer;
     display: inline-block;
 }
+#delButton{
+    background-color: #ed5565;
+    color: #FFFFFF;
+    border-radius: 3px;
+    padding: 5px 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    vertical-align: middle;
+    cursor: pointer;
+    display: inline-block;
+}
+
 

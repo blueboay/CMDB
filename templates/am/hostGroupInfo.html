@@ -7,13 +7,19 @@
 
 {% block body-right %}
     <h3>主机分组如下：</h3>
-    <div>
-        <a id="addButton" href="{% url "addHostGroup" %}">新增分组</a>
+    <div class="opeartion">
+        <div class="opeartion-add">
+            <a id="addButton" href="{% url "addHostGroup" %}">新增分组</a>
+        </div>
+        <div class="opeartion-del">
+            <a id="delButton">删除选中分组</a>
+        </div>
+        <div style="clear:both;"></div>
     </div>
     <table class="altrowstable" id="alternatecolor">
         <thead>
             <tr>
-                <th style="width: 20px">ID</th>
+                <th style="width: 20px"><input type="checkbox" id="is_checked"></th>
                 <th style="width: 160px">分组名称</th>
                 <th style="width: 270px">备注</th>
                 <th style="width: 80px">操作</th>
@@ -22,7 +28,7 @@
         <tbody>
              {% for i in data %}
                  <tr id="{{ forloop.counter }}">
-                     <td>{{ forloop.counter }}</td>
+                     <td><input name="{{ i.id }}" type="checkbox"></td>
                      <td>{{ i.GroupName }}</td>
                      <td>{{ i.Note }}</td>
                      <td>
@@ -33,5 +39,33 @@
              {% endfor %}
         </tbody>
     </table>
-    <script src="/static/tables.js"></script>
 {% endblock %}
+{% block js %}
+    <script src="/static/tables.js"></script>
+    <script>
+    $("#delButton").click(function () {
+        var data = [];
+        var elm = $("tbody input").each(function () {
+            if ($(this).prop("checked")){
+                data.push($(this).attr("name"));
+            }
+        });
+        if (data.length === 0){
+            alert("你没有选择任何分组");
+        }else{
+            $.ajax({
+                url: "/am/delete",
+                type: "post",
+                data: {"host_group": data},
+                traditional: true,
+                success: function (arg) {
+                    console.log(123);
+                },
+                fail: function () {
+                }
+            });
+        }
+    });
+    </script>
+{% endblock %}
+

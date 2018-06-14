@@ -4,13 +4,6 @@
     <link rel="stylesheet" type="text/css" href="/static/table.css">
     <link rel="stylesheet" type="text/css" href="/static/am/button.css">
     <style>
-    #opeartion{
-        background-color: white;
-    }
-    #opeartion-add{
-        float: left;
-        width: 10%;
-    }
     #opeartion-filter{
         float: left;
         width: 30%;
@@ -43,10 +36,15 @@
 
 {% block body-right %}
     <h3>主机信息如下：</h3>
-    <div id="opeartion">
-        <div id="opeartion-add">
+    <div class="opeartion">
+        <div class="opeartion-add">
             <a id="addButton" href="{% url "addHost" %}">新增主机</a>
         </div>
+        <div class="opeartion-del">
+{#            <a id="delButton" href="{% url "delete" %}">删除选中主机</a>#}
+            <a id="delButton">删除选中主机</a>
+        </div>
+
         <form action="{% url "hostInfo" %}" method="post">
             <div id="opeartion-filter">
                 <select name="ENVName">
@@ -74,7 +72,7 @@
         <table class="altrowstable" id="alternatecolor">
             <thead>
                 <tr>
-                    <th style="width: 20px">ID</th>
+                    <th style="width: 20px"><input type="checkbox" id="is_checked"></th>
                     <th style="width: 160px">服务器名称</th>
                     <th style="width: 110px">IP地址</th>
                     <th style="width: 70px">监控</th>
@@ -88,7 +86,7 @@
             <tbody>
                  {% for i in data %}
                      <tr>
-                         <td>{{ forloop.counter }}</td>
+                         <td><input type="checkbox" name="{{ i.id }}"></td>
                          <td>{{ i.ServerName }}</td>
                          <td>{{ i.IP }}</td>
                          <td>{{ i.Zabbix }}</td>
@@ -106,5 +104,32 @@
             </tbody>
         </table>
     {% endblock %}
+{% endblock %}
+{% block js %}
     <script src="/static/tables.js"></script>
+    <script>
+    $("#delButton").click(function () {
+        var data = [];
+        var elm = $("tbody input").each(function () {
+            if ($(this).prop("checked")){
+                data.push($(this).attr("name"));
+            }
+        });
+        if (data.length === 0){
+            alert("你没有选择任何主机");
+        }else{
+            $.ajax({
+                url: "/am/delete",
+                type: "post",
+                data: {"host": data},
+                traditional: true,
+                success: function (arg) {
+                    console.log(123);
+                },
+                fail: function () {
+                }
+            });
+        }
+    });
+    </script>
 {% endblock %}

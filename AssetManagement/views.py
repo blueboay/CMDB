@@ -290,3 +290,20 @@ def delete(request):
                 return HttpResponse("删除成功")
             else:
                 return HttpResponse("请求错误")
+    if request.method == "POST":
+        post_data = request.POST
+        for i in post_data:
+            if i == "host":
+                for i in post_data.getlist("host"):
+                    models.HostInfo.objects.filter(id=i).delete()
+            elif i == "host_env":
+                for i in post_data.getlist("host_env"):
+                    models.HostENV.objects.filter(id=i).delete()
+            elif i == "host_group":
+                for i in post_data.getlist("host_group"):
+                    models.HostGroup.objects.filter(id=i).delete()
+            else:
+                pass
+
+
+        return HttpResponse("123")

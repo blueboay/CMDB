@@ -27,3 +27,14 @@ table.altrowstable td {
 table {
     margin-top: 10px;
 }
+.opeartion{
+        background-color: white;
+}
+.opeartion-add{
+    float: left;
+    width: 6%;
+}
+.opeartion-del{
+    float: left;
+    width: 15%;
+}

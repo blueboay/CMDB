@@ -7,13 +7,19 @@
 
 {% block body-right %}
     <h3>主机环境如下：</h3>
-    <div>
-        <a id="addButton" href="{% url "addHostENV" %}">新增环境</a>
+    <div class="opeartion">
+        <div class="opeartion-add">
+            <a id="addButton" href="{% url "addHostENV" %}">新增环境</a>
+        </div>
+        <div class="opeartion-del">
+            <a id="delButton">删除选中环境</a>
+        </div>
+        <div style="clear:both;"></div>
     </div>
     <table class="altrowstable" id="alternatecolor">
         <thead>
             <tr>
-                <th style="width: 20px">ID</th>
+                <th style="width: 20px"><input type="checkbox" id="is_checked"></th>
                 <th style="width: 160px">环境名称</th>
                 <th style="width: 270px">备注</th>
                 <th style="width: 80px">操作</th>
@@ -22,7 +28,7 @@
         <tbody>
              {% for i in data %}
                  <tr>
-                     <td>{{ forloop.counter }}</td>
+                     <td><input type="checkbox" name="{{ i.id }}"></td>
                      <td>{{ i.EnvName }}</td>
                      <td>{{ i.Note }}</td>
                      <td>
@@ -33,5 +39,32 @@
              {% endfor %}
         </tbody>
     </table>
+{% endblock %}
+{% block js %}
     <script src="/static/tables.js"></script>
+    <script>
+    $("#delButton").click(function () {
+        var data = [];
+        var elm = $("tbody input").each(function () {
+            if ($(this).prop("checked")){
+                data.push($(this).attr("name"));
+            }
+        });
+        if (data.length === 0){
+            alert("你没有选择任何环境");
+        }else{
+            $.ajax({
+                url: "/am/delete",
+                type: "post",
+                data: {"host_env": data},
+                traditional: true,
+                success: function (arg) {
+                    console.log(123);
+                },
+                fail: function () {
+                }
+            });
+        }
+    });
+    </script>
 {% endblock %}

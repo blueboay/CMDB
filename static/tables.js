@@ -16,4 +16,16 @@ function altRows(id){
 
 window.onload=function(){
     altRows('alternatecolor');
-}
+};
+
+
+$("#is_checked").change(function () {
+    var status = $("#is_checked").prop("checked");
+    if (status){
+        $("tbody input").prop("checked", true);
+    }else {
+        $("tbody input").prop("checked", false);
+    }
+});
+
+
