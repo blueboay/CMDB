@@ -25,7 +25,7 @@ $(function () {
         }
         if (data !== old_data){
             $.ajax({
-                url: "/am/check",
+                url: "/am/check_repeat",
                 type: "post",
                 data: {"env_name": data},
                 success: function (arg) {

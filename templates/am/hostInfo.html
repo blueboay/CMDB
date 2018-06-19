@@ -38,10 +38,10 @@
     <h3>主机信息如下：</h3>
     <div class="opeartion">
         <div class="opeartion-add">
-            <a id="addButton" href="{% url "addHost" %}">新增主机</a>
+{#            <a id="addButton" href="{% url "addHost" %}">新增主机</a>#}
+            <a id="addButton">新增主机</a>
         </div>
         <div class="opeartion-del">
-{#            <a id="delButton" href="{% url "delete" %}">删除选中主机</a>#}
             <a id="delButton">删除选中主机</a>
         </div>
 
@@ -132,6 +132,23 @@
                 }
             });
         }
+    });
+
+    $("#addButton").click(function () {
+        $.ajax({
+            url: "/am/check_is_exist",
+            success: function (arg) {
+                if (arg === "1"){
+                    alert("请先创建主机分组");
+                }else if (arg === "2"){
+                    alert("请先创建环境");
+                }else {
+                    window.location.href = "/am/addHost";
+                }
+            },
+            fail: function () {
+            }
+        })
     });
     </script>
 {% endblock %}

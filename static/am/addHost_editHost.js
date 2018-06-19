@@ -98,7 +98,7 @@ $(function () {
         }
         if (data !== old_data){
             $.ajax({
-                url: "/am/check",
+                url: "/am/check_repeat",
                 type: "post",
                 data: {"host_name": data},
                 success: function (arg) {

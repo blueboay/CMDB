@@ -61,7 +61,7 @@ def get_group_name(group_id):
 
 
 # 检查主机名，分组名，环境名是否重复
-def check(request):
+def check_repeat(request):
     post_data = request.POST
     for i in post_data:
         name = post_data[i]
@@ -83,6 +83,17 @@ def check(request):
         else:
             pass
 
+
+# 检查是否有主机分组或者环境
+def check_is_exist(reuquest):
+    group_data = get_group_data()
+    env_data = get_env_data()
+    if group_data.__len__() == 0:
+        return HttpResponse("1")
+    elif env_data.__len__() == 0:
+        return HttpResponse("2")
+    else:
+        return HttpResponse("OK")
 
 # 删除主机
 def del_host(nid):
@@ -313,9 +324,11 @@ def delete(request):
                 return render(request, 'am/hostENVInfo.html', {'data': get_env_data()})
             elif i[0] == "host":
                 del_host(get_data['host'])
-                return render(request, 'am/hostInfo.html', {'data': get_host_data(),
-                                                     "hostData": get_group_data(),
-                                                     "envData": get_env_data()})
+                return render(request,
+                              'am/hostInfo.html',
+                              {'data': get_host_data(),
+                               "hostData": get_group_data(),
+                               "envData": get_env_data()})
             else:
                 return HttpResponse("请求错误")
     if request.method == "POST":
