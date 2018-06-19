@@ -85,7 +85,7 @@ def check_repeat(request):
 
 
 # 检查是否有主机分组或者环境
-def check_is_exist(reuquest):
+def check_is_exist(request):
     group_data = get_group_data()
     env_data = get_env_data()
     if group_data.__len__() == 0:
@@ -94,6 +94,18 @@ def check_is_exist(reuquest):
         return HttpResponse("2")
     else:
         return HttpResponse("OK")
+
+
+# 搜索指定主机
+def search(request):
+    get_data = request.GET
+    for i in get_data:
+        if i == "group_name":
+            print(get_data["group_name"])
+        else:
+            print(get_data["env_name"])
+    return HttpResponse("123")
+
 
 # 删除主机
 def del_host(nid):

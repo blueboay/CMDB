@@ -13,6 +13,7 @@ urlpatterns = [
 
     path('edit', views.edit, name="edit"),
     path('delete', views.delete, name="delete"),
+    path('search', views.search, name="search"),
     path('check_repeat', views.check_repeat, name="check_repeat"),
     path('check_is_exist', views.check_is_exist, name="check_is_exist"),
 

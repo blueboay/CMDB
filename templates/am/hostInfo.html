@@ -47,13 +47,13 @@
 
         <form action="{% url "hostInfo" %}" method="post">
             <div id="opeartion-filter">
-                <select name="ENVName">
+                <select name="ENVName" id="filter_env">
                     <option>环境</option>
                     {% for i in envData %}
                         <option>{{ i.EnvName }}</option>
                     {% endfor %}
                 </select>
-                <select name="GroupName">
+                <select name="GroupName" id="filter_group_name">
                     <option>分组</option>
                     {% for i in hostData %}
                         <option>{{ i.GroupName }}</option>
@@ -150,5 +150,27 @@
             }
         })
     });
+
+    $("#filter_group_name").change(function () {
+        var data = $("#filter_group_name").val();
+        if (data !== "分组"){
+            $.ajax({
+                url: "/am/search",
+                type: "get",
+                data: {"group_name": data}
+            })
+        }
+    });
+
+    $("#filter_env").change(function () {
+        var data = $("#filter_env").val();
+        if (data !== "环境"){
+            $.ajax({
+                url: "/am/search",
+                type: "get",
+                data: {"env_name": data}
+            })
+        }
+    })
     </script>
 {% endblock %}
