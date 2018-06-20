@@ -6,9 +6,9 @@ function altRows(id){
 
         for(var i=0;i<rows.length;i++){
             if(i % 2 === 0){
-                rows[i].className = "evenrowcolor";
+                rows[i].className = "evenrowcolor"
             }else{
-                rows[i].className = "oddrowcolor";
+                rows[i].className = "oddrowcolor"
             }
         }
     }
@@ -22,9 +22,9 @@ window.onload=function(){
 $("#is_checked").change(function () {
     var status = $("#is_checked").prop("checked");
     if (status){
-        $("tbody input").prop("checked", true);
+        $("tbody input").prop("checked", true)
     }else {
-        $("tbody input").prop("checked", false);
+        $("tbody input").prop("checked", false)
     }
 });
 

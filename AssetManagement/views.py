@@ -1,5 +1,7 @@
 from django.shortcuts import render, HttpResponse
+from django.core import serializers
 from AssetManagement import models
+import json
 import pyDes
 import base64
 
@@ -98,13 +100,17 @@ def check_is_exist(request):
 
 # 搜索指定主机
 def search(request):
-    get_data = request.GET
-    for i in get_data:
-        if i == "group_name":
-            print(get_data["group_name"])
-        else:
-            print(get_data["env_name"])
-    return HttpResponse("123")
+    post_data = request.POST
+    if post_data["env_name"] == "" and post_data["group_name"] != "":
+        return "123"
+    elif post_data["env_name"] != "" and post_data["group_name"] == "":
+        # 返回Json数据格式给前端
+        data = serializers.serialize("json", models.HostInfo.objects.filter(Environment=post_data["env_name"]))
+        return HttpResponse(data)
+    elif post_data["env_name"] == "" and post_data["group_name"] == "":
+        return HttpResponse(models.HostInfo.objects.all())
+    else:
+        return "111"
 
 
 # 删除主机
@@ -149,14 +155,7 @@ def host_info(request):
     all_data = render(request, 'am/hostInfo.html', {'data': get_host_data(),
                                                     "hostData": get_group_data(),
                                                     "envData": get_env_data()})
-    post_data = request.POST
-    if request.method == "POST":
-        if post_data["ENVName"] != "环境" or post_data["GroupName"] != "分组" or post_data["Other"] != "":
-            return HttpResponse("此功能尚未开发完成...")
-        else:
-            return all_data
-    else:
-        return all_data
+    return all_data
 
 
 # 资产列表详细信息
