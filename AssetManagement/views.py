@@ -102,15 +102,16 @@ def check_is_exist(request):
 def search(request):
     post_data = request.POST
     if post_data["env_name"] == "" and post_data["group_name"] != "":
-        return "123"
+        pass
     elif post_data["env_name"] != "" and post_data["group_name"] == "":
         # 返回Json数据格式给前端
         data = serializers.serialize("json", models.HostInfo.objects.filter(Environment=post_data["env_name"]))
         return HttpResponse(data)
     elif post_data["env_name"] == "" and post_data["group_name"] == "":
-        return HttpResponse(models.HostInfo.objects.all())
+        data = serializers.serialize("json", models.HostInfo.objects.all())
+        return HttpResponse(data)
     else:
-        return "111"
+        pass
 
 
 # 删除主机

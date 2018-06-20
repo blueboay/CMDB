@@ -30,7 +30,6 @@
         font-size: 12px;
         height: 27px
     }
-
     </style>
 {% endblock %}
 
@@ -173,9 +172,9 @@
             success: function (arg) {
                 $("#tbody").html("");   {% comment %}清空原有的表单内容{% endcomment %}
 {#                将后端数据组合成新的表单内容#}
-                var context = '';
+                var content = '';
                 $.each(arg, function (index, item) {    {% comment %}index和item为固定写法{% endcomment %}
-                    context += "<tr>" +
+                    content += "<tr>" +
                         "<td><input type='checkbox' name=" +item.pk+"></td>" +
                         "<td>"+item.fields.ServerName+"</td>" +
                         "<td>"+item.fields.IP+"</td>" +
@@ -185,13 +184,16 @@
                         "<td>"+item.fields.Keepass+"</td>" +
                         "<td>"+item.fields.Note+"</td>" +
                         "<td>"+
-                            "<a id='moreInfo' href=/am/hostMoreInfo?host="+item.pk+">详细信息</a>" +
-                            "<a id='edit' href=/am/edit?host="+item.pk+">编辑</a>" +
-                            "<a id='del' href=/am/delete?host="+item.pk+">删除</a>" +
+                            "<a style='margin-right: 4px;' id='moreInfo' href=/am/hostMoreInfo?host="+item.pk+">详细信息</a>" +
+                            "<a style='margin-right: 4px;' id='edit' href=/am/edit?host="+item.pk+">编辑</a>" +
+                            "<a style='margin-right: 4px;' id='del' href=/am/delete?host="+item.pk+">删除</a>" +
                         "</td>" +
                         "</tr>"
                 });
-                $("#tbody").html(context);  {% comment %}将新的表单添加进网页{% endcomment %}
+                $("#tbody").html(content);  {% comment %}将新的表单添加进网页{% endcomment %}
+                (function () {
+                    altRows("alternatecolor");       {% comment %}执行altRows函数，改变显示颜色{% endcomment %}
+                })()
             }
         });
     });
