@@ -6,29 +6,22 @@
     <style>
     #opeartion-filter{
         float: left;
-        width: 30%;
+        width: 40%;
         height: 28px;
     }
     #opeartion-search{
-        float: left;
-        width: 30%;
+        float: right;
         height: 28px;
     }
     #opeartion-search input[type="text"]{
-        height: 22px
+        height: 22px;
+        width: 259px;
     }
     select{
         padding: 4px 12px;
         font-size: 14px;
-        width: 100px;
-    }
-    input[type="submit"]{
-        background-color: #18a689;
-        border-color: #18a689;
-        color: #FFFFFF;
-        padding: 3px 10px;
-        font-size: 12px;
-        height: 27px
+        width: 120px;
+        font-family: "FangSong_GB2312";
     }
     </style>
 {% endblock %}
@@ -37,50 +30,46 @@
     <h3>主机信息如下：</h3>
     <div class="opeartion">
         <div class="opeartion-add">
-{#            <a id="addButton" href="{% url "addHost" %}">新增主机</a>#}
             <a id="addButton">新增主机</a>
         </div>
         <div class="opeartion-del">
             <a id="delButton">删除选中主机</a>
         </div>
-
-        <form action="{% url "hostInfo" %}" method="post">
-            <div id="opeartion-filter">
-                <label for="filter_env"></label>
-                <select name="ENVName" id="filter_env">
-                    <option>环境</option>
-                    {% for i in envData %}
-                        <option>{{ i.EnvName }}</option>
-                    {% endfor %}
-                </select>
-                <label for="filter_group_name"></label>
-                <select name="GroupName" id="filter_group_name">
-                    <option>分组</option>
-                    {% for i in hostData %}
-                        <option>{{ i.GroupName }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div id="opeartion-search">
-                <input type="text" name="Other" placeholder="可填写主机名或IP地址">
-                <input type="submit" value="-搜索-">
-            </div>
-            <div style="clear:both;"></div>
-        </form>
+        <div id="opeartion-filter">
+            <label for="filter_env"></label>
+            <select name="ENVName" id="filter_env">
+                <option>环境</option>
+                {% for i in envData %}
+                    <option>{{ i.EnvName }}</option>
+                {% endfor %}
+            </select>
+            <label for="filter_group_name"></label>
+            <select name="GroupName" id="filter_group_name">
+                <option>分组</option>
+                {% for i in hostData %}
+                    <option>{{ i.GroupName }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div id="opeartion-search">
+            <input id="other" type="text" name="Other" placeholder="可填写主机名或IP地址">
+            <a id="search">-搜索-</a>
+        </div>
+        <div style="clear:both;"></div>
 
     </div>
     <table class="altrowstable" id="alternatecolor">
         <thead>
             <tr>
-                <th style="width: 20px"><label for="is_checked"></label><input type="checkbox" id="is_checked"></th>
-                <th style="width: 160px">服务器名称</th>
-                <th style="width: 110px">IP地址</th>
-                <th style="width: 70px">监控</th>
-                <th style="width: 70px">自动化运维</th>
-                <th style="width: 70px">堡垒机</th>
-                <th style="width: 70px">密码记录</th>
-                <th style="width: 270px">备注信息</th>
-                <th style="width: 160px">操作</th>
+                <th style="width: 1%"><label for="is_checked"></label><input type="checkbox" id="is_checked"></th>
+                <th style="width: 16%">服务器名称</th>
+                <th style="width: 11%">IP地址</th>
+                <th style="width: 7%">监控</th>
+                <th style="width: 7%">自动化运维</th>
+                <th style="width: 7%">堡垒机</th>
+                <th style="width: 7%">密码记录</th>
+                <th style="width: 27%">备注信息</th>
+                <th style="width: 16%">操作</th>
             </tr>
         </thead>
         <tbody id="tbody">
@@ -164,19 +153,21 @@
             return {"group_name": group_name, "env_name": env_name}
         }
     }
-
-    $("#filter_group_name, #filter_env").change(function () {
-        var data = get_group_env();
+    function search(data) {
         $.ajax({
             url: "/am/search",
             type: "post",
             data: data,
             dataType: "json",   {% comment %}指定接收到的数据类型{% endcomment %}
             success: function (arg) {
-                $("#tbody").html("");   {% comment %}清空原有的表单内容{% endcomment %}
-{#                将后端数据组合成新的表单内容#}
-                var content = '';
-                $.each(arg, function (index, item) {    {% comment %}index和item为固定写法{% endcomment %}
+                if(arg.length === 0){
+                    alert("没有查询到任何数据");
+                    location.reload();
+                }else {
+                    $("#tbody").html("");   {% comment %}清空原有的表单内容{% endcomment %}
+{#                    将后端数据组合成新的表单内容#}
+                    var content = '';
+                    $.each(arg, function (index, item) {    {% comment %}index和item为固定写法{% endcomment %}
                     content += "<tr>" +
                         "<td><input type='checkbox' name=" +item.pk+"></td>" +
                         "<td>"+item.fields.ServerName+"</td>" +
@@ -192,13 +183,26 @@
                             "<a style='margin-right: 4px;' id='del' href=/am/delete?host="+item.pk+">删除</a>" +
                         "</td>" +
                         "</tr>"
-                });
-                $("#tbody").html(content);  {% comment %}将新的表单添加进网页{% endcomment %}
-                (function () {
-                    altRows("alternatecolor");       {% comment %}执行altRows函数，改变显示颜色{% endcomment %}
-                })()
+                    });
+                    $("#tbody").html(content);  {% comment %}将新的表单添加进网页{% endcomment %}
+                    (function () {
+                        altRows("alternatecolor");       {% comment %}执行altRows函数，改变显示颜色{% endcomment %}
+                    })()
+                }
             }
         });
+    }
+    $("#filter_group_name, #filter_env, #search").change(function () {
+        var data = get_group_env();
+        search(data)
     });
+    $("#search").click(function () {
+        var data = $("#other").val();
+        if (data === ""){
+            alert("请输入查询内容后提交")
+        }else {
+            search({"other": data})
+        }
+    })
     </script>
 {% endblock %}
