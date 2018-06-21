@@ -46,12 +46,14 @@
 
         <form action="{% url "hostInfo" %}" method="post">
             <div id="opeartion-filter">
+                <label for="filter_env"></label>
                 <select name="ENVName" id="filter_env">
                     <option>环境</option>
                     {% for i in envData %}
                         <option>{{ i.EnvName }}</option>
                     {% endfor %}
                 </select>
+                <label for="filter_group_name"></label>
                 <select name="GroupName" id="filter_group_name">
                     <option>分组</option>
                     {% for i in hostData %}
@@ -70,7 +72,7 @@
     <table class="altrowstable" id="alternatecolor">
         <thead>
             <tr>
-                <th style="width: 20px"><input type="checkbox" id="is_checked"></th>
+                <th style="width: 20px"><label for="is_checked"></label><input type="checkbox" id="is_checked"></th>
                 <th style="width: 160px">服务器名称</th>
                 <th style="width: 110px">IP地址</th>
                 <th style="width: 70px">监控</th>
@@ -84,7 +86,7 @@
         <tbody id="tbody">
              {% for i in data %}
                  <tr>
-                     <td><input type="checkbox" name="{{ i.id }}"></td>
+                     <td><label for="{{ i.id }}"></label><input type="checkbox" name="{{ i.id }}" id="{{ i.id }}"></td>
                      <td>{{ i.ServerName }}</td>
                      <td>{{ i.IP }}</td>
                      <td>{{ i.Zabbix }}</td>
@@ -105,9 +107,10 @@
 {% block js %}
     <script src="/static/tables.js"></script>
     <script>
+{#    批量删除按钮#}
     $("#delButton").click(function () {
         var data = [];
-        var elm = $("tbody input").each(function () {
+        $("tbody input").each(function () {
             if ($(this).prop("checked")){
                 data.push($(this).attr("name"));
             }
@@ -130,7 +133,7 @@
             });
         }
     });
-
+{#    新增按钮#}
     $("#addButton").click(function () {
         $.ajax({
             url: "/am/check_is_exist",
