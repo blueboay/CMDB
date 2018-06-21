@@ -104,9 +104,7 @@ def search(request):
     for i in post_data:
         if i == "other":
             search_obj = Q()
-            search_obj.connector = "OR"
-            search_obj.children.append(("ServerName", post_data["other"]))
-            search_obj.children.append(("IP", post_data["other"]))
+            search_obj.add(Q(ServerName__contains=post_data["other"]) | Q(IP__contains=post_data["other"]), Q.OR)
             data = serializers.serialize("json", models.HostInfo.objects.filter(search_obj))
             return HttpResponse(data)
         else:
