@@ -180,17 +180,17 @@ def index(request):
 
 # 环境分组
 def host_environment_info(request):
-    return render(request, 'am/hostENVInfo.html', {'data': get_env_data()})
+    return render(request, 'am/host_env_info.html', {'data': get_env_data()})
 
 
 # 主机分组
 def host_group_info(request):
-    return render(request, 'am/hostGroupInfo.html', {'data': get_group_data()})
+    return render(request, 'am/host_group_info.html', {'data': get_group_data()})
 
 
 # 资产列表
 def host_info(request):
-    all_data = render(request, 'am/hostInfo.html', {'data': get_host_data(),
+    all_data = render(request, 'am/host_info.html', {'data': get_host_data(),
                                                     "hostData": get_group_data(),
                                                     "envData": get_env_data()})
     return all_data
@@ -206,7 +206,7 @@ def host_more_info(request):
     # 将获取的密码进行解密，再更改为UTF-8
     decrypt_password = (decrypt_str(get_password(get_data["host"]))).decode("UTF-8")
 
-    return render(request, 'am/hostMoreInfo.html', {"data": host_data,
+    return render(request, 'am/host_more_info.html', {"data": host_data,
                                                     "groupData": group_data,
                                                     "password": decrypt_password})
 
@@ -237,7 +237,7 @@ def add_host(request):
             Keepass=request.POST["Keepass"],
             Note=request.POST["Note"],
         )
-    return render(request, "am/addhost.html", {"envData": get_env_data(), "hostGroupData": get_group_data()})
+    return render(request, "am/add_host.html", {"envData": get_env_data(), "hostGroupData": get_group_data()})
 
 
 # 编辑主机信息
@@ -280,7 +280,7 @@ def add_host_group(request):
             GroupName=request.POST["GroupName"],
             Note=request.POST["Note"],
         )
-    return render(request, "am/addhostgroup.html")
+    return render(request, "am/add_host_group.html")
 
 
 # 更改主机分组
@@ -303,7 +303,7 @@ def add_host_environment(request):
             EnvName=request.POST["EnvName"],
             Note=request.POST["Note"],
         )
-    return render(request, "am/addHostENV.html")
+    return render(request, "am/add_host_env.html")
 
 
 # 更改环境
@@ -328,10 +328,10 @@ def edit(request):
         for i in get_data.items():
             if i[0] == "hostGroup":
                 data = models.HostGroup.objects.get(id=get_data["hostGroup"])
-                return render(request, "am/editHostGroup.html", {"data": data})
+                return render(request, "am/edit_host_group.html", {"data": data})
             elif i[0] == "hostENVGroup":
                 data = models.HostENV.objects.get(id=get_data["hostENVGroup"])
-                return render(request, "am/editHostENV.html", {"data": data})
+                return render(request, "am/edit_host_env.html", {"data": data})
             elif i[0] == "host":
                 data = models.HostInfo.objects.get(id=get_data["host"])
                 server_name = get_host_name(get_data["host"])
@@ -347,15 +347,15 @@ def edit(request):
                 # 将获取的密码进行解密，再更改为UTF-8
                 decrypt_password = (decrypt_str(get_password(get_data["host"]))).decode("UTF-8")
 
-                return render(request, "am/editHost.html", {"data": data,
+                return render(request, "am/edit_host.html", {"data": data,
                                                             "envData": get_env_data(),
                                                             "hostGroupData": get_group_data(),
                                                             "usegroupdata": groups_list,
                                                             "ZabbixData": zabbix_data,
                                                             "SaltData": salt_data,
-                                                            "JumpserverData": jumpserver_data,
-                                                            "KeepassData": keepass_data,
-                                                            "password": decrypt_password})
+                                                             "JumpserverData": jumpserver_data,
+                                                             "KeepassData": keepass_data,
+                                                             "password": decrypt_password})
             else:
                 return HttpResponse("请求错误")
 
@@ -368,14 +368,14 @@ def delete(request):
         for i in get_data.items():
             if i[0] == "hostGroup":
                 del_group(get_data['hostGroup'])
-                return render(request, 'am/hostGroupInfo.html', {'data': get_group_data()})
+                return render(request, 'am/host_group_info.html', {'data': get_group_data()})
             elif i[0] == "hostENVGroup":
                 del_env(get_data['hostENVGroup'])
-                return render(request, 'am/hostENVInfo.html', {'data': get_env_data()})
+                return render(request, 'am/host_env_info.html', {'data': get_env_data()})
             elif i[0] == "host":
                 del_host(get_data['host'])
                 return render(request,
-                              'am/hostInfo.html',
+                              'am/host_info.html',
                               {'data': get_host_data(),
                                "hostData": get_group_data(),
                                "envData": get_env_data()})

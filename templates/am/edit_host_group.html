@@ -1,10 +1,10 @@
-{% extends 'am/addHostENV.html' %}
+{% extends 'am/add_host_group.html' %}
 
 {% block body-right %}
-<form action="{% url "changeHostENV" %}?id={{ data.id }}" method="post" id="commentForm">
+<form action="{% url "changeHostGroup" %}?id={{ data.id }}" method="post" id="commentForm">
     <p>
-        <label for="id_EnvName" class="name">环境名称：</label>
-        <input type="text" name="EnvName" id="id_EnvName" value={{ data.EnvName }}>
+        <label for="id_GroupName" class="name">分组名称：</label>
+        <input type="text" name="GroupName" id="id_GroupName" value={{ data.GroupName }}>
         <span id="id_error_info1" class="error_info">此名称已经被使用</span>
         <span id="id_error_info2" class="error_info">名称不能以空格开头</span>
     </p>
@@ -19,5 +19,5 @@
 {% endblock %}
 
 {% block js %}
-    <script src="/static/am/addHostENV_editHostENV.js"></script>
+    <script src="/static/am/addHostGroup_editHostGroup.js"></script>
 {% endblock %}
