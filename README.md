@@ -25,8 +25,8 @@ Gunicorn+Ngnx+Supervisor
 创建Supervisor配置文件：
 
     [program:gunicorn]
-    directory= /usr/local/ProJectName
-    command = /usr/bin/gunicorn ProJectName.wsgi -b 127.0.0.1:8000
+    directory= /Path/Tp/ProjectName
+    command = /usr/bin/gunicorn ProjectName.wsgi -b 127.0.0.1:8000
     user = root
     autostart= true
     autorestart= true
@@ -46,7 +46,7 @@ Gunicorn+Ngnx+Supervisor
         }
         
         location ~.*\.(html|css|js)$ {
-            root /usr/local/Gogenius;
+            root /Path/Tp/ProjectName;
             proxy_next_upstream http_500 http_502 http_503 error timeout invalid_header;
             proxy_set_header Host $host;
             proxy_set_header X-Forwarded-For $remote_addr;
@@ -64,6 +64,9 @@ Gunicorn+Ngnx+Supervisor
             'PASSWORD': '123456',
         }
     }
+同步数据库配置：
+    python3.4 manage.py makemigrations
+    python3.4 manage.py migrate
 ### 部署步骤三：启动验证
     systemctl start supervisord.service
     systemctl enable supervisord.service
