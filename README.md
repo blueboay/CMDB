@@ -23,6 +23,7 @@ Gunicorn+Ngnx+Supervisor
     python3.4 -m pip install PyMySQL
 ### 部署步骤二：修改配置
 创建Supervisor配置文件：
+
     [program:gunicorn]
     directory= /usr/local/ProJectName
     command = /usr/bin/gunicorn ProJectName.wsgi -b 127.0.0.1:8000
@@ -34,16 +35,13 @@ Gunicorn+Ngnx+Supervisor
 
 创建Nginx配置文件：
     server {
-
         listen 5000;
-
         location / {
             proxy_pass http://127.0.0.1:8000;
             proxy_next_upstream http_500 http_502 http_503 error timeout invalid_header;
             proxy_set_header Host $host;
             proxy_set_header X-Forwarded-For $remote_addr;
         }
-
         location ~.*\.(html|css|js)$ {
             root /usr/local/Gogenius;
             proxy_next_upstream http_500 http_502 http_503 error timeout invalid_header;
@@ -51,6 +49,7 @@ Gunicorn+Ngnx+Supervisor
             proxy_set_header X-Forwarded-For $remote_addr;
         }
     }
+    
 ### 部署步骤三：启动验证
     systemctl start supervisord.service
     systemctl enable supervisord.service
