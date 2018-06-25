@@ -31,6 +31,7 @@ Gunicorn+Ngnx+Supervisor
     autorestart= true
     redirect_stderr = true
     stdout_logfile = /var/log/gunicorn.log
+
 创建Nginx配置文件：
     server {
 
@@ -51,3 +52,7 @@ Gunicorn+Ngnx+Supervisor
         }
     }
 ### 部署步骤三：启动验证
+    systemctl start supervisord.service
+    systemctl enable supervisord.service
+    systemctl start nginx
+    systemctl enable nginx
