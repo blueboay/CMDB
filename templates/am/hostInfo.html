@@ -132,7 +132,7 @@
                 }else if (arg === "2"){
                     alert("请先创建环境")
                 }else {
-                    window.location.href = "/am/addHost"
+                    window.location.href = "/am/add_host"
                 }
             }
         })
@@ -176,7 +176,7 @@
                         "<td>"+item.fields.Keepass+"</td>" +
                         "<td>"+item.fields.Note+"</td>" +
                         "<td>"+
-                            "<a style='margin-right: 4px' id='moreInfo' href=/am/hostMoreInfo?host="+item.pk+">详细信息</a>" +
+                            "<a style='margin-right: 4px' id='moreInfo' href=/am/host_more_info?host="+item.pk+">详细信息</a>" +
                             "<a style='margin-right: 4px' id='edit' href=/am/edit?host="+item.pk+">编辑</a>" +
                             "<a style='margin-right: 4px' id='del' href=/am/delete?host="+item.pk+">删除</a>" +
                         "</td>" +
