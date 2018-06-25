@@ -32,7 +32,6 @@ Gunicorn+Ngnx+Supervisor
     autorestart= true
     redirect_stderr = true
     stdout_logfile = /var/log/gunicorn.log
-
 创建Nginx配置文件：
 
     server {
@@ -53,7 +52,18 @@ Gunicorn+Ngnx+Supervisor
             proxy_set_header X-Forwarded-For $remote_addr;
         }
     }
-    
+修改settings.py连接数据库配置：
+
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'cmdb',
+            'HOST': '192.168.1.1',
+            'PORT': '3306',
+            'USER': 'username',
+            'PASSWORD': '123456',
+        }
+    }
 ### 部署步骤三：启动验证
     systemctl start supervisord.service
     systemctl enable supervisord.service
