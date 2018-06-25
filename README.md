@@ -34,14 +34,18 @@ Gunicorn+Ngnx+Supervisor
     stdout_logfile = /var/log/gunicorn.log
 
 创建Nginx配置文件：
+
     server {
+    
         listen 5000;
+        
         location / {
             proxy_pass http://127.0.0.1:8000;
             proxy_next_upstream http_500 http_502 http_503 error timeout invalid_header;
             proxy_set_header Host $host;
             proxy_set_header X-Forwarded-For $remote_addr;
         }
+        
         location ~.*\.(html|css|js)$ {
             root /usr/local/Gogenius;
             proxy_next_upstream http_500 http_502 http_503 error timeout invalid_header;
