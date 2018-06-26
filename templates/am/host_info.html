@@ -86,6 +86,7 @@
                      <td>
                          <a id="moreInfo" href="{% url "hostMoreInfo" %}?host={{ i.id }}">详细信息</a>
                          <a id="edit" href="{% url "edit" %}?host={{ i.id }}">编辑</a>
+                         <a id="clone" href="{% url "edit" %}?clone={{ i.id }}">克隆</a>
                          <a id="del" href="{% url "delete" %}?host={{ i.id }}">删除</a>
                      </td>
                  </tr>

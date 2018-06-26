@@ -205,7 +205,6 @@ def host_more_info(request):
 
     # 将获取的密码进行解密，再更改为UTF-8
     decrypt_password = (decrypt_str(get_password(get_data["host"]))).decode("UTF-8")
-
     return render(request, 'am/host_more_info.html', {"data": host_data,
                                                     "groupData": group_data,
                                                     "password": decrypt_password})
@@ -332,32 +331,55 @@ def edit(request):
             elif i[0] == "hostENVGroup":
                 data = models.HostENV.objects.get(id=get_data["hostENVGroup"])
                 return render(request, "am/edit_host_env.html", {"data": data})
-            elif i[0] == "host":
-                data = models.HostInfo.objects.get(id=get_data["host"])
-                server_name = get_host_name(get_data["host"])
-                groups = models.HostAndHGroup.objects.filter(ServerName=server_name).values("GroupName")
-                groups_list = []
-                for group in groups:
-                    groups_list.append(group["GroupName"])
-                zabbix_data = models.HostInfo.objects.filter(id=get_data["host"]).values("Zabbix")
-                salt_data = models.HostInfo.objects.filter(id=get_data["host"]).values("Salt")
-                jumpserver_data = models.HostInfo.objects.filter(id=get_data["host"]).values("Jumpserver")
-                keepass_data = models.HostInfo.objects.filter(id=get_data["host"]).values("Keepass")
-
-                # 将获取的密码进行解密，再更改为UTF-8
-                decrypt_password = (decrypt_str(get_password(get_data["host"]))).decode("UTF-8")
-
-                return render(request, "am/edit_host.html", {"data": data,
-                                                            "envData": get_env_data(),
-                                                            "hostGroupData": get_group_data(),
-                                                            "usegroupdata": groups_list,
-                                                            "ZabbixData": zabbix_data,
-                                                            "SaltData": salt_data,
-                                                             "JumpserverData": jumpserver_data,
-                                                             "KeepassData": keepass_data,
-                                                             "password": decrypt_password})
             else:
-                return HttpResponse("请求错误")
+                print(i[0])
+                if i[0] == "host":
+                    data = models.HostInfo.objects.get(id=get_data["host"])
+                    server_name = get_host_name(get_data["host"])
+                    groups = models.HostAndHGroup.objects.filter(ServerName=server_name).values("GroupName")
+                    groups_list = []
+                    for group in groups:
+                        groups_list.append(group["GroupName"])
+                    zabbix_data = models.HostInfo.objects.filter(id=get_data["host"]).values("Zabbix")
+                    salt_data = models.HostInfo.objects.filter(id=get_data["host"]).values("Salt")
+                    jumpserver_data = models.HostInfo.objects.filter(id=get_data["host"]).values("Jumpserver")
+                    keepass_data = models.HostInfo.objects.filter(id=get_data["host"]).values("Keepass")
+
+                    # 将获取的密码进行解密，再更改为UTF-8
+                    decrypt_password = (decrypt_str(get_password(get_data["host"]))).decode("UTF-8")
+                    return render(request, "am/edit_host.html", {"data": data,
+                                                                 "envData": get_env_data(),
+                                                                 "hostGroupData": get_group_data(),
+                                                                 "usegroupdata": groups_list,
+                                                                 "ZabbixData": zabbix_data,
+                                                                 "SaltData": salt_data,
+                                                                 "JumpserverData": jumpserver_data,
+                                                                 "KeepassData": keepass_data,
+                                                                 "password": decrypt_password})
+                else:
+                    print("123")
+                    data = models.HostInfo.objects.get(id=get_data["clone"])
+                    server_name = get_host_name(get_data["clone"])
+                    groups = models.HostAndHGroup.objects.filter(ServerName=server_name).values("GroupName")
+                    groups_list = []
+                    for group in groups:
+                        groups_list.append(group["GroupName"])
+                    zabbix_data = models.HostInfo.objects.filter(id=get_data["clone"]).values("Zabbix")
+                    salt_data = models.HostInfo.objects.filter(id=get_data["clone"]).values("Salt")
+                    jumpserver_data = models.HostInfo.objects.filter(id=get_data["clone"]).values("Jumpserver")
+                    keepass_data = models.HostInfo.objects.filter(id=get_data["clone"]).values("Keepass")
+
+                    # 将获取的密码进行解密，再更改为UTF-8
+                    decrypt_password = (decrypt_str(get_password(get_data["clone"]))).decode("UTF-8")
+                    return render(request, "am/clone_host.html", {"data": data,
+                                                                 "envData": get_env_data(),
+                                                                 "hostGroupData": get_group_data(),
+                                                                 "usegroupdata": groups_list,
+                                                                 "ZabbixData": zabbix_data,
+                                                                 "SaltData": salt_data,
+                                                                 "JumpserverData": jumpserver_data,
+                                                                 "KeepassData": keepass_data,
+                                                                 "password": decrypt_password})
 
 
 # 册除功能
