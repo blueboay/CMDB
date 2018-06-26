@@ -119,7 +119,6 @@ def check_use(request):
                     return HttpResponse("E")
 
 
-
 # 搜索指定主机
 def search(request):
     post_data = request.POST
@@ -434,12 +433,34 @@ def delete(request):
                     del_host(nid)
                 return HttpResponse("successful")
             elif name == "host_env":
+                env_name_list = []
+                q1 = Q()
+                q1.connector = "OR"
                 for nid in post_data.getlist("host_env"):
-                    del_env(nid)
-                return HttpResponse("successful")
+                    env_name_list.append(models.HostENV.objects.filter(id=nid).values("EnvName")[0]["EnvName"])
+                for n in env_name_list:
+                    q1.children.append(("Environment", n))
+                data = models.HostInfo.objects.filter(q1)
+                if data.__len__() != 0:
+                    return HttpResponse("error")
+                if data.__len__() == 0:
+                    for nid in post_data.getlist("host_env"):
+                        del_env(nid)
+                    return HttpResponse("successful")
             elif name == "host_group":
+                group_name_list = []
+                q1 = Q()
+                q1.connector = "OR"
                 for nid in post_data.getlist("host_group"):
-                    del_group(nid)
-                return HttpResponse("successful")
+                    group_name_list.append(get_group_name(nid))
+                for n in group_name_list:
+                    q1.children.append(("GroupName", n))
+                data = models.HostAndHGroup.objects.filter(q1)
+                if data.__len__() != 0:
+                    return HttpResponse("error")
+                if data.__len__() == 0:
+                    for nid in post_data.getlist("host_group"):
+                        del_group(nid)
+                    return HttpResponse("successful")
             else:
                 pass
