@@ -98,6 +98,28 @@ def check_is_exist(request):
         return HttpResponse("OK")
 
 
+# 检查分组和环境是否被主机使用
+def check_use(request):
+    get_data = request.GET
+    for i in get_data:
+        if i == "host_group":
+            group_name = get_group_name(get_data["host_group"])
+            data = models.HostAndHGroup.objects.filter(GroupName=group_name)
+            if data.__len__() == 0:
+                return HttpResponse("OK")
+            else:
+                return HttpResponse("E")
+        else:
+            if i == "host_env":
+                env_name = models.HostENV.objects.filter(id=get_data["host_env"]).values("EnvName")[0]["EnvName"]
+                data = models.HostInfo.objects.filter(Environment=env_name)
+                if data.__len__() == 0:
+                    return HttpResponse("OK")
+                else:
+                    return HttpResponse("E")
+
+
+
 # 搜索指定主机
 def search(request):
     post_data = request.POST

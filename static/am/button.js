@@ -1,6 +1,6 @@
-$('body').on('mouseover', '#addButton, #moreInfo, #edit, #search, #backButton, #editButton', function(){
+$('body').on('mouseover', '#addButton, #moreInfo, #edit, #search, #backButton, #editButton, #clone', function(){
     $(this).css({"background-color": "#15806B"});
-}).on('mouseout', '#addButton, #moreInfo, #edit, #search, #backButton, #editButton', function(){
+}).on('mouseout', '#addButton, #moreInfo, #edit, #search, #backButton, #editButton, #clone', function(){
     $(this).css({"background-color": "#18a689"});
 }).on('mouseover', '#delButton, #del', function () {
     $(this).css({"background-color": "#BB4352"});

@@ -68,8 +68,8 @@
                 <th style="width: 7%">自动化运维</th>
                 <th style="width: 7%">堡垒机</th>
                 <th style="width: 7%">密码记录</th>
-                <th style="width: 27%">备注信息</th>
-                <th style="width: 16%">操作</th>
+                <th style="width: 26%">备注信息</th>
+                <th style="width: 17%">操作</th>
             </tr>
         </thead>
         <tbody id="tbody">
@@ -179,6 +179,7 @@
                         "<td>"+
                             "<a style='margin-right: 4px' id='moreInfo' href=/am/host_more_info?host="+item.pk+">详细信息</a>" +
                             "<a style='margin-right: 4px' id='edit' href=/am/edit?host="+item.pk+">编辑</a>" +
+                            "<a style='margin-right: 4px' id='clone' href=/am/edit?clone="+item.pk+">克隆</a>" +
                             "<a style='margin-right: 4px' id='del' href=/am/delete?host="+item.pk+">删除</a>" +
                         "</td>" +
                         "</tr>"
