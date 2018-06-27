@@ -65,6 +65,7 @@ Gunicorn+Ngnx+Supervisor
         }
     }
 同步数据库配置：
+
     python3.4 manage.py makemigrations
     python3.4 manage.py migrate
 ### 部署步骤三：启动验证
