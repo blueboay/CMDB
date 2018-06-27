@@ -87,7 +87,7 @@
                          <a id="moreInfo" href="{% url "hostMoreInfo" %}?host={{ i.id }}">详细信息</a>
                          <a id="edit" href="{% url "edit" %}?host={{ i.id }}">编辑</a>
                          <a id="clone" href="{% url "edit" %}?clone={{ i.id }}">克隆</a>
-                         <a id="del" href="{% url "delete" %}?host={{ i.id }}">删除</a>
+                         <a id="del" href="{% url "delete" %}?host={{ i.id }}" onclick="return checked()">删除</a>
                      </td>
                  </tr>
              {% endfor %}
@@ -108,19 +108,21 @@
         if (data.length === 0){
             alert("你没有选择任何主机");
         }else{
-            $.ajax({
-                url: "/am/delete",
-                type: "post",
-                data: {"host": data},
-                traditional: true,
-                success: function (arg) {
-                    if (arg === "successful"){
-                        location.reload();
+            if (confirm("确认删除选中主机？")){
+                $.ajax({
+                    url: "/am/delete",
+                    type: "post",
+                    data: {"host": data},
+                    traditional: true,
+                    success: function (arg) {
+                        if (arg === "successful"){
+                            location.reload();
+                        }
+                    },
+                    fail: function () {
                     }
-                },
-                fail: function () {
-                }
-            });
+                });
+            }
         }
     });
 {#    新增按钮#}
@@ -180,7 +182,7 @@
                             "<a style='margin-right: 4px' id='moreInfo' href=/am/host_more_info?host="+item.pk+">详细信息</a>" +
                             "<a style='margin-right: 4px' id='edit' href=/am/edit?host="+item.pk+">编辑</a>" +
                             "<a style='margin-right: 4px' id='clone' href=/am/edit?clone="+item.pk+">克隆</a>" +
-                            "<a style='margin-right: 4px' id='del' href=/am/delete?host="+item.pk+">删除</a>" +
+                            "<a style='margin-right: 4px' id='del' href=/am/delete?host="+item.pk+" onclick='return checked()'>删除</a>" +
                         "</td>" +
                         "</tr>"
                     });
@@ -204,5 +206,12 @@
             search({"other": data})
         }
     });
+    function checked() {
+        if (confirm("再次确认删除？")){
+            return true
+        }else {
+            return false
+        }
+    }
     </script>
 {% endblock %}

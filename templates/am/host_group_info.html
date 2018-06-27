@@ -53,38 +53,44 @@
         if (data.length === 0){
             alert("你没有选择任何分组");
         }else{
-            $.ajax({
-                url: "/am/delete",
-                type: "post",
-                data: {"host_group": data},
-                traditional: true,
-                success: function (arg) {
-                    if (arg === "successful"){
-                        location.reload();
-                    }else {
-                        alert("选中的分组有主机正在使用，无法删除")
+            if (confirm("确认删除选中分组？")){
+                $.ajax({
+                    url: "/am/delete",
+                    type: "post",
+                    data: {"host_group": data},
+                    traditional: true,
+                    success: function (arg) {
+                        if (arg === "successful"){
+                            location.reload();
+                        }else {
+                            alert("选中的分组有主机正在使用，无法删除")
+                        }
+                    },
+                    fail: function () {
                     }
-                },
-                fail: function () {
-                }
-            });
+                });
+            }
         }
     });
     function checked(ths) {
         var data = ths.name;
         var flag = true;
-        $.ajax({
-            url: "/am/check_use",
-            data: {"host_group": data},
-            traditional: true,
-            async: false,           {% comment %}使用同步请求{% endcomment %}
-            success: function (arg) {
-                if (arg !== "OK"){
-                    alert("该分组有主机正在使用，无法删除！");
-                    flag = false;            {% comment %}不可以在ajax直接返回flase{% endcomment %}
+        if (confirm("再次确认删除？")){
+            $.ajax({
+                url: "/am/check_use",
+                data: {"host_group": data},
+                traditional: true,
+                async: false,           {% comment %}使用同步请求{% endcomment %}
+                success: function (arg) {
+                    if (arg !== "OK"){
+                        alert("该分组有主机正在使用，无法删除！");
+                        flag = false;            {% comment %}不可以在ajax直接返回flase{% endcomment %}
+                    }
                 }
-            }
-        });
+            });
+        }else {
+            flag = false;
+        }
         return flag
     }
     </script>
