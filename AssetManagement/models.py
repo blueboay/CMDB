@@ -12,6 +12,10 @@ class HostInfo(models.Model):
     Environment = models.CharField('使用环境', max_length=32)
     OSType = models.CharField('操作系统类型', max_length=32)
     OSVersion = models.CharField('操作系统版本', max_length=32)
+    ServerType = models.CharField('类型', max_length=32, blank=True)
+    Brand = models.CharField('品牌', max_length=32, blank=True)
+    Owner = models.CharField('所有者', max_length=32, blank=True)
+    Position = models.CharField('位置', max_length=32, blank=True)
     Zabbix = models.CharField('是否加入监控', max_length=32)
     Salt = models.CharField('是否加入自动化运维', max_length=32)
     Jumpserver = models.CharField('是否加入堡垒机', max_length=32)
@@ -39,3 +43,25 @@ class HostGroup(models.Model):
 class HostAndHGroup(models.Model):
     ServerName = models.CharField('服务器名称', max_length=32)
     GroupName = models.CharField("分组名称", max_length=32)
+
+
+class UserInfo(models.Model):
+    UserName = models.CharField('用户名', max_length=32)
+    Password = models.CharField('密码', max_length=128)
+    Alias = models.CharField('别名', max_length=32)
+    # Permission = models.CharField('权限', max_length=32)
+    PhoneNumber = models.IntegerField('手机', null=True, blank=True)
+    Email = models.EmailField('邮箱', max_length=32, null=True, blank=True)
+    Note = models.CharField('备注信息', max_length=1024, null=True, blank=True)
+
+
+class NetworkDevice(models.Model):
+    Name = models.CharField('设备名称', max_length=32)
+    ManageIP = models.CharField('管理IP', max_length=64)
+    Password = models.CharField('密码', max_length=128)
+    Type = models.CharField('类型', max_length=32)
+    # HomeNetwork = models.CharField('所属网络', max_length=32)
+    Brand = models.CharField('品牌', max_length=32)
+    Owner = models.CharField('所有者', max_length=32)
+    Position = models.CharField('位置', max_length=32)
+    Note = models.CharField('备注信息', max_length=1024, null=True, blank=True)
