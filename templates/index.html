@@ -8,7 +8,7 @@
     <style>
 {#        左侧菜单鼠标移动时的颜色#}
         .backgroundColor {
-            background-color: #d4e3e5;
+            background-color: #417690;
         }
     </style>
     {% block head %}
@@ -23,12 +23,14 @@
 
 <div>
     <div id="body-left">
-        <div>
+        <div style="background-color: #d4e3e5">
             <div class="menu-taile">CMDB</div>
             <div>
                 <h3>资产管理</h3>
-                <a href="{% url "hostInfo" %}">
-                    <p>资产列表</p>
+                <a href="javascript:void(0)">
+                    <p id="menu">资产列表</p>
+                    <p id="server" style="padding: 5px 0 5px 30px" class="hide">服务器资产</p>
+                    <p id="network" style="padding: 5px 0 5px 30px" class="hide">网络设备资产</p>
                 </a>
                 <a href="{% url "hostGroupInfo" %}">
                     <p>主机分组</p>
@@ -42,6 +44,15 @@
                 <h3>验证码查询</h3>
                 <a href="{% url "prod" %}">
                     <p>生产环境</p>
+                </a>
+                <a href="javascript:void(0)">
+                    <p>测试环境</p>
+                </a>
+            </div>
+             <div>
+                <h3>用户管理</h3>
+                <a href="javascript:void(0)">
+                    <p>用户列表</p>
                 </a>
             </div>
         </div>
@@ -58,11 +69,26 @@
 <script src="/static/messages_zh.js"></script>
 <script src="/static/am/button.js"></script>
 <script>
-$("#body-left").find("p").mouseover(function () {
-    $(this).addClass("backgroundColor");
-}).mouseout(function () {
-    $(this).removeClass("backgroundColor");
-})
+    $("#body-left").find("p").mouseover(function () {
+        $(this).addClass("backgroundColor");
+    }).mouseout(function () {
+        $(this).removeClass("backgroundColor");
+    });
+    $("#menu").click(function () {
+        $(this).siblings().each(function () {
+            if ($(this).attr("class").indexOf("hide") ===0 ) {
+                $(this).removeClass("hide")
+            }else {
+                $(this).addClass("hide")
+            }
+        })
+    });
+    $("#server").click(function () {
+        window.location.href = "/am/host_info"
+    });
+    $("#network").click(function () {
+        window.location.href = "/am/host_info"
+    })
 </script>
 {% block js %}
 {% endblock %}
