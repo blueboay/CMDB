@@ -48,8 +48,14 @@
     color: #FFFFFF;
     padding: 6px 10px;
     font-size: 12px;
-    height: 27px;
+    height: 16px;
     cursor: pointer;
     border-radius: 3px;
+    float: right;
+}
+#add_del{
+    float: left;
+    width: 30%;
+    height: 28px;
 }
 

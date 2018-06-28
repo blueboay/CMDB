@@ -30,11 +30,3 @@ table {
 .opeartion{
     background-color: white;
 }
-.opeartion-add{
-    float: left;
-    width: 6%;
-}
-.opeartion-del{
-    float: left;
-    width: 15%;
-}

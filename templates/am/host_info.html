@@ -6,12 +6,13 @@
     <style>
     #opeartion-filter{
         float: left;
-        width: 40%;
+        width: 30%;
         height: 28px;
     }
     #opeartion-search{
         float: right;
         height: 28px;
+        width: 40%;
     }
     #opeartion-search input[type="text"]{
         height: 22px;
@@ -22,6 +23,11 @@
         font-size: 14px;
         width: 120px;
         font-family: "FangSong_GB2312";
+        border-radius: 4px;
+    }
+    #other{
+        float: right;
+        margin-right: 2px;
     }
     </style>
 {% endblock %}
@@ -29,10 +35,8 @@
 {% block body-right %}
     <h3>主机信息如下：</h3>
     <div class="opeartion">
-        <div class="opeartion-add">
+        <div id="add_del">
             <a id="addButton">新增主机</a>
-        </div>
-        <div class="opeartion-del">
             <a id="delButton">删除选中主机</a>
         </div>
         <div id="opeartion-filter">
@@ -52,11 +56,10 @@
             </select>
         </div>
         <div id="opeartion-search">
-            <input id="other" type="text" name="Other" placeholder="可填写主机名或IP地址">
             <a id="search">-搜索-</a>
+            <input id="other" type="text" name="Other" placeholder="可填写主机名或IP地址">
         </div>
         <div style="clear:both;"></div>
-
     </div>
     <table class="altrowstable" id="alternatecolor">
         <thead>
