@@ -11,6 +11,7 @@ urlpatterns = [
     path('add_host', views.add_host, name="addHost"),
     path('add_host_group', views.add_host_group, name="addHostGroup"),
     path('add_host_environment', views.add_host_environment, name="addHostENV"),
+    path('add_network_device', views.add_network_device, name="add_network_device"),
 
     path('edit', views.edit, name="edit"),
     path('delete', views.delete, name="delete"),
@@ -22,4 +23,5 @@ urlpatterns = [
     path('change_host_environment', views.change_host_environment, name="changeHostENV"),
     path('change_host_group', views.change_host_group, name="changeHostGroup"),
     path('change_host_info', views.change_host_info, name="changeHostInfo"),
+    path('change_network_device_info', views.change_network_device_info, name="change_network_device_info"),
 ]

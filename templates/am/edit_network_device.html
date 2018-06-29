@@ -1,0 +1,97 @@
+{% extends 'am/add_network_device.html' %}
+
+{% block body-right %}
+<form action="{% url "change_network_device_info" %}?id={{ data.id }}" method="post" id="commentForm">
+    <p>
+        <label for="id_Name" class="name">设备名称：</label>
+        <input type="text" name="Name" id="id_Name" value="{{ data.Name }}">
+        <span id="id_error_info" class="error_info">名称不能以空格开头</span>
+    </p>
+    <p>
+        <label for="id_IP" class="name">管理IP：</label>
+        <input type="text" name="IP" id="id_IP" value="{{ data.ManageIP }}">
+    </p>
+    <p>
+        <label for="id_Password" class="name">密码：</label>
+        <input type="password" name="Password" id="id_Password" value="{{ password }}">
+    </p>
+    <p>
+        <label for="id_Type" class="name">类型：</label>
+        <select name="Type" id="id_Type">
+            <option style='display: none'></option>
+            {% if data.Type == "交换机" %}
+                <option selected="selected">交换机</option>
+            {% else %}
+                <option>交换机</option>
+            {% endif %}
+            {% if data.Type == "路由器" %}
+                <option selected="selected">路由器</option>
+            {% else %}
+                <option>路由器</option>
+            {% endif %}
+            {% if data.Type == "防火墙" %}
+                <option selected="selected">防火墙</option>
+            {% else %}
+                <option>防火墙</option>
+            {% endif %}
+        </select>
+    </p>
+    <p>
+        <label for="id_Brand" class="name">品牌：</label>
+        <select name="Brand" id="id_Brand">
+            <option style='display: none'></option>
+            {% if data.Brand == "H3C" %}
+                <option selected="selected">H3C</option>
+            {% else %}
+                <option>H3C</option>
+            {% endif %}
+            {% if data.Brand == "华为" %}
+                <option selected="selected">华为</option>
+            {% else %}
+                <option>华为</option>
+            {% endif %}
+            {% if data.Brand == "深信服" %}
+                <option selected="selected">深信服</option>
+            {% else %}
+                <option>深信服</option>
+            {% endif %}
+            {% if data.Brand == "爱快" %}
+                <option selected="selected">爱快</option>
+            {% else %}
+                <option>爱快</option>
+            {% endif %}
+        </select>
+    </p>
+    <p>
+        <label for="id_Owner" class="name">所有者：</label>
+        <select name="Owner" id="id_Owner">
+            <option style='display: none'></option>
+            {% if data.Owner == "电信" %}
+                <option selected="selected">电信</option>
+            {% else %}
+                <option>电信</option>
+            {% endif %}
+            {% if data.Owner == "高锦" %}
+                <option selected="selected">高锦</option>
+            {% else %}
+                <option>高锦</option>
+            {% endif %}
+        </select>
+    </p>
+    <p>
+        <label for="id_Position" class="name">位置：</label>
+        <input type="text" name="Position" id="id_Position" value="{{ data.Position }}">
+    </p>
+    <p>
+        <label for="id_Note" class="name">备注：</label>
+        <textarea name="Note" id="id_Note">{{ data.Note }}</textarea>
+    </p>
+    <p>
+        <input type="submit" id="sub" value="保存">
+    </p>
+</form>
+{% endblock %}
+
+{% block js %}
+    <script src="/static/am/addNetwork_editNetwork.js"></script>
+{% endblock %}

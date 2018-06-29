@@ -30,8 +30,14 @@ def decrypt_str(data):
 
 
 # 获取主机超级用户密码并改成bytes类型
-def get_password(data):
+def get_host_password(data):
     password = models.HostInfo.objects.filter(id=data).values()[0]["SuperUserPass"]
+    return password.encode("UTF-8")
+
+
+# 获取网络设备密码
+def get_network_device_password(data):
+    password = models.NetworkDevice.objects.filter(id=data).values()[0]["Password"]
     return password.encode("UTF-8")
 
 
@@ -48,6 +54,11 @@ def get_group_data():
 # 获取主机分组表所有数据
 def get_env_data():
     return models.HostENV.objects.all()
+
+
+# 获取网络设备表所有数据
+def get_network_device_data():
+    return models.NetworkDevice.objects.all()
 
 
 # 获取主机名
@@ -193,6 +204,12 @@ def del_env(nid):
     return "successful"
 
 
+# 删除网络设备
+def del_network_device(nid):
+    models.NetworkDevice.objects.filter(id=nid).delete()
+    return "successful"
+
+
 # 主页
 def index(request):
     return render(request, 'index.html')
@@ -230,7 +247,7 @@ def host_more_info(request):
     group_data = models.HostAndHGroup.objects.filter(ServerName=server_name).values("GroupName")
 
     # 将获取的密码进行解密，再更改为UTF-8
-    decrypt_password = (decrypt_str(get_password(get_data["host"]))).decode("UTF-8")
+    decrypt_password = (decrypt_str(get_host_password(get_data["host"]))).decode("UTF-8")
     return render(request, 'am/host_more_info.html', {"data": host_data,
                                                     "groupData": group_data,
                                                     "password": decrypt_password})
@@ -239,8 +256,8 @@ def host_more_info(request):
 # 添加主机
 def add_host(request):
     if request.method == "POST":
-        data = request.POST
-        group_names = data.getlist("HostGroup")
+        post_data = request.POST
+        group_names = post_data.getlist("HostGroup")
         for group_name in group_names:
             models.HostAndHGroup.objects.create(
                 ServerName=request.POST["ServerName"],
@@ -263,6 +280,23 @@ def add_host(request):
             Note=request.POST["Note"],
         )
     return render(request, "am/add_host.html", {"envData": get_env_data(), "hostGroupData": get_group_data()})
+
+
+# 添加网络设备
+def add_network_device(request):
+    if request.method == "POST":
+        models.NetworkDevice.objects.create(
+            Name=request.POST["Name"],
+            ManageIP=request.POST["IP"],
+            #  存入数据库前先进行加密，再更改为UTF-8
+            Password=(encrypt_str(request.POST["Password"])).decode("UTF-8"),
+            Type=request.POST["Type"],
+            Brand=request.POST["Brand"],
+            Owner=request.POST["Owner"],
+            Position=request.POST["Position"],
+            Note=request.POST["Note"],
+        )
+    return render(request, "am/add_network_device.html")
 
 
 # 编辑主机信息
@@ -293,6 +327,24 @@ def change_host_info(request):
             Salt=request.POST["Salt"],
             Jumpserver=request.POST["Jumpserver"],
             Keepass=request.POST["Keepass"],
+            Note=request.POST["Note"],
+        )
+        return HttpResponse("OK")
+
+
+# 编辑网络设备信息
+def change_network_device_info(request):
+    if request.method == "POST":
+        get_data = request.GET
+        models.NetworkDevice.objects.filter(id=get_data["id"]).update(
+            Name=request.POST["Name"],
+            ManageIP=request.POST["IP"],
+            #  存入数据库前先进行加密，再更改为UTF-8
+            Password=(encrypt_str(request.POST["Password"])).decode("UTF-8"),
+            Type=request.POST["Type"],
+            Brand=request.POST["Brand"],
+            Owner=request.POST["Owner"],
+            Position=request.POST["Position"],
             Note=request.POST["Note"],
         )
         return HttpResponse("OK")
@@ -357,53 +409,60 @@ def edit(request):
             elif i[0] == "hostENVGroup":
                 data = models.HostENV.objects.get(id=get_data["hostENVGroup"])
                 return render(request, "am/edit_host_env.html", {"data": data})
+            elif i[0] == "editHost":
+                data = models.HostInfo.objects.get(id=get_data["editHost"])
+                server_name = get_host_name(get_data["editHost"])
+                groups = models.HostAndHGroup.objects.filter(ServerName=server_name).values("GroupName")
+                groups_list = []
+                for group in groups:
+                    groups_list.append(group["GroupName"])
+                zabbix_data = models.HostInfo.objects.filter(id=get_data["editHost"]).values("Zabbix")
+                salt_data = models.HostInfo.objects.filter(id=get_data["editHost"]).values("Salt")
+                jumpserver_data = models.HostInfo.objects.filter(id=get_data["editHost"]).values("Jumpserver")
+                keepass_data = models.HostInfo.objects.filter(id=get_data["editHost"]).values("Keepass")
+
+                # 将获取的密码进行解密，再更改为UTF-8
+                decrypt_password = (decrypt_str(get_host_password(get_data["editHost"]))).decode("UTF-8")
+                return render(request, "am/edit_host.html", {"data": data,
+                                                             "envData": get_env_data(),
+                                                             "hostGroupData": get_group_data(),
+                                                             "usegroupdata": groups_list,
+                                                             "ZabbixData": zabbix_data,
+                                                             "SaltData": salt_data,
+                                                             "JumpserverData": jumpserver_data,
+                                                             "KeepassData": keepass_data,
+                                                             "password": decrypt_password})
+            elif i[0] == "cloneHost":
+                data = models.HostInfo.objects.get(id=get_data["cloneHost"])
+                server_name = get_host_name(get_data["cloneHost"])
+                groups = models.HostAndHGroup.objects.filter(ServerName=server_name).values("GroupName")
+                groups_list = []
+                for group in groups:
+                    groups_list.append(group["GroupName"])
+                zabbix_data = models.HostInfo.objects.filter(id=get_data["cloneHost"]).values("Zabbix")
+                salt_data = models.HostInfo.objects.filter(id=get_data["cloneHost"]).values("Salt")
+                jumpserver_data = models.HostInfo.objects.filter(id=get_data["cloneHost"]).values("Jumpserver")
+                keepass_data = models.HostInfo.objects.filter(id=get_data["cloneHost"]).values("Keepass")
+
+                # 将获取的密码进行解密，再更改为UTF-8
+                decrypt_password = (decrypt_str(get_host_password(get_data["cloneHost"]))).decode("UTF-8")
+                return render(request, "am/clone_host.html", {"data": data,
+                                                             "envData": get_env_data(),
+                                                             "hostGroupData": get_group_data(),
+                                                             "usegroupdata": groups_list,
+                                                             "ZabbixData": zabbix_data,
+                                                             "SaltData": salt_data,
+                                                             "JumpserverData": jumpserver_data,
+                                                             "KeepassData": keepass_data,
+                                                             "password": decrypt_password})
+            elif i[0] == "edit_network_device":
+                data = models.NetworkDevice.objects.get(id=get_data["edit_network_device"])
+                # 将获取的密码进行解密，再更改为UTF-8
+                decrypt_password = (decrypt_str(get_network_device_password(get_data["edit_network_device"]))).decode("UTF-8")
+                return render(request, "am/edit_network_device.html", {"data": data,
+                                                             "password": decrypt_password})
             else:
-                if i[0] == "host":
-                    data = models.HostInfo.objects.get(id=get_data["host"])
-                    server_name = get_host_name(get_data["host"])
-                    groups = models.HostAndHGroup.objects.filter(ServerName=server_name).values("GroupName")
-                    groups_list = []
-                    for group in groups:
-                        groups_list.append(group["GroupName"])
-                    zabbix_data = models.HostInfo.objects.filter(id=get_data["host"]).values("Zabbix")
-                    salt_data = models.HostInfo.objects.filter(id=get_data["host"]).values("Salt")
-                    jumpserver_data = models.HostInfo.objects.filter(id=get_data["host"]).values("Jumpserver")
-                    keepass_data = models.HostInfo.objects.filter(id=get_data["host"]).values("Keepass")
-
-                    # 将获取的密码进行解密，再更改为UTF-8
-                    decrypt_password = (decrypt_str(get_password(get_data["host"]))).decode("UTF-8")
-                    return render(request, "am/edit_host.html", {"data": data,
-                                                                 "envData": get_env_data(),
-                                                                 "hostGroupData": get_group_data(),
-                                                                 "usegroupdata": groups_list,
-                                                                 "ZabbixData": zabbix_data,
-                                                                 "SaltData": salt_data,
-                                                                 "JumpserverData": jumpserver_data,
-                                                                 "KeepassData": keepass_data,
-                                                                 "password": decrypt_password})
-                else:
-                    data = models.HostInfo.objects.get(id=get_data["clone"])
-                    server_name = get_host_name(get_data["clone"])
-                    groups = models.HostAndHGroup.objects.filter(ServerName=server_name).values("GroupName")
-                    groups_list = []
-                    for group in groups:
-                        groups_list.append(group["GroupName"])
-                    zabbix_data = models.HostInfo.objects.filter(id=get_data["clone"]).values("Zabbix")
-                    salt_data = models.HostInfo.objects.filter(id=get_data["clone"]).values("Salt")
-                    jumpserver_data = models.HostInfo.objects.filter(id=get_data["clone"]).values("Jumpserver")
-                    keepass_data = models.HostInfo.objects.filter(id=get_data["clone"]).values("Keepass")
-
-                    # 将获取的密码进行解密，再更改为UTF-8
-                    decrypt_password = (decrypt_str(get_password(get_data["clone"]))).decode("UTF-8")
-                    return render(request, "am/clone_host.html", {"data": data,
-                                                                 "envData": get_env_data(),
-                                                                 "hostGroupData": get_group_data(),
-                                                                 "usegroupdata": groups_list,
-                                                                 "ZabbixData": zabbix_data,
-                                                                 "SaltData": salt_data,
-                                                                 "JumpserverData": jumpserver_data,
-                                                                 "KeepassData": keepass_data,
-                                                                 "password": decrypt_password})
+                pass
 
 
 # 册除功能
@@ -425,8 +484,11 @@ def delete(request):
                               {'data': get_host_data(),
                                "hostData": get_group_data(),
                                "envData": get_env_data()})
+            elif i[0] == "network_device":
+                del_network_device(get_data['network_device'])
+                return render(request, 'am/network_device_info.html', {'data': get_network_device_data()})
             else:
-                return HttpResponse("请求错误")
+                pass
     if request.method == "POST":
         # 指定删除
         post_data = request.POST
@@ -465,5 +527,9 @@ def delete(request):
                     for nid in post_data.getlist("host_group"):
                         del_group(nid)
                     return HttpResponse("successful")
+            elif name == "network_device":
+                for nid in post_data.getlist("network_device"):
+                    del_network_device(nid)
+                return HttpResponse("successful")
             else:
                 pass

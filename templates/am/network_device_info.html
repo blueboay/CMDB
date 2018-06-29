@@ -6,13 +6,13 @@
     <style>
     #opeartion-filter{
         float: left;
-        width: 30%;
+        width: 40%;
         height: 28px;
     }
     #opeartion-search{
         float: right;
         height: 28px;
-        width: 40%;
+        width: 30%;
     }
     #opeartion-search input[type="text"]{
         height: 22px;
@@ -40,18 +40,31 @@
             <a id="delButton">删除选中网络设备</a>
         </div>
         <div id="opeartion-filter">
-            <label for="filter_env"></label>
-            <select name="ENVName" id="filter_env">
+            <label for="filter_network_device_type"></label>
+            <select name="network_device_type" id="filter_network_device_type">
                 <option>类型</option>
+                <option>交换机</option>
+                <option>路由器</option>
+                <option>防火墙</option>
             </select>
-            <label for="filter_group_name"></label>
-            <select name="GroupName" id="filter_group_name">
+            <label for="filter_network_device_owner"></label>
+            <select name="network_device_owner" id="filter_network_device_owner">
                 <option>所有者</option>
+                <option>电信</option>
+                <option>高锦</option>
+            </select>
+            <label for="filter_network_device_brand"></label>
+            <select name="network_device_brand" id="filter_network_device_brand">
+                <option>品牌</option>
+                <option>H3C</option>
+                <option>华为</option>
+                <option>深信服</option>
+                <option>爱快</option>
             </select>
         </div>
         <div id="opeartion-search">
             <a id="search">-搜索-</a>
-            <input id="other" type="text" name="Other" placeholder="可填写设备名或IP地址">
+            <input id="other" type="text" name="Other" placeholder="可填写设备名 IP地址 位置">
         </div>
         <div style="clear:both;"></div>
     </div>
@@ -81,9 +94,8 @@
                      <td>{{ i.Position }}</td>
                      <td>{{ i.Note }}</td>
                      <td>
-                         <a id="moreInfo" href="{% url "hostMoreInfo" %}?network_device={{ i.id }}">详细信息</a>
-                         <a id="edit" href="{% url "edit" %}?network_device={{ i.id }}">编辑</a>
-                         <a id="clone" href="{% url "edit" %}?network_device_clone={{ i.id }}">克隆</a>
+                         <a id="moreInfo" href="{% url "hostMoreInfo" %}?more_network_device={{ i.id }}">详细信息</a>
+                         <a id="edit" href="{% url "edit" %}?edit_network_device={{ i.id }}">编辑</a>
                          <a id="del" href="{% url "delete" %}?network_device={{ i.id }}" onclick="return checked()">删除</a>
                      </td>
                  </tr>
@@ -109,7 +121,7 @@
                 $.ajax({
                     url: "/am/delete",
                     type: "post",
-                    data: {"host": data},
+                    data: {"network_device": data},
                     traditional: true,
                     success: function (arg) {
                         if (arg === "successful"){
@@ -124,31 +136,29 @@
     });
 {#    新增按钮#}
     $("#addButton").click(function () {
-        $.ajax({
-            url: "/am/check_is_exist",
-            success: function (arg) {
-                if (arg === "1"){
-                    alert("请先创建主机分组")
-                }else if (arg === "2"){
-                    alert("请先创建环境")
-                }else {
-                    window.location.href = "/am/add_host"
-                }
-            }
-        })
+        window.location.href = "/am/add_network_device"
     });
 
     function get_group_env() {
-        var group_name = $("#filter_group_name").val();
-        var env_name = $("#filter_env").val();
-        if (group_name === "分组" && env_name !== "环境"){
-            return {"env_name": env_name, "group_name": ""}
-        }else if (env_name === "环境" && group_name !== "分组"){
-            return {"group_name": group_name, "env_name": ""}
-        }else if (env_name === "环境" &&  group_name === "分组") {
-            return {"group_name": "", "env_name": ""}
-        } else {
-            return {"group_name": group_name, "env_name": env_name}
+        var network_device_type = $("#filter_network_device_type").val();
+        var network_device_owner = $("#filter_network_device_owner").val();
+        var network_device_brand = $("#filter_network_device_brand").val();
+        if (network_device_type === "类型" && network_device_owner === "所有者" && network_device_brand === "品牌"){
+            return {"network_device_type": "", "network_device_owner": "", "network_device_brand": "" }
+        }else if (network_device_type !== "类型" && network_device_owner !== "所有者" && network_device_brand !== "品牌"){
+            return {"network_device_type": network_device_type, "network_device_owner": network_device_owner, "network_device_brand": network_device_brand }
+        }else if (network_device_type === "类型" && network_device_owner !== "所有者" && network_device_brand !== "品牌"){
+            return {"network_device_type": "", "network_device_owner": network_device_owner, "network_device_brand": network_device_brand }
+        }else if (network_device_type !== "类型" && network_device_owner === "所有者" && network_device_brand !== "品牌"){
+            return {"network_device_type": network_device_type, "network_device_owner": "", "network_device_brand": network_device_brand }
+        }else if (network_device_type !== "类型" && network_device_owner !== "所有者" && network_device_brand === "品牌"){
+            return {"network_device_type": network_device_type, "network_device_owner": network_device_owner, "network_device_brand": "" }
+        }else if (network_device_type === "类型" && network_device_owner === "所有者" && network_device_brand !== "品牌"){
+            return {"network_device_type": "", "network_device_owner": "", "network_device_brand": network_device_brand }
+        }else if (network_device_type === "类型" && network_device_owner !== "所有者" && network_device_brand === "品牌"){
+            return {"network_device_type": "", "network_device_owner": network_device_owner, "network_device_brand": "" }
+        }else if (network_device_type !== "类型" && network_device_owner === "所有者" && network_device_brand === "品牌"){
+            return {"network_device_type": network_device_type, "network_device_owner": "", "network_device_brand": "" }
         }
     }
     function search(data) {
@@ -191,9 +201,10 @@
             }
         });
     }
-    $("#filter_group_name, #filter_env, #search").change(function () {
+    $("#filter_network_device_brand, #filter_network_device_owner, #filter_network_device_type").change(function () {
         var data = get_group_env();
-        search(data)
+        console.log(data);
+{#        search(data)#}
     });
     $("#search").click(function () {
         var data = $("#other").val();
