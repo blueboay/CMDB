@@ -46,6 +46,7 @@
                 <option>交换机</option>
                 <option>路由器</option>
                 <option>防火墙</option>
+                <option>AD</option>
             </select>
             <label for="filter_network_device_owner"></label>
             <select name="network_device_owner" id="filter_network_device_owner">
@@ -60,6 +61,7 @@
                 <option>华为</option>
                 <option>深信服</option>
                 <option>爱快</option>
+                <option>大华</option>
             </select>
         </div>
         <div id="opeartion-search">
@@ -203,7 +205,6 @@
     }
     $("#filter_network_device_brand, #filter_network_device_owner, #filter_network_device_type").change(function () {
         var data = get_group_env();
-        console.log(data);
 {#        search(data)#}
     });
     $("#search").click(function () {

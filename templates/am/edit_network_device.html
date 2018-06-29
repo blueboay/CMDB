@@ -34,6 +34,11 @@
             {% else %}
                 <option>防火墙</option>
             {% endif %}
+            {% if data.Type == "AD" %}
+                <option selected="selected">AD</option>
+            {% else %}
+                <option>AD</option>
+            {% endif %}
         </select>
     </p>
     <p>
@@ -59,6 +64,11 @@
                 <option selected="selected">爱快</option>
             {% else %}
                 <option>爱快</option>
+            {% endif %}
+            {% if data.Brand == "大华" %}
+                <option selected="selected">大华</option>
+            {% else %}
+                <option>大华</option>
             {% endif %}
         </select>
     </p>
