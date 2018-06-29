@@ -6,6 +6,7 @@ urlpatterns = [
     path('host_more_info', views.host_more_info, name="hostMoreInfo"),
     path('host_environment_info', views.host_environment_info, name="hostENVInfo"),
     path('host_group_info', views.host_group_info, name="hostGroupInfo"),
+    path('network_device_info', views.network_device_info, name="network_device_info"),
 
     path('add_host', views.add_host, name="addHost"),
     path('add_host_group', views.add_host_group, name="addHostGroup"),

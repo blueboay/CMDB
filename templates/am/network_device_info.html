@@ -1,0 +1,214 @@
+{% extends 'index.html' %}
+
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="/static/table.css">
+    <link rel="stylesheet" type="text/css" href="/static/am/button.css">
+    <style>
+    #opeartion-filter{
+        float: left;
+        width: 30%;
+        height: 28px;
+    }
+    #opeartion-search{
+        float: right;
+        height: 28px;
+        width: 40%;
+    }
+    #opeartion-search input[type="text"]{
+        height: 22px;
+        width: 259px;
+    }
+    select{
+        padding: 4px 12px;
+        font-size: 14px;
+        width: 120px;
+        font-family: "FangSong_GB2312";
+        border-radius: 4px;
+    }
+    #other{
+        float: right;
+        margin-right: 2px;
+    }
+    </style>
+{% endblock %}
+
+{% block body-right %}
+    <h3>网络设备信息如下：</h3>
+    <div class="opeartion">
+        <div id="add_del">
+            <a id="addButton">新增网络设备</a>
+            <a id="delButton">删除选中网络设备</a>
+        </div>
+        <div id="opeartion-filter">
+            <label for="filter_env"></label>
+            <select name="ENVName" id="filter_env">
+                <option>类型</option>
+            </select>
+            <label for="filter_group_name"></label>
+            <select name="GroupName" id="filter_group_name">
+                <option>所有者</option>
+            </select>
+        </div>
+        <div id="opeartion-search">
+            <a id="search">-搜索-</a>
+            <input id="other" type="text" name="Other" placeholder="可填写设备名或IP地址">
+        </div>
+        <div style="clear:both;"></div>
+    </div>
+    <table class="altrowstable" id="alternatecolor">
+        <thead>
+            <tr>
+                <th style="width: 1%"><label for="is_checked"></label><input type="checkbox" id="is_checked"></th>
+                <th style="width: 16%">设备名称</th>
+                <th style="width: 11%">管理IP</th>
+                <th style="width: 7%">类型</th>
+                <th style="width: 7%">品牌</th>
+                <th style="width: 7%">所有者</th>
+                <th style="width: 7%">位置</th>
+                <th style="width: 26%">备注信息</th>
+                <th style="width: 17%">操作</th>
+            </tr>
+        </thead>
+        <tbody id="tbody">
+             {% for i in data %}
+                 <tr>
+                     <td><label for="{{ i.id }}"></label><input type="checkbox" name="{{ i.id }}" id="{{ i.id }}"></td>
+                     <td>{{ i.Name }}</td>
+                     <td>{{ i.ManageIP }}</td>
+                     <td>{{ i.Type }}</td>
+                     <td>{{ i.Brand }}</td>
+                     <td>{{ i.Owner }}</td>
+                     <td>{{ i.Position }}</td>
+                     <td>{{ i.Note }}</td>
+                     <td>
+                         <a id="moreInfo" href="{% url "hostMoreInfo" %}?network_device={{ i.id }}">详细信息</a>
+                         <a id="edit" href="{% url "edit" %}?network_device={{ i.id }}">编辑</a>
+                         <a id="clone" href="{% url "edit" %}?network_device_clone={{ i.id }}">克隆</a>
+                         <a id="del" href="{% url "delete" %}?network_device={{ i.id }}" onclick="return checked()">删除</a>
+                     </td>
+                 </tr>
+             {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+{% block js %}
+    <script src="/static/tables.js"></script>
+    <script>
+{#    批量删除按钮#}
+    $("#delButton").click(function () {
+        var data = [];
+        $("tbody input").each(function () {
+            if ($(this).prop("checked")){
+                data.push($(this).attr("name"));
+            }
+        });
+        if (data.length === 0){
+            alert("你没有选择任何主机");
+        }else{
+            if (confirm("确认删除选中主机？")){
+                $.ajax({
+                    url: "/am/delete",
+                    type: "post",
+                    data: {"host": data},
+                    traditional: true,
+                    success: function (arg) {
+                        if (arg === "successful"){
+                            location.reload();
+                        }
+                    },
+                    fail: function () {
+                    }
+                });
+            }
+        }
+    });
+{#    新增按钮#}
+    $("#addButton").click(function () {
+        $.ajax({
+            url: "/am/check_is_exist",
+            success: function (arg) {
+                if (arg === "1"){
+                    alert("请先创建主机分组")
+                }else if (arg === "2"){
+                    alert("请先创建环境")
+                }else {
+                    window.location.href = "/am/add_host"
+                }
+            }
+        })
+    });
+
+    function get_group_env() {
+        var group_name = $("#filter_group_name").val();
+        var env_name = $("#filter_env").val();
+        if (group_name === "分组" && env_name !== "环境"){
+            return {"env_name": env_name, "group_name": ""}
+        }else if (env_name === "环境" && group_name !== "分组"){
+            return {"group_name": group_name, "env_name": ""}
+        }else if (env_name === "环境" &&  group_name === "分组") {
+            return {"group_name": "", "env_name": ""}
+        } else {
+            return {"group_name": group_name, "env_name": env_name}
+        }
+    }
+    function search(data) {
+        $.ajax({
+            url: "/am/search",
+            type: "post",
+            data: data,
+            dataType: "json",   {% comment %}指定接收到的数据类型{% endcomment %}
+            success: function (arg) {
+                if(arg.length === 0){
+                    alert("没有查询到任何数据");
+                    location.reload();
+                }else {
+                    $("#tbody").html("");   {% comment %}清空原有的表单内容{% endcomment %}
+{#                    将后端数据组合成新的表单内容#}
+                    var content = '';
+                    $.each(arg, function (index, item) {    {% comment %}index和item为固定写法{% endcomment %}
+                    content += "<tr>" +
+                        "<td><input type='checkbox' name=" +item.pk+"></td>" +
+                        "<td>"+item.fields.ServerName+"</td>" +
+                        "<td>"+item.fields.IP+"</td>" +
+                        "<td>"+item.fields.Zabbix+"</td>" +
+                        "<td>"+item.fields.Salt+"</td>" +
+                        "<td>"+item.fields.Jumpserver+"</td>" +
+                        "<td>"+item.fields.Keepass+"</td>" +
+                        "<td>"+item.fields.Note+"</td>" +
+                        "<td>"+
+                            "<a style='margin-right: 4px' id='moreInfo' href=/am/host_more_info?host="+item.pk+">详细信息</a>" +
+                            "<a style='margin-right: 4px' id='edit' href=/am/edit?host="+item.pk+">编辑</a>" +
+                            "<a style='margin-right: 4px' id='clone' href=/am/edit?clone="+item.pk+">克隆</a>" +
+                            "<a style='margin-right: 4px' id='del' href=/am/delete?host="+item.pk+" onclick='return checked()'>删除</a>" +
+                        "</td>" +
+                        "</tr>"
+                    });
+                    $("#tbody").html(content);  {% comment %}将新的表单添加进网页{% endcomment %}
+                    (function () {
+                        altRows("alternatecolor");       {% comment %}执行altRows函数，改变显示颜色{% endcomment %}
+                    })()
+                }
+            }
+        });
+    }
+    $("#filter_group_name, #filter_env, #search").change(function () {
+        var data = get_group_env();
+        search(data)
+    });
+    $("#search").click(function () {
+        var data = $("#other").val();
+        if (data === ""){
+            alert("请输入查询内容后提交")
+        }else {
+            search({"other": data})
+        }
+    });
+    function checked() {
+        if (confirm("再次确认删除？")){
+            return true
+        }else {
+            return false
+        }
+    }
+    </script>
+{% endblock %}

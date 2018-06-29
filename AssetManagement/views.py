@@ -150,7 +150,6 @@ def search(request):
             elif post_data["env_name"] != "" and post_data["group_name"] == "":
                 # 返回Json数据格式给前端
                 data = serializers.serialize("json", models.HostInfo.objects.filter(Environment=post_data["env_name"]))
-                print(data)
                 return HttpResponse(data)
             elif post_data["env_name"] == "" and post_data["group_name"] == "":
                 data = serializers.serialize("json", models.HostInfo.objects.all())
@@ -202,6 +201,12 @@ def index(request):
 # 环境分组
 def host_environment_info(request):
     return render(request, 'am/host_env_info.html', {'data': get_env_data()})
+
+
+# 网络设备列表
+def network_device_info(request):
+    data = models.NetworkDevice.objects.all()
+    return render(request, "am/network_device_info.html", {"data": data})
 
 
 # 主机分组
@@ -353,7 +358,6 @@ def edit(request):
                 data = models.HostENV.objects.get(id=get_data["hostENVGroup"])
                 return render(request, "am/edit_host_env.html", {"data": data})
             else:
-                print(i[0])
                 if i[0] == "host":
                     data = models.HostInfo.objects.get(id=get_data["host"])
                     server_name = get_host_name(get_data["host"])
@@ -378,7 +382,6 @@ def edit(request):
                                                                  "KeepassData": keepass_data,
                                                                  "password": decrypt_password})
                 else:
-                    print("123")
                     data = models.HostInfo.objects.get(id=get_data["clone"])
                     server_name = get_host_name(get_data["clone"])
                     groups = models.HostAndHGroup.objects.filter(ServerName=server_name).values("GroupName")
