@@ -48,12 +48,6 @@
                 <option>防火墙</option>
                 <option>AD</option>
             </select>
-            <label for="filter_network_device_owner"></label>
-            <select name="network_device_owner" id="filter_network_device_owner">
-                <option>所有者</option>
-                <option>电信</option>
-                <option>高锦</option>
-            </select>
             <label for="filter_network_device_brand"></label>
             <select name="network_device_brand" id="filter_network_device_brand">
                 <option>品牌</option>
@@ -62,6 +56,12 @@
                 <option>深信服</option>
                 <option>爱快</option>
                 <option>大华</option>
+            </select>
+            <label for="filter_network_device_owner"></label>
+            <select name="network_device_owner" id="filter_network_device_owner">
+                <option>所有者</option>
+                <option>电信</option>
+                <option>高锦</option>
             </select>
         </div>
         <div id="opeartion-search">
@@ -165,11 +165,12 @@
     }
     function search(data) {
         $.ajax({
-            url: "/am/search",
+            url: "/am/search_network_device",
             type: "post",
             data: data,
             dataType: "json",   {% comment %}指定接收到的数据类型{% endcomment %}
             success: function (arg) {
+                console.log(arg);
                 if(arg.length === 0){
                     alert("没有查询到任何数据");
                     location.reload();
@@ -180,18 +181,17 @@
                     $.each(arg, function (index, item) {    {% comment %}index和item为固定写法{% endcomment %}
                     content += "<tr>" +
                         "<td><input type='checkbox' name=" +item.pk+"></td>" +
-                        "<td>"+item.fields.ServerName+"</td>" +
-                        "<td>"+item.fields.IP+"</td>" +
-                        "<td>"+item.fields.Zabbix+"</td>" +
-                        "<td>"+item.fields.Salt+"</td>" +
-                        "<td>"+item.fields.Jumpserver+"</td>" +
-                        "<td>"+item.fields.Keepass+"</td>" +
+                        "<td>"+item.fields.Name+"</td>" +
+                        "<td>"+item.fields.ManageIP+"</td>" +
+                        "<td>"+item.fields.Type+"</td>" +
+                        "<td>"+item.fields.Brand+"</td>" +
+                        "<td>"+item.fields.Owner+"</td>" +
+                        "<td>"+item.fields.Position+"</td>" +
                         "<td>"+item.fields.Note+"</td>" +
                         "<td>"+
-                            "<a style='margin-right: 4px' id='moreInfo' href=/am/host_more_info?host="+item.pk+">详细信息</a>" +
-                            "<a style='margin-right: 4px' id='edit' href=/am/edit?host="+item.pk+">编辑</a>" +
-                            "<a style='margin-right: 4px' id='clone' href=/am/edit?clone="+item.pk+">克隆</a>" +
-                            "<a style='margin-right: 4px' id='del' href=/am/delete?host="+item.pk+" onclick='return checked()'>删除</a>" +
+                            "<a style='margin-right: 4px' id='moreInfo' href=/am/host_more_info?more_network_device="+item.pk+">详细信息</a>" +
+                            "<a style='margin-right: 4px' id='edit' href=/am/edit?edit_network_device="+item.pk+">编辑</a>" +
+                            "<a style='margin-right: 4px' id='del' href=/am/delete?edit_network_device="+item.pk+" onclick='return checked()'>删除</a>" +
                         "</td>" +
                         "</tr>"
                     });
@@ -205,7 +205,7 @@
     }
     $("#filter_network_device_brand, #filter_network_device_owner, #filter_network_device_type").change(function () {
         var data = get_group_env();
-{#        search(data)#}
+        search(data)
     });
     $("#search").click(function () {
         var data = $("#other").val();

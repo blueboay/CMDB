@@ -130,8 +130,8 @@ def check_use(request):
                     return HttpResponse("E")
 
 
-# 搜索指定主机
-def search(request):
+# 搜索指定服务器
+def search_server(request):
     post_data = request.POST
     for i in post_data:
         if i == "other":
@@ -180,6 +180,61 @@ def search(request):
                 search_obj.add(q2, "AND")
                 data = serializers.serialize("json", models.HostInfo.objects.filter(search_obj))
                 return HttpResponse(data)
+
+
+# 搜索指定网络设备
+def search_network_device(request):
+    post_data = request.POST
+    for i in post_data:
+        if i == "other":
+            search_obj = Q()
+            search_obj.add(Q(Name__icontains=post_data["other"]) | Q(ManageIP__contains=post_data["other"]) | Q(Position__contains=post_data["other"]), Q.OR)
+            data = serializers.serialize("json", models.NetworkDevice.objects.filter(search_obj))
+            return HttpResponse(data)
+    else:
+        if post_data["network_device_type"] == "" and post_data["network_device_owner"] == "" and post_data["network_device_brand"] == "":
+            data = serializers.serialize("json", models.NetworkDevice.objects.all())
+            return HttpResponse(data)
+        elif post_data["network_device_type"] != "" and post_data["network_device_owner"] != "" and post_data["network_device_brand"] != "":
+            q1 = Q()
+            q1.connector = "AND"
+            q1.children.append(("Type", post_data["network_device_type"]))
+            q1.children.append(("Brand", post_data["network_device_brand"]))
+            q1.children.append(("Owner", post_data["network_device_owner"]))
+            data = serializers.serialize("json", models.NetworkDevice.objects.filter(q1))
+            return HttpResponse(data)
+        elif post_data["network_device_type"] == "" and post_data["network_device_owner"] == "" and post_data["network_device_brand"] != "":
+            data = serializers.serialize("json", models.NetworkDevice.objects.filter(Brand=post_data["network_device_brand"]))
+            return HttpResponse(data)
+        elif post_data["network_device_type"] == "" and post_data["network_device_owner"] != "" and post_data["network_device_brand"] == "":
+            data = serializers.serialize("json", models.NetworkDevice.objects.filter(Owner=post_data["network_device_owner"]))
+            return HttpResponse(data)
+        elif post_data["network_device_type"] != "" and post_data["network_device_owner"] == "" and post_data["network_device_brand"] == "":
+            data = serializers.serialize("json", models.NetworkDevice.objects.filter(Type=post_data["network_device_type"]))
+            return HttpResponse(data)
+        elif post_data["network_device_type"] != "" and post_data["network_device_owner"] != "" and post_data["network_device_brand"] == "":
+            q1 = Q()
+            q1.connector = "AND"
+            q1.children.append(("Type", post_data["network_device_type"]))
+            q1.children.append(("Owner", post_data["network_device_owner"]))
+            data = serializers.serialize("json", models.NetworkDevice.objects.filter(q1))
+            return HttpResponse(data)
+        elif post_data["network_device_type"] != "" and post_data["network_device_owner"] == "" and post_data["network_device_brand"] != "":
+            q1 = Q()
+            q1.connector = "AND"
+            q1.children.append(("Type", post_data["network_device_type"]))
+            q1.children.append(("Brand", post_data["network_device_brand"]))
+            data = serializers.serialize("json", models.NetworkDevice.objects.filter(q1))
+            return HttpResponse(data)
+        elif post_data["network_device_type"] == "" and post_data["network_device_owner"] != "" and post_data["network_device_brand"] != "":
+            q1 = Q()
+            q1.connector = "AND"
+            q1.children.append(("Brand", post_data["network_device_brand"]))
+            q1.children.append(("Owner", post_data["network_device_owner"]))
+            data = serializers.serialize("json", models.NetworkDevice.objects.filter(q1))
+            return HttpResponse(data)
+        else:
+            pass
 
 
 # 删除主机

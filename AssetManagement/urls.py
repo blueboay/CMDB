@@ -15,7 +15,8 @@ urlpatterns = [
 
     path('edit', views.edit, name="edit"),
     path('delete', views.delete, name="delete"),
-    path('search', views.search, name="search"),
+    path('search_server', views.search_server, name="search_server"),
+    path('search_network_device', views.search_network_device, name="search_network_device"),
     path('check_repeat', views.check_repeat, name="check_repeat"),
     path('check_use', views.check_use, name="check_use"),
     path('check_is_exist', views.check_is_exist, name="check_is_exist"),

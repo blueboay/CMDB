@@ -31,6 +31,7 @@
                     <p id="menu">资产列表</p>
                     <p id="server" style="padding: 5px 0 5px 30px">服务器资产</p>
                     <p id="network" style="padding: 5px 0 5px 30px">网络设备资产</p>
+                    <p style="padding: 5px 0 5px 30px">硬件服务器资产</p>
                 </a>
                 <a href="{% url "hostGroupInfo" %}">
                     <p>主机分组</p>
@@ -74,30 +75,12 @@
     }).mouseout(function () {
         $(this).removeClass("backgroundColor");
     });
-{#    $("#menu").click(function () {#}
-{#        $(this).siblings().each(function () {#}
-{#            if ($(this).attr("class").indexOf("hide") ===0 ) {#}
-{#                $(this).removeClass("hide")#}
-{#            }else {#}
-{#                $(this).addClass("hide")#}
-{#            }#}
-{#        })#}
-{#    });#}
     $("#server").click(function () {
         window.location.href = "/am/host_info"
     });
     $("#network").click(function () {
         window.location.href = "/am/network_device_info"
     });
-
-{#    $(function () {#}
-{#       var url = window.location.pathname;#}
-{#       console.log(url);#}
-{#       console.log(url);#}
-{#        if (url === "/am/host_info" || url === "/am/network_device_info"){#}
-{#            $("#server, #network").removeClass("hide")#}
-{#        }#}
-{#    })#}
 </script>
 {% block js %}
 {% endblock %}
