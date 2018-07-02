@@ -31,7 +31,7 @@
                     <p id="menu">资产列表</p>
                     <p id="server" style="padding: 5px 0 5px 30px">服务器资产</p>
                     <p id="network" style="padding: 5px 0 5px 30px">网络设备资产</p>
-                    <p style="padding: 5px 0 5px 30px">硬件服务器资产</p>
+                    <p id="physics_server" style="padding: 5px 0 5px 30px">硬件服务器资产</p>
                 </a>
                 <a href="{% url "hostGroupInfo" %}">
                     <p>主机分组</p>
@@ -80,6 +80,9 @@
     });
     $("#network").click(function () {
         window.location.href = "/am/network_device_info"
+    });
+    $("#physics_server").click(function () {
+        window.location.href = "/am/physics_server_info"
     });
 </script>
 {% block js %}

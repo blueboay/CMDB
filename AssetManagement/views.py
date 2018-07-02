@@ -281,6 +281,12 @@ def network_device_info(request):
     return render(request, "am/network_device_info.html", {"data": data})
 
 
+# 物理服务器信息
+def physics_server_info(request):
+    data = models.PhysicalServer.objects.all()
+    return render(request, "am/physics_server_info.html", {"data": data})
+
+
 # 主机分组
 def host_group_info(request):
     return render(request, 'am/host_group_info.html', {'data': get_group_data()})
@@ -343,6 +349,29 @@ def add_network_device(request):
             Note=request.POST["Note"],
         )
     return render(request, "am/add_network_device.html")
+
+
+# 添加物理服务器
+def add_physics_server(request):
+    if request.method == "POST":
+        models.PhysicalServer.objects.create(
+            Model=request.POST["Model"],
+            Type=request.POST["Type"],
+            SN=request.POST["SN"],
+            Brand=request.POST["Brand"],
+            Position=request.POST["Position"],
+            Owner=request.POST["Owner"],
+            ManageURL=request.POST["Owner"],
+            ManageUsername=request.POST["ManageUsername"],
+            #  存入数据库前先进行加密，再更改为UTF-8
+            ManagePassword=(encrypt_str(request.POST["ManagePassword"])).decode("UTF-8"),
+            ExpireData=request.POST["ExpireData"],
+            CPU=request.POST["CPU"],
+            Memory=request.POST["Memory"],
+            TotalSpace=request.POST["TotalSpace"],
+            Note=request.POST["Note"],
+        )
+    return render(request, "am/add_physics_server.html")
 
 
 # 编辑主机信息

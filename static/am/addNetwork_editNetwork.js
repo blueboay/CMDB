@@ -25,7 +25,7 @@ $().ready(function() {
         },
         messages: {
             Name: {
-                required: "请输入设备名称"
+                required: "请输入设备型号"
             },
             IP: {
                 required: "请输入设备管理IP"

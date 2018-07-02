@@ -6,11 +6,13 @@ urlpatterns = [
     path('host_environment_info', views.host_environment_info, name="hostENVInfo"),
     path('host_group_info', views.host_group_info, name="hostGroupInfo"),
     path('network_device_info', views.network_device_info, name="network_device_info"),
+    path('physics_server_info', views.physics_server_info, name="physics_server_info"),
 
     path('add_host', views.add_host, name="addHost"),
     path('add_host_group', views.add_host_group, name="addHostGroup"),
     path('add_host_environment', views.add_host_environment, name="addHostENV"),
     path('add_network_device', views.add_network_device, name="add_network_device"),
+    path('add_physics_server', views.add_physics_server, name="add_physics_server"),
 
     path('edit', views.edit, name="edit"),
     path('delete', views.delete, name="delete"),

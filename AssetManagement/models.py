@@ -56,7 +56,7 @@ class UserInfo(models.Model):
 
 
 class NetworkDevice(models.Model):
-    Name = models.CharField('设备名称', max_length=32)
+    Name = models.CharField('型号名称', max_length=32)
     ManageIP = models.CharField('管理IP', max_length=64)
     Password = models.CharField('密码', max_length=128)
     Type = models.CharField('类型', max_length=32)
@@ -70,13 +70,15 @@ class NetworkDevice(models.Model):
 class PhysicalServer(models.Model):
     Model = models.CharField('型号', max_length=32)
     Type = models.CharField('类型', max_length=32)
-    SN = models.CharField('序列号', max_length=32)
+    SN = models.CharField('序列号', max_length=32, null=True, blank=True)
     Brand = models.CharField('品牌', max_length=32)
     Position = models.CharField('位置', max_length=32)
-    ManageIP = models.CharField('管理IP', max_length=32, null=True, blank=True)
+    Owner = models.CharField('所有者', max_length=32, null=True, blank=True)
+    ManageURL = models.CharField('登录URL', max_length=32, null=True, blank=True)
     ManageUsername = models.CharField('管理用户名', max_length=32, null=True, blank=True)
     ManagePassword = models.CharField('管理密码', max_length=32, null=True, blank=True)
     ExpireData = models.DateField('维保过期时间', max_length=32)
-    CPU = models.CharField('型号', max_length=32)
-    Memory = models.CharField('型号', max_length=32)
+    CPU = models.CharField('CPU', max_length=32)
+    Memory = models.CharField('内存', max_length=32)
     TotalSpace = models.CharField('总空间', max_length=32)
+    Note = models.CharField('备注信息', max_length=1024, null=True, blank=True)

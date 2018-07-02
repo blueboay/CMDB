@@ -33,32 +33,33 @@
 {% endblock %}
 
 {% block body-right %}
-    <h3>网络设备信息如下：</h3>
+    <h3>服务器信息如下：</h3>
     <div class="opeartion">
         <div id="add_del">
-            <a id="addButton">新增网络设备</a>
-            <a id="delButton">删除选中网络设备</a>
+            <a id="addButton">新增服务器</a>
+            <a id="delButton">删除选中服务器</a>
         </div>
         <div id="opeartion-filter">
-            <label for="filter_network_device_type"></label>
-            <select name="network_device_type" id="filter_network_device_type">
+            <label for="filter_physics_server_type"></label>
+            <select name="physics_server_type" id="filter_physics_server_type">
                 <option>类型</option>
-                <option>交换机</option>
-                <option>路由器</option>
-                <option>防火墙</option>
-                <option>AD</option>
+                <option>服务器</option>
+                <option>存储</option>
+                <option>人证比对</option>
+                <option>刀片</option>
+                <option>其它</option>
             </select>
-            <label for="filter_network_device_brand"></label>
-            <select name="network_device_brand" id="filter_network_device_brand">
+            <label for="filter_physics_server_brand"></label>
+            <select name="physics_server_brand" id="filter_physics_server_brand">
                 <option>品牌</option>
-                <option>H3C</option>
-                <option>华为</option>
-                <option>深信服</option>
-                <option>爱快</option>
+                <option>DELL</option>
+                <option>HP</option>
+                <option>浪潮</option>
                 <option>大华</option>
+                <option>海康</option>
             </select>
-            <label for="filter_network_device_owner"></label>
-            <select name="network_device_owner" id="filter_network_device_owner">
+            <label for="filter_physics_server_owner"></label>
+            <select name="physics_server_owner" id="filter_physics_server_owner">
                 <option>所有者</option>
                 <option>电信</option>
                 <option>高锦</option>
@@ -74,31 +75,38 @@
         <thead>
             <tr>
                 <th style="width: 1%"><label for="is_checked"></label><input type="checkbox" id="is_checked"></th>
-                <th style="width: 16%">设备型号</th>
-                <th style="width: 11%">管理IP</th>
-                <th style="width: 7%">类型</th>
-                <th style="width: 7%">品牌</th>
-                <th style="width: 7%">所有者</th>
-                <th style="width: 7%">位置</th>
-                <th style="width: 26%">备注信息</th>
-                <th style="width: 17%">操作</th>
+                <th style="width: 10%">型号</th>
+                <th style="width: 5%">类型</th>
+                <th style="width: 5%">品牌</th>
+                <th style="width: 5%">所有者</th>
+                <th style="width: 5%">位置</th>
+                <th style="width: 8%">保修状态</th>
+                <th style="width: 5%">CPU</th>
+                <th style="width: 5%">内存</th>
+                <th style="width: 5%">总空间</th>
+                <th style="width: 15%">备注信息</th>
+                <th style="width: 18%">操作</th>
             </tr>
         </thead>
         <tbody id="tbody">
              {% for i in data %}
                  <tr>
                      <td><label for="{{ i.id }}"></label><input type="checkbox" name="{{ i.id }}" id="{{ i.id }}"></td>
-                     <td>{{ i.Name }}</td>
-                     <td>{{ i.ManageIP }}</td>
+                     <td>{{ i.Model }}</td>
                      <td>{{ i.Type }}</td>
                      <td>{{ i.Brand }}</td>
                      <td>{{ i.Owner }}</td>
                      <td>{{ i.Position }}</td>
+                     <td>{{ i.ExpireData }}</td>
+                     <td>{{ i.CPU }}</td>
+                     <td>{{ i.Memory }}</td>
+                     <td>{{ i.TotalSpace }}</td>
                      <td>{{ i.Note }}</td>
                      <td>
-                         <a id="moreInfo" href="{% url "get_password" %}?network_device={{ i.id }}">获取密码</a>
-                         <a id="edit" href="{% url "edit" %}?network_device={{ i.id }}">编辑</a>
-                         <a id="del" href="{% url "delete" %}?network_device={{ i.id }}" onclick="return checked()">删除</a>
+                         <a id="moreInfo" href="{% url "get_password" %}?physics_server_more_info={{ i.id }}">详细信息</a>
+                         <a id="moreInfo" href="{% url "get_password" %}?physics_server={{ i.id }}">获取登录信息</a>
+                         <a id="edit" href="{% url "edit" %}?physics_server={{ i.id }}">编辑</a>
+                         <a id="del" href="{% url "delete" %}?physics_server={{ i.id }}" onclick="return checked()">删除</a>
                      </td>
                  </tr>
              {% endfor %}
@@ -123,7 +131,7 @@
                 $.ajax({
                     url: "/am/delete",
                     type: "post",
-                    data: {"network_device": data},
+                    data: {"physics_server": data},
                     traditional: true,
                     success: function (arg) {
                         if (arg === "successful"){
@@ -138,34 +146,34 @@
     });
 {#    新增按钮#}
     $("#addButton").click(function () {
-        window.location.href = "/am/add_network_device"
+        window.location.href = "/am/add_physics_server"
     });
 
     function get_group_env() {
-        var network_device_type = $("#filter_network_device_type").val();
-        var network_device_owner = $("#filter_network_device_owner").val();
-        var network_device_brand = $("#filter_network_device_brand").val();
-        if (network_device_type === "类型" && network_device_owner === "所有者" && network_device_brand === "品牌"){
-            return {"network_device_type": "", "network_device_owner": "", "network_device_brand": "" }
-        }else if (network_device_type !== "类型" && network_device_owner !== "所有者" && network_device_brand !== "品牌"){
-            return {"network_device_type": network_device_type, "network_device_owner": network_device_owner, "network_device_brand": network_device_brand }
-        }else if (network_device_type === "类型" && network_device_owner !== "所有者" && network_device_brand !== "品牌"){
-            return {"network_device_type": "", "network_device_owner": network_device_owner, "network_device_brand": network_device_brand }
-        }else if (network_device_type !== "类型" && network_device_owner === "所有者" && network_device_brand !== "品牌"){
-            return {"network_device_type": network_device_type, "network_device_owner": "", "network_device_brand": network_device_brand }
-        }else if (network_device_type !== "类型" && network_device_owner !== "所有者" && network_device_brand === "品牌"){
-            return {"network_device_type": network_device_type, "network_device_owner": network_device_owner, "network_device_brand": "" }
-        }else if (network_device_type === "类型" && network_device_owner === "所有者" && network_device_brand !== "品牌"){
-            return {"network_device_type": "", "network_device_owner": "", "network_device_brand": network_device_brand }
-        }else if (network_device_type === "类型" && network_device_owner !== "所有者" && network_device_brand === "品牌"){
-            return {"network_device_type": "", "network_device_owner": network_device_owner, "network_device_brand": "" }
-        }else if (network_device_type !== "类型" && network_device_owner === "所有者" && network_device_brand === "品牌"){
-            return {"network_device_type": network_device_type, "network_device_owner": "", "network_device_brand": "" }
+        var physics_server_type = $("#filter_physics_server_type").val();
+        var physics_server_owner = $("#filter_physics_server_owner").val();
+        var physics_server_brand = $("#filter_physics_server_brand").val();
+        if (physics_server_type === "类型" && physics_server_owner === "所有者" && physics_server_brand === "品牌"){
+            return {"physics_server_type": "", "physics_server_owner": "", "physics_server_brand": "" }
+        }else if (physics_server_type !== "类型" && physics_server_owner !== "所有者" && physics_server_brand !== "品牌"){
+            return {"physics_server_type": physics_server_type, "physics_server_owner": physics_server_owner, "physics_server_brand": physics_server_brand }
+        }else if (physics_server_type === "类型" && physics_server_owner !== "所有者" && physics_server_brand !== "品牌"){
+            return {"physics_server_type": "", "physics_server_owner": physics_server_owner, "physics_server_brand": physics_server_brand }
+        }else if (physics_server_type !== "类型" && physics_server_owner === "所有者" && physics_server_brand !== "品牌"){
+            return {"physics_server_type": physics_server_type, "physics_server_owner": "", "physics_server_brand": physics_server_brand }
+        }else if (physics_server_type !== "类型" && physics_server_owner !== "所有者" && physics_server_brand === "品牌"){
+            return {"physics_server_type": physics_server_type, "physics_server_owner": physics_server_owner, "physics_server_brand": "" }
+        }else if (physics_server_type === "类型" && physics_server_owner === "所有者" && physics_server_brand !== "品牌"){
+            return {"physics_server_type": "", "physics_server_owner": "", "physics_server_brand": physics_server_brand }
+        }else if (physics_server_type === "类型" && physics_server_owner !== "所有者" && physics_server_brand === "品牌"){
+            return {"physics_server_type": "", "physics_server_owner": physics_server_owner, "physics_server_brand": "" }
+        }else if (physics_server_type !== "类型" && physics_server_owner === "所有者" && physics_server_brand === "品牌"){
+            return {"physics_server_type": physics_server_type, "physics_server_owner": "", "physics_server_brand": "" }
         }
     }
     function search(data) {
         $.ajax({
-            url: "/am/search_network_device",
+            url: "/am/search_physics_server",
             type: "post",
             data: data,
             dataType: "json",   {% comment %}指定接收到的数据类型{% endcomment %}
@@ -189,9 +197,10 @@
                         "<td>"+item.fields.Position+"</td>" +
                         "<td>"+item.fields.Note+"</td>" +
                         "<td>"+
-                            "<a style='margin-right: 4px' id='moreInfo' href=/am/get_password?more_network_device="+item.pk+">获取密码</a>" +
-                            "<a style='margin-right: 4px' id='edit' href=/am/edit?network_device="+item.pk+">编辑</a>" +
-                            "<a style='margin-right: 4px' id='del' href=/am/delete?edit_network_device="+item.pk+" onclick='return checked()'>删除</a>" +
+                            "<a style='margin-right: 4px' id='moreInfo' href=/am/get_password?physics_server="+item.pk+">详细信息</a>" +
+                            "<a style='margin-right: 4px' id='moreInfo' href=/am/get_password?physics_server="+item.pk+">获取登录信息</a>" +
+                            "<a style='margin-right: 4px' id='edit' href=/am/edit?physics_server="+item.pk+">编辑</a>" +
+                            "<a style='margin-right: 4px' id='del' href=/am/delete?physics_server="+item.pk+" onclick='return checked()'>删除</a>" +
                         "</td>" +
                         "</tr>"
                     });
@@ -203,7 +212,7 @@
             }
         });
     }
-    $("#filter_network_device_brand, #filter_network_device_owner, #filter_network_device_type").change(function () {
+    $("#filter_physics_server_brand, #filter_physics_server_owner, #filter_physics_server_type").change(function () {
         var data = get_group_env();
         search(data)
     });
