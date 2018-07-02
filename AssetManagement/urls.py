@@ -3,7 +3,6 @@ from AssetManagement import views
 
 urlpatterns = [
     path('host_info', views.host_info, name="hostInfo"),
-    path('host_more_info', views.host_more_info, name="hostMoreInfo"),
     path('host_environment_info', views.host_environment_info, name="hostENVInfo"),
     path('host_group_info', views.host_group_info, name="hostGroupInfo"),
     path('network_device_info', views.network_device_info, name="network_device_info"),
@@ -20,6 +19,7 @@ urlpatterns = [
     path('check_repeat', views.check_repeat, name="check_repeat"),
     path('check_use', views.check_use, name="check_use"),
     path('check_is_exist', views.check_is_exist, name="check_is_exist"),
+    path('get_password', views.get_password, name="get_password"),
 
     path('change_host_environment', views.change_host_environment, name="changeHostENV"),
     path('change_host_group', views.change_host_group, name="changeHostGroup"),

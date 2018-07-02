@@ -294,18 +294,9 @@ def host_info(request):
     return all_data
 
 
-# 资产列表详细信息
-def host_more_info(request):
-    get_data = request.GET
-    host_data = models.HostInfo.objects.filter(id=get_data["host"]).values()
-    server_name = get_host_name(get_data["host"])
-    group_data = models.HostAndHGroup.objects.filter(ServerName=server_name).values("GroupName")
-
-    # 将获取的密码进行解密，再更改为UTF-8
-    decrypt_password = (decrypt_str(get_host_password(get_data["host"]))).decode("UTF-8")
-    return render(request, 'am/host_more_info.html', {"data": host_data,
-                                                    "groupData": group_data,
-                                                    "password": decrypt_password})
+# 获取密码
+def get_password(request):
+    return HttpResponse("此功能还未开发")
 
 
 # 添加主机
@@ -510,7 +501,7 @@ def edit(request):
                                                              "JumpserverData": jumpserver_data,
                                                              "KeepassData": keepass_data,
                                                              "password": decrypt_password})
-            elif i[0] == "edit_network_device":
+            elif i[0] == "network_device":
                 data = models.NetworkDevice.objects.get(id=get_data["edit_network_device"])
                 # 将获取的密码进行解密，再更改为UTF-8
                 decrypt_password = (decrypt_str(get_network_device_password(get_data["edit_network_device"]))).decode("UTF-8")

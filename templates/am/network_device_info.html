@@ -96,8 +96,8 @@
                      <td>{{ i.Position }}</td>
                      <td>{{ i.Note }}</td>
                      <td>
-                         <a id="moreInfo" href="{% url "hostMoreInfo" %}?more_network_device={{ i.id }}">详细信息</a>
-                         <a id="edit" href="{% url "edit" %}?edit_network_device={{ i.id }}">编辑</a>
+                         <a id="moreInfo" href="{% url "get_password" %}?network_device={{ i.id }}">获取密码</a>
+                         <a id="edit" href="{% url "edit" %}?network_device={{ i.id }}">编辑</a>
                          <a id="del" href="{% url "delete" %}?network_device={{ i.id }}" onclick="return checked()">删除</a>
                      </td>
                  </tr>
@@ -189,8 +189,8 @@
                         "<td>"+item.fields.Position+"</td>" +
                         "<td>"+item.fields.Note+"</td>" +
                         "<td>"+
-                            "<a style='margin-right: 4px' id='moreInfo' href=/am/host_more_info?more_network_device="+item.pk+">详细信息</a>" +
-                            "<a style='margin-right: 4px' id='edit' href=/am/edit?edit_network_device="+item.pk+">编辑</a>" +
+                            "<a style='margin-right: 4px' id='moreInfo' href=/am/get_password?more_network_device="+item.pk+">详细信息</a>" +
+                            "<a style='margin-right: 4px' id='edit' href=/am/edit?network_device="+item.pk+">编辑</a>" +
                             "<a style='margin-right: 4px' id='del' href=/am/delete?edit_network_device="+item.pk+" onclick='return checked()'>删除</a>" +
                         "</td>" +
                         "</tr>"

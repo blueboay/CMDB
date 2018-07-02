@@ -87,7 +87,7 @@
                      <td>{{ i.Keepass }}</td>
                      <td>{{ i.Note }}</td>
                      <td>
-                         <a id="moreInfo" href="{% url "hostMoreInfo" %}?host={{ i.id }}">详细信息</a>
+                         <a id="moreInfo" href="{% url "get_password" %}?host={{ i.id }}">获取密码</a>
                          <a id="edit" href="{% url "edit" %}?editHost={{ i.id }}">编辑</a>
                          <a id="clone" href="{% url "edit" %}?cloneHost={{ i.id }}">克隆</a>
                          <a id="del" href="{% url "delete" %}?host={{ i.id }}" onclick="return checked()">删除</a>
@@ -182,7 +182,7 @@
                         "<td>"+item.fields.Keepass+"</td>" +
                         "<td>"+item.fields.Note+"</td>" +
                         "<td>"+
-                            "<a style='margin-right: 4px' id='moreInfo' href=/am/host_more_info?host="+item.pk+">详细信息</a>" +
+                            "<a style='margin-right: 4px' id='moreInfo' href=/am/get_password?host="+item.pk+">获取密码</a>" +
                             "<a style='margin-right: 4px' id='edit' href=/am/edit?host="+item.pk+">编辑</a>" +
                             "<a style='margin-right: 4px' id='clone' href=/am/edit?clone="+item.pk+">克隆</a>" +
                             "<a style='margin-right: 4px' id='del' href=/am/delete?host="+item.pk+" onclick='return checked()'>删除</a>" +
