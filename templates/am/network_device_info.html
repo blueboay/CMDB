@@ -74,7 +74,7 @@
         <thead>
             <tr>
                 <th style="width: 1%"><label for="is_checked"></label><input type="checkbox" id="is_checked"></th>
-                <th style="width: 16%">设备名称</th>
+                <th style="width: 16%">设备型号</th>
                 <th style="width: 11%">管理IP</th>
                 <th style="width: 7%">类型</th>
                 <th style="width: 7%">品牌</th>
@@ -189,7 +189,7 @@
                         "<td>"+item.fields.Position+"</td>" +
                         "<td>"+item.fields.Note+"</td>" +
                         "<td>"+
-                            "<a style='margin-right: 4px' id='moreInfo' href=/am/get_password?more_network_device="+item.pk+">详细信息</a>" +
+                            "<a style='margin-right: 4px' id='moreInfo' href=/am/get_password?more_network_device="+item.pk+">获取密码</a>" +
                             "<a style='margin-right: 4px' id='edit' href=/am/edit?network_device="+item.pk+">编辑</a>" +
                             "<a style='margin-right: 4px' id='del' href=/am/delete?edit_network_device="+item.pk+" onclick='return checked()'>删除</a>" +
                         "</td>" +
