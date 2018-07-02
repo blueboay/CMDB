@@ -65,3 +65,18 @@ class NetworkDevice(models.Model):
     Owner = models.CharField('所有者', max_length=32)
     Position = models.CharField('位置', max_length=32)
     Note = models.CharField('备注信息', max_length=1024, null=True, blank=True)
+
+
+class PhysicalServer(models.Model):
+    Model = models.CharField('型号', max_length=32)
+    Type = models.CharField('类型', max_length=32)
+    SN = models.CharField('序列号', max_length=32)
+    Brand = models.CharField('品牌', max_length=32)
+    Position = models.CharField('位置', max_length=32)
+    ManageIP = models.CharField('管理IP', max_length=32, null=True, blank=True)
+    ManageUsername = models.CharField('管理用户名', max_length=32, null=True, blank=True)
+    ManagePassword = models.CharField('管理密码', max_length=32, null=True, blank=True)
+    ExpireData = models.DateField('维保过期时间', max_length=32)
+    CPU = models.CharField('型号', max_length=32)
+    Memory = models.CharField('型号', max_length=32)
+    TotalSpace = models.CharField('总空间', max_length=32)

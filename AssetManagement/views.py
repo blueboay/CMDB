@@ -502,9 +502,9 @@ def edit(request):
                                                              "KeepassData": keepass_data,
                                                              "password": decrypt_password})
             elif i[0] == "network_device":
-                data = models.NetworkDevice.objects.get(id=get_data["edit_network_device"])
+                data = models.NetworkDevice.objects.get(id=get_data["network_device"])
                 # 将获取的密码进行解密，再更改为UTF-8
-                decrypt_password = (decrypt_str(get_network_device_password(get_data["edit_network_device"]))).decode("UTF-8")
+                decrypt_password = (decrypt_str(get_network_device_password(get_data["network_device"]))).decode("UTF-8")
                 return render(request, "am/edit_network_device.html", {"data": data,
                                                              "password": decrypt_password})
             else:
