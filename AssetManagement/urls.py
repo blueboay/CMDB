@@ -27,4 +27,5 @@ urlpatterns = [
     path('change_host_group', views.change_host_group, name="changeHostGroup"),
     path('change_host_info', views.change_host_info, name="changeHostInfo"),
     path('change_network_device_info', views.change_network_device_info, name="change_network_device_info"),
+    path('change_physics_server_info', views.change_physics_server_info, name="change_physics_server_info"),
 ]

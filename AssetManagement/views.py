@@ -41,6 +41,12 @@ def get_network_device_password(data):
     return password.encode("UTF-8")
 
 
+# 获取物理服务器密码
+def get_physics_server_password(data):
+    password = models.PhysicalServer.objects.filter(id=data).values()[0]["ManagePassword"]
+    return password.encode("UTF-8")
+
+
 # 获取主机信息所有数据
 def get_host_data():
     return models.HostInfo.objects.all()
@@ -295,8 +301,8 @@ def host_group_info(request):
 # 资产列表
 def host_info(request):
     all_data = render(request, 'am/host_info.html', {'data': get_host_data(),
-                                                    "hostData": get_group_data(),
-                                                    "envData": get_env_data()})
+                                                     "hostData": get_group_data(),
+                                                     "envData": get_env_data()})
     return all_data
 
 
@@ -361,7 +367,7 @@ def add_physics_server(request):
             Brand=request.POST["Brand"],
             Position=request.POST["Position"],
             Owner=request.POST["Owner"],
-            ManageURL=request.POST["Owner"],
+            ManageURL=request.POST["ManageURL"],
             ManageUsername=request.POST["ManageUsername"],
             #  存入数据库前先进行加密，再更改为UTF-8
             ManagePassword=(encrypt_str(request.POST["ManagePassword"])).decode("UTF-8"),
@@ -404,7 +410,7 @@ def change_host_info(request):
             Keepass=request.POST["Keepass"],
             Note=request.POST["Note"],
         )
-        return HttpResponse("OK")
+        return HttpResponse(host_info(request))
 
 
 # 编辑网络设备信息
@@ -422,7 +428,31 @@ def change_network_device_info(request):
             Position=request.POST["Position"],
             Note=request.POST["Note"],
         )
-        return HttpResponse("OK")
+        return HttpResponse(network_device_info(request))
+
+
+# 编辑物理服务器信息
+def change_physics_server_info(request):
+    if request.method == "POST":
+        get_data = request.GET
+        models.PhysicalServer.objects.filter(id=get_data["id"]).update(
+            Model=request.POST["Model"],
+            Type=request.POST["Type"],
+            SN=request.POST["SN"],
+            Brand=request.POST["Brand"],
+            Position=request.POST["Position"],
+            Owner=request.POST["Owner"],
+            ManageURL=request.POST["ManageURL"],
+            ManageUsername=request.POST["ManageUsername"],
+            #  存入数据库前先进行加密，再更改为UTF-8
+            ManagePassword=(encrypt_str(request.POST["ManagePassword"])).decode("UTF-8"),
+            ExpireData=request.POST["ExpireData"],
+            CPU=request.POST["CPU"],
+            Memory=request.POST["Memory"],
+            TotalSpace=request.POST["TotalSpace"],
+            Note=request.POST["Note"],
+        )
+        return HttpResponse(physics_server_info(request))
 
 
 # 添加主机分组
@@ -445,7 +475,7 @@ def change_host_group(request):
             GroupName=request.POST["GroupName"],
             Note=request.POST["Note"],
         )
-        return HttpResponse('OK')
+        return HttpResponse(host_group_info(request))
 
 
 # 添加环境
@@ -470,7 +500,7 @@ def change_host_environment(request):
         )
         if old_env_data != new_env_data:
             models.HostInfo.objects.filter(Environment=old_env_data).update(Environment=new_env_data)
-        return HttpResponse('OK')
+        return HttpResponse(host_environment_info(request))
 
 
 # 编辑功能
@@ -522,20 +552,26 @@ def edit(request):
                 # 将获取的密码进行解密，再更改为UTF-8
                 decrypt_password = (decrypt_str(get_host_password(get_data["cloneHost"]))).decode("UTF-8")
                 return render(request, "am/clone_host.html", {"data": data,
-                                                             "envData": get_env_data(),
-                                                             "hostGroupData": get_group_data(),
-                                                             "usegroupdata": groups_list,
-                                                             "ZabbixData": zabbix_data,
-                                                             "SaltData": salt_data,
-                                                             "JumpserverData": jumpserver_data,
-                                                             "KeepassData": keepass_data,
-                                                             "password": decrypt_password})
+                                                              "envData": get_env_data(),
+                                                              "hostGroupData": get_group_data(),
+                                                              "usegroupdata": groups_list,
+                                                              "ZabbixData": zabbix_data,
+                                                              "SaltData": salt_data,
+                                                              "JumpserverData": jumpserver_data,
+                                                              "KeepassData": keepass_data,
+                                                              "password": decrypt_password})
             elif i[0] == "network_device":
                 data = models.NetworkDevice.objects.get(id=get_data["network_device"])
                 # 将获取的密码进行解密，再更改为UTF-8
-                decrypt_password = (decrypt_str(get_network_device_password(get_data["network_device"]))).decode("UTF-8")
+                decrypt_password = (decrypt_str(get_network_device_password(get_data["network_device"])))
                 return render(request, "am/edit_network_device.html", {"data": data,
-                                                             "password": decrypt_password})
+                                                                       "password": decrypt_password.decode("UTF-8")})
+            elif i[0] == "physics_server":
+                data = models.PhysicalServer.objects.get(id=get_data["physics_server"])
+                # 将获取的密码进行解密，再更改为UTF-8
+                decrypt_password = (decrypt_str(get_physics_server_password(get_data["physics_server"])))
+                return render(request, "am/edit_physics_server.html", {"data": data,
+                                                                       "password": decrypt_password.decode("UTF-8")})
             else:
                 pass
 

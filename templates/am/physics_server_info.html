@@ -6,7 +6,7 @@
     <style>
     #opeartion-filter{
         float: left;
-        width: 40%;
+        width: 45%;
         height: 28px;
     }
     #opeartion-search{
@@ -64,6 +64,12 @@
                 <option>电信</option>
                 <option>高锦</option>
             </select>
+            <label for="filter_expire_data"></label>
+            <select name="expire_data" id="filter_expire_data">
+                <option>保修状态</option>
+                <option>在保</option>
+                <option>过保</option>
+            </select>
         </div>
         <div id="opeartion-search">
             <a id="search">-搜索-</a>
@@ -76,16 +82,17 @@
             <tr>
                 <th style="width: 1%"><label for="is_checked"></label><input type="checkbox" id="is_checked"></th>
                 <th style="width: 10%">型号</th>
-                <th style="width: 5%">类型</th>
+                <th style="width: 8%">序列号</th>
+                <th style="width: 6%">类型</th>
                 <th style="width: 5%">品牌</th>
                 <th style="width: 5%">所有者</th>
+                <th style="width: 8%">保修到期时间</th>
                 <th style="width: 5%">位置</th>
-                <th style="width: 8%">保修状态</th>
-                <th style="width: 5%">CPU</th>
-                <th style="width: 5%">内存</th>
+                <th style="width: 7%">CPU总核数</th>
+                <th style="width: 5%">总内存</th>
                 <th style="width: 5%">总空间</th>
-                <th style="width: 15%">备注信息</th>
-                <th style="width: 18%">操作</th>
+                <th style="width: 16%">备注信息</th>
+                <th style="width: 14%">操作</th>
             </tr>
         </thead>
         <tbody id="tbody">
@@ -93,17 +100,17 @@
                  <tr>
                      <td><label for="{{ i.id }}"></label><input type="checkbox" name="{{ i.id }}" id="{{ i.id }}"></td>
                      <td>{{ i.Model }}</td>
+                     <td>{{ i.SN }}</td>
                      <td>{{ i.Type }}</td>
                      <td>{{ i.Brand }}</td>
                      <td>{{ i.Owner }}</td>
+                     <td>{{ i.ExpireData|date:'Y-m-d' }}</td>
                      <td>{{ i.Position }}</td>
-                     <td>{{ i.ExpireData }}</td>
                      <td>{{ i.CPU }}</td>
                      <td>{{ i.Memory }}</td>
                      <td>{{ i.TotalSpace }}</td>
                      <td>{{ i.Note }}</td>
                      <td>
-                         <a id="moreInfo" href="{% url "get_password" %}?physics_server_more_info={{ i.id }}">详细信息</a>
                          <a id="moreInfo" href="{% url "get_password" %}?physics_server={{ i.id }}">获取登录信息</a>
                          <a id="edit" href="{% url "edit" %}?physics_server={{ i.id }}">编辑</a>
                          <a id="del" href="{% url "delete" %}?physics_server={{ i.id }}" onclick="return checked()">删除</a>
@@ -197,7 +204,6 @@
                         "<td>"+item.fields.Position+"</td>" +
                         "<td>"+item.fields.Note+"</td>" +
                         "<td>"+
-                            "<a style='margin-right: 4px' id='moreInfo' href=/am/get_password?physics_server="+item.pk+">详细信息</a>" +
                             "<a style='margin-right: 4px' id='moreInfo' href=/am/get_password?physics_server="+item.pk+">获取登录信息</a>" +
                             "<a style='margin-right: 4px' id='edit' href=/am/edit?physics_server="+item.pk+">编辑</a>" +
                             "<a style='margin-right: 4px' id='del' href=/am/delete?physics_server="+item.pk+" onclick='return checked()'>删除</a>" +
