@@ -194,14 +194,20 @@ def search_network_device(request):
     for i in post_data:
         if i == "other":
             search_obj = Q()
-            search_obj.add(Q(Name__icontains=post_data["other"]) | Q(ManageIP__contains=post_data["other"]) | Q(Position__contains=post_data["other"]), Q.OR)
+            search_obj.add(Q(Name__icontains=post_data["other"])
+                           | Q(ManageIP__contains=post_data["other"])
+                           | Q(Position__contains=post_data["other"]), Q.OR)
             data = serializers.serialize("json", models.NetworkDevice.objects.filter(search_obj))
             return HttpResponse(data)
     else:
-        if post_data["network_device_type"] == "" and post_data["network_device_owner"] == "" and post_data["network_device_brand"] == "":
+        if post_data["network_device_type"] == "" \
+                and post_data["network_device_owner"] == "" \
+                and post_data["network_device_brand"] == "":
             data = serializers.serialize("json", models.NetworkDevice.objects.all())
             return HttpResponse(data)
-        elif post_data["network_device_type"] != "" and post_data["network_device_owner"] != "" and post_data["network_device_brand"] != "":
+        elif post_data["network_device_type"] != "" \
+                and post_data["network_device_owner"] != "" \
+                and post_data["network_device_brand"] != "":
             q1 = Q()
             q1.connector = "AND"
             q1.children.append(("Type", post_data["network_device_type"]))
@@ -209,30 +215,45 @@ def search_network_device(request):
             q1.children.append(("Owner", post_data["network_device_owner"]))
             data = serializers.serialize("json", models.NetworkDevice.objects.filter(q1))
             return HttpResponse(data)
-        elif post_data["network_device_type"] == "" and post_data["network_device_owner"] == "" and post_data["network_device_brand"] != "":
-            data = serializers.serialize("json", models.NetworkDevice.objects.filter(Brand=post_data["network_device_brand"]))
+        elif post_data["network_device_type"] == "" \
+                and post_data["network_device_owner"] == "" \
+                and post_data["network_device_brand"] != "":
+            data = serializers.serialize("json",
+                                         models.NetworkDevice.objects.filter(Brand=post_data["network_device_brand"]))
             return HttpResponse(data)
-        elif post_data["network_device_type"] == "" and post_data["network_device_owner"] != "" and post_data["network_device_brand"] == "":
-            data = serializers.serialize("json", models.NetworkDevice.objects.filter(Owner=post_data["network_device_owner"]))
+        elif post_data["network_device_type"] == "" \
+                and post_data["network_device_owner"] != "" \
+                and post_data["network_device_brand"] == "":
+            data = serializers.serialize("json",
+                                         models.NetworkDevice.objects.filter(Owner=post_data["network_device_owner"]))
             return HttpResponse(data)
-        elif post_data["network_device_type"] != "" and post_data["network_device_owner"] == "" and post_data["network_device_brand"] == "":
-            data = serializers.serialize("json", models.NetworkDevice.objects.filter(Type=post_data["network_device_type"]))
+        elif post_data["network_device_type"] != "" \
+                and post_data["network_device_owner"] == "" \
+                and post_data["network_device_brand"] == "":
+            data = serializers.serialize("json",
+                                         models.NetworkDevice.objects.filter(Type=post_data["network_device_type"]))
             return HttpResponse(data)
-        elif post_data["network_device_type"] != "" and post_data["network_device_owner"] != "" and post_data["network_device_brand"] == "":
+        elif post_data["network_device_type"] != "" \
+                and post_data["network_device_owner"] != "" \
+                and post_data["network_device_brand"] == "":
             q1 = Q()
             q1.connector = "AND"
             q1.children.append(("Type", post_data["network_device_type"]))
             q1.children.append(("Owner", post_data["network_device_owner"]))
             data = serializers.serialize("json", models.NetworkDevice.objects.filter(q1))
             return HttpResponse(data)
-        elif post_data["network_device_type"] != "" and post_data["network_device_owner"] == "" and post_data["network_device_brand"] != "":
+        elif post_data["network_device_type"] != "" \
+                and post_data["network_device_owner"] == "" \
+                and post_data["network_device_brand"] != "":
             q1 = Q()
             q1.connector = "AND"
             q1.children.append(("Type", post_data["network_device_type"]))
             q1.children.append(("Brand", post_data["network_device_brand"]))
             data = serializers.serialize("json", models.NetworkDevice.objects.filter(q1))
             return HttpResponse(data)
-        elif post_data["network_device_type"] == "" and post_data["network_device_owner"] != "" and post_data["network_device_brand"] != "":
+        elif post_data["network_device_type"] == "" \
+                and post_data["network_device_owner"] != "" \
+                and post_data["network_device_brand"] != "":
             q1 = Q()
             q1.connector = "AND"
             q1.children.append(("Brand", post_data["network_device_brand"]))
