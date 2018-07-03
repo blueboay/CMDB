@@ -25,7 +25,7 @@ $().ready(function() {
             Position: {
                 required: true
             },
-            ExpireData: {
+            ExpireDate: {
                 required: true,
                 dateISO:true
             },
@@ -67,7 +67,7 @@ $().ready(function() {
             Position: {
                 required: "请输入设备位置"
             },
-            ExpireData: {
+            ExpireDate: {
                 required: "选择过期时间",
                 dateISO: "必须输入合法的日期"
             },

@@ -45,9 +45,9 @@
                 <option>类型</option>
                 <option>服务器</option>
                 <option>存储</option>
-                <option>人证比对</option>
+                <option>旷视科技</option>
                 <option>刀片</option>
-                <option>其它</option>
+                <option>云天励飞</option>
             </select>
             <label for="filter_physics_server_brand"></label>
             <select name="physics_server_brand" id="filter_physics_server_brand">
@@ -64,8 +64,8 @@
                 <option>电信</option>
                 <option>高锦</option>
             </select>
-            <label for="filter_expire_data"></label>
-            <select name="expire_data" id="filter_expire_data">
+            <label for="filter_expire_date"></label>
+            <select name="expire_data" id="filter_expire_date">
                 <option>保修状态</option>
                 <option>在保</option>
                 <option>过保</option>
@@ -91,8 +91,8 @@
                 <th style="width: 7%">CPU总核数</th>
                 <th style="width: 5%">总内存</th>
                 <th style="width: 5%">总空间</th>
-                <th style="width: 16%">备注信息</th>
-                <th style="width: 14%">操作</th>
+                <th style="width: 14%">备注信息</th>
+                <th style="width: 16%">操作</th>
             </tr>
         </thead>
         <tbody id="tbody">
@@ -104,7 +104,7 @@
                      <td>{{ i.Type }}</td>
                      <td>{{ i.Brand }}</td>
                      <td>{{ i.Owner }}</td>
-                     <td>{{ i.ExpireData|date:'Y-m-d' }}</td>
+                     <td>{{ i.ExpireDate|date:'Y-m-d' }}</td>
                      <td>{{ i.Position }}</td>
                      <td>{{ i.CPU }}</td>
                      <td>{{ i.Memory }}</td>
@@ -160,24 +160,134 @@
         var physics_server_type = $("#filter_physics_server_type").val();
         var physics_server_owner = $("#filter_physics_server_owner").val();
         var physics_server_brand = $("#filter_physics_server_brand").val();
-        if (physics_server_type === "类型" && physics_server_owner === "所有者" && physics_server_brand === "品牌"){
-            return {"physics_server_type": "", "physics_server_owner": "", "physics_server_brand": "" }
-        }else if (physics_server_type !== "类型" && physics_server_owner !== "所有者" && physics_server_brand !== "品牌"){
-            return {"physics_server_type": physics_server_type, "physics_server_owner": physics_server_owner, "physics_server_brand": physics_server_brand }
-        }else if (physics_server_type === "类型" && physics_server_owner !== "所有者" && physics_server_brand !== "品牌"){
-            return {"physics_server_type": "", "physics_server_owner": physics_server_owner, "physics_server_brand": physics_server_brand }
-        }else if (physics_server_type !== "类型" && physics_server_owner === "所有者" && physics_server_brand !== "品牌"){
-            return {"physics_server_type": physics_server_type, "physics_server_owner": "", "physics_server_brand": physics_server_brand }
-        }else if (physics_server_type !== "类型" && physics_server_owner !== "所有者" && physics_server_brand === "品牌"){
-            return {"physics_server_type": physics_server_type, "physics_server_owner": physics_server_owner, "physics_server_brand": "" }
-        }else if (physics_server_type === "类型" && physics_server_owner === "所有者" && physics_server_brand !== "品牌"){
-            return {"physics_server_type": "", "physics_server_owner": "", "physics_server_brand": physics_server_brand }
-        }else if (physics_server_type === "类型" && physics_server_owner !== "所有者" && physics_server_brand === "品牌"){
-            return {"physics_server_type": "", "physics_server_owner": physics_server_owner, "physics_server_brand": "" }
-        }else if (physics_server_type !== "类型" && physics_server_owner === "所有者" && physics_server_brand === "品牌"){
-            return {"physics_server_type": physics_server_type, "physics_server_owner": "", "physics_server_brand": "" }
+        var physics__expire_date = $("#filter_expire_date").val();
+        if (physics_server_type === "类型"
+            && physics_server_owner === "所有者"
+            && physics_server_brand === "品牌"
+            && physics__expire_date === "保修状态"){
+            return {"physics_server_type": "",
+                "physics_server_owner": "",
+                "physics_server_brand": "",
+                "physics__expire_date": "" }
+        }else if (physics_server_type !== "类型"
+            && physics_server_owner !== "所有者"
+            && physics_server_brand !== "品牌"
+            && physics__expire_date !== "保修状态"){
+            return {"physics_server_type": physics_server_type,
+                "physics_server_owner": physics_server_owner,
+                "physics_server_brand": physics_server_brand,
+                "physics__expire_date": physics__expire_date }
+        }else if (physics_server_type !== "类型"
+            && physics_server_owner === "所有者"
+            && physics_server_brand === "品牌"
+            && physics__expire_date === "保修状态"){
+            return {"physics_server_type": physics_server_type,
+                "physics_server_owner": "",
+                "physics_server_brand": "",
+                "physics__expire_date": "" }
+        }else if (physics_server_type === "类型"
+            && physics_server_owner !== "所有者"
+            && physics_server_brand === "品牌"
+            && physics__expire_date === "保修状态"){
+            return {"physics_server_type": "",
+                "physics_server_owner": physics_server_owner,
+                "physics_server_brand": "",
+                "physics__expire_date": "" }
+        }else if (physics_server_type === "类型"
+            && physics_server_owner === "所有者"
+            && physics_server_brand !== "品牌"
+            && physics__expire_date === "保修状态"){
+            return {"physics_server_type": "",
+                "physics_server_owner": "",
+                "physics_server_brand": physics_server_brand,
+                "physics__expire_date": "" }
+        }else if (physics_server_type === "类型"
+            && physics_server_owner === "所有者"
+            && physics_server_brand === "品牌"
+            && physics__expire_date !== "保修状态"){
+            return {"physics_server_type": "",
+                "physics_server_owner": "",
+                "physics_server_brand": "",
+                "physics__expire_date": physics__expire_date }
+        }else if (physics_server_type !== "类型"
+            && physics_server_owner !== "所有者"
+            && physics_server_brand === "品牌"
+            && physics__expire_date === "保修状态"){
+            return {"physics_server_type": physics_server_type,
+                "physics_server_owner": physics_server_owner,
+                "physics_server_brand": "",
+                "physics__expire_date": "" }
+        }else if (physics_server_type !== "类型"
+            && physics_server_owner === "所有者"
+            && physics_server_brand !== "品牌"
+            && physics__expire_date === "保修状态"){
+            return {"physics_server_type": physics_server_type,
+                "physics_server_owner": "",
+                "physics_server_brand": physics_server_brand,
+                "physics__expire_date": "" }
+        }else if (physics_server_type !== "类型"
+            && physics_server_owner === "所有者"
+            && physics_server_brand === "品牌"
+            && physics__expire_date !== "保修状态"){
+            return {"physics_server_type": physics_server_type,
+                "physics_server_owner": "",
+                "physics_server_brand": "",
+                "physics__expire_date": physics__expire_date }
+        }else if (physics_server_type === "类型"
+            && physics_server_owner !== "所有者"
+            && physics_server_brand !== "品牌"
+            && physics__expire_date === "保修状态"){
+            return {"physics_server_type": "",
+                "physics_server_owner": physics_server_owner,
+                "physics_server_brand": physics_server_brand,
+                "physics__expire_date": "" }
+        }else if (physics_server_type === "类型"
+            && physics_server_owner !== "所有者"
+            && physics_server_brand === "品牌"
+            && physics__expire_date !== "保修状态"){
+            return {"physics_server_type": "",
+                "physics_server_owner": physics_server_owner,
+                "physics_server_brand": "",
+                "physics__expire_date": physics__expire_date }
+        }else if (physics_server_type === "类型"
+            && physics_server_owner === "所有者"
+            && physics_server_brand !== "品牌"
+            && physics__expire_date !== "保修状态"){
+            return {"physics_server_type": "",
+                "physics_server_owner": "",
+                "physics_server_brand": physics_server_brand,
+                "physics__expire_date": physics__expire_date }
+        }else if (physics_server_type !== "类型"
+            && physics_server_owner !== "所有者"
+            && physics_server_brand !== "品牌"
+            && physics__expire_date === "保修状态"){
+            return {"physics_server_type": physics_server_type,
+                "physics_server_owner": physics_server_owner,
+                "physics_server_brand": physics_server_brand,
+                "physics__expire_date": "" }
+        }else if (physics_server_type !== "类型"
+            && physics_server_owner !== "所有者"
+            && physics_server_brand === "品牌"
+            && physics__expire_date !== "保修状态"){
+            return {"physics_server_type": physics_server_type,
+                "physics_server_owner": physics_server_owner,
+                "physics_server_brand": "",
+                "physics__expire_date": physics__expire_date }
+        }else if (physics_server_type !== "类型"
+            && physics_server_owner === "所有者"
+            && physics_server_brand !== "品牌"
+            && physics__expire_date !== "保修状态"){
+            return {"physics_server_type": physics_server_type,
+                "physics_server_owner": "",
+                "physics_server_brand": physics_server_brand,
+                "physics__expire_date": physics__expire_date }
+        }else
+            return {"physics_server_type": physics_server_type,
+                "physics_server_owner": physics_server_owner,
+                "physics_server_brand": physics_server_brand,
+                "physics__expire_date": physics__expire_date }
         }
-    }
+
     function search(data) {
         $.ajax({
             url: "/am/search_physics_server",
@@ -185,7 +295,7 @@
             data: data,
             dataType: "json",   {% comment %}指定接收到的数据类型{% endcomment %}
             success: function (arg) {
-                console.log(arg);
+                console.log(arg)
                 if(arg.length === 0){
                     alert("没有查询到任何数据");
                     location.reload();
@@ -196,12 +306,16 @@
                     $.each(arg, function (index, item) {    {% comment %}index和item为固定写法{% endcomment %}
                     content += "<tr>" +
                         "<td><input type='checkbox' name=" +item.pk+"></td>" +
-                        "<td>"+item.fields.Name+"</td>" +
-                        "<td>"+item.fields.ManageIP+"</td>" +
+                        "<td>"+item.fields.Model+"</td>" +
+                        "<td>"+item.fields.SN+"</td>" +
                         "<td>"+item.fields.Type+"</td>" +
                         "<td>"+item.fields.Brand+"</td>" +
                         "<td>"+item.fields.Owner+"</td>" +
+                        "<td>"+item.fields.ExpireDate+"</td>" +
                         "<td>"+item.fields.Position+"</td>" +
+                        "<td>"+item.fields.CPU+"</td>" +
+                        "<td>"+item.fields.Memory+"</td>" +
+                        "<td>"+item.fields.TotalSpace+"</td>" +
                         "<td>"+item.fields.Note+"</td>" +
                         "<td>"+
                             "<a style='margin-right: 4px' id='moreInfo' href=/am/get_password?physics_server="+item.pk+">获取登录信息</a>" +
@@ -218,7 +332,7 @@
             }
         });
     }
-    $("#filter_physics_server_brand, #filter_physics_server_owner, #filter_physics_server_type").change(function () {
+    $("#filter_physics_server_brand, #filter_physics_server_owner, #filter_physics_server_type, #filter_expire_date").change(function () {
         var data = get_group_env();
         search(data)
     });

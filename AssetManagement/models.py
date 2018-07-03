@@ -77,7 +77,7 @@ class PhysicalServer(models.Model):
     ManageURL = models.CharField('登录URL', max_length=32, null=True, blank=True)
     ManageUsername = models.CharField('管理用户名', max_length=32, null=True, blank=True)
     ManagePassword = models.CharField('管理密码', max_length=32, null=True, blank=True)
-    ExpireData = models.DateField('维保过期时间', max_length=32)
+    ExpireDate = models.DateField('维保过期时间', max_length=32)
     CPU = models.CharField('CPU', max_length=32)
     Memory = models.CharField('内存', max_length=32)
     TotalSpace = models.CharField('总空间', max_length=32)

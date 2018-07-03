@@ -4,10 +4,19 @@ from AssetManagement import models
 from django.db.models import Q
 import pyDes
 import base64
+import time
 
 # Create your views here.
 Key = "Gogenius"
 Iv = "Gogen123"
+
+
+# 获取系统当前时间与服务器过保时间比较，返回是否过保
+def diff_date(date):
+    print(date)
+    now_date = int(time.time())
+    print(now_date)
+    return "123"
 
 
 # 加密
@@ -65,6 +74,11 @@ def get_env_data():
 # 获取网络设备表所有数据
 def get_network_device_data():
     return models.NetworkDevice.objects.all()
+
+
+# 获取物理服务器所有数据
+def get_physics_server_data():
+    return models.PhysicalServer.objects.all()
 
 
 # 获取主机名
@@ -264,6 +278,131 @@ def search_network_device(request):
             pass
 
 
+# 搜索物理服务器
+def search_physics_server(request):
+    post_data = request.POST
+    for i in post_data:
+        if i == "other":
+            search_obj = Q()
+            search_obj.add(Q(Model__icontains=post_data["other"])
+                           | Q(Position__contains=post_data["other"])
+                           | Q(ManageURL__contains=post_data["other"]), Q.OR)
+            data = serializers.serialize("json", models.PhysicalServer.objects.filter(search_obj))
+            return HttpResponse(data)
+    else:
+        if post_data["physics_server_type"] == "" \
+                and post_data["physics_server_owner"] == "" \
+                and post_data["physics_server_brand"] == "" \
+                and post_data["physics__expire_date"] == "":
+            data = serializers.serialize("json", models.PhysicalServer.objects.all())
+            return HttpResponse(data)
+        elif post_data["physics_server_type"] != "" \
+                and post_data["physics_server_owner"] != "" \
+                and post_data["physics_server_brand"] != "" \
+                and post_data["physics__expire_date"] != "":
+            pass
+        elif post_data["physics_server_type"] != "" \
+                and post_data["physics_server_owner"] == "" \
+                and post_data["physics_server_brand"] == "" \
+                and post_data["physics__expire_date"] == "":
+            data = serializers.serialize("json",
+                                         models.PhysicalServer.objects.filter(Type=post_data["physics_server_type"]))
+            return HttpResponse(data)
+        elif post_data["physics_server_type"] == "" \
+                and post_data["physics_server_owner"] != "" \
+                and post_data["physics_server_brand"] == "" \
+                and post_data["physics__expire_date"] == "":
+            data = serializers.serialize("json",
+                                         models.PhysicalServer.objects.filter(Owner=post_data["physics_server_owner"]))
+            return HttpResponse(data)
+        elif post_data["physics_server_type"] == "" \
+                and post_data["physics_server_owner"] == "" \
+                and post_data["physics_server_brand"] != "" \
+                and post_data["physics__expire_date"] == "":
+            data = serializers.serialize("json",
+                                         models.PhysicalServer.objects.filter(Brand=post_data["physics_server_brand"]))
+            return HttpResponse(data)
+        elif post_data["physics_server_type"] == "" \
+                and post_data["physics_server_owner"] == "" \
+                and post_data["physics_server_brand"] == "" \
+                and post_data["physics__expire_date"] != "":
+            diff_date("2018-01-01")
+            return "123"
+        elif post_data["physics_server_type"] != "" \
+                and post_data["physics_server_owner"] != "" \
+                and post_data["physics_server_brand"] == "" \
+                and post_data["physics__expire_date"] == "":
+            q1 = Q()
+            q1.connector = "AND"
+            q1.children.append(("Type", post_data["physics_server_type"]))
+            q1.children.append(("Owner", post_data["physics_server_owner"]))
+            data = serializers.serialize("json", models.PhysicalServer.objects.filter(q1))
+            return HttpResponse(data)
+        elif post_data["physics_server_type"] != "" \
+                and post_data["physics_server_owner"] == "" \
+                and post_data["physics_server_brand"] != "" \
+                and post_data["physics__expire_date"] == "":
+            q1 = Q()
+            q1.connector = "AND"
+            q1.children.append(("Type", post_data["physics_server_type"]))
+            q1.children.append(("Brand", post_data["physics_server_brand"]))
+            data = serializers.serialize("json", models.PhysicalServer.objects.filter(q1))
+            return HttpResponse(data)
+        elif post_data["physics_server_type"] != "" \
+                and post_data["physics_server_owner"] == "" \
+                and post_data["physics_server_brand"] == "" \
+                and post_data["physics__expire_date"] != "":
+            return "123"
+        elif post_data["physics_server_type"] == "" \
+                and post_data["physics_server_owner"] != "" \
+                and post_data["physics_server_brand"] != "" \
+                and post_data["physics__expire_date"] == "":
+            q1 = Q()
+            q1.connector = "AND"
+            q1.children.append(("Owner", post_data["physics_server_owner"]))
+            q1.children.append(("Brand", post_data["physics_server_brand"]))
+            data = serializers.serialize("json", models.PhysicalServer.objects.filter(q1))
+            return HttpResponse(data)
+        elif post_data["physics_server_type"] == "" \
+                and post_data["physics_server_owner"] != "" \
+                and post_data["physics_server_brand"] == "" \
+                and post_data["physics__expire_date"] != "":
+            return "123"
+        elif post_data["physics_server_type"] == "" \
+                and post_data["physics_server_owner"] == "" \
+                and post_data["physics_server_brand"] != "" \
+                and post_data["physics__expire_date"] != "":
+            return "123"
+        elif post_data["physics_server_type"] != "" \
+                and post_data["physics_server_owner"] != "" \
+                and post_data["physics_server_brand"] != "" \
+                and post_data["physics__expire_date"] == "":
+            q1 = Q()
+            q1.connector = "AND"
+            q1.children.append(("Owner", post_data["physics_server_owner"]))
+            q1.children.append(("Brand", post_data["physics_server_brand"]))
+            q1.children.append(("Type", post_data["physics_server_type"]))
+            data = serializers.serialize("json", models.PhysicalServer.objects.filter(q1))
+            return HttpResponse(data)
+        elif post_data["physics_server_type"] != "" \
+                and post_data["physics_server_owner"] != "" \
+                and post_data["physics_server_brand"] == "" \
+                and post_data["physics__expire_date"] != "":
+            return "123"
+        elif post_data["physics_server_type"] != "" \
+                and post_data["physics_server_owner"] == "" \
+                and post_data["physics_server_brand"] != "" \
+                and post_data["physics__expire_date"] != "":
+            return "123"
+        elif post_data["physics_server_type"] == "" \
+                and post_data["physics_server_owner"] != "" \
+                and post_data["physics_server_brand"] != "" \
+                and post_data["physics__expire_date"] != "":
+            return "123"
+        else:
+            pass
+
+
 # 删除主机
 def del_host(nid):
     server_name = get_host_name(nid)
@@ -289,6 +428,12 @@ def del_env(nid):
 # 删除网络设备
 def del_network_device(nid):
     models.NetworkDevice.objects.filter(id=nid).delete()
+    return "successful"
+
+
+# 删除物理服务器
+def del_physics_server(nid):
+    models.PhysicalServer.objects.filter(id=nid).delete()
     return "successful"
 
 
@@ -392,7 +537,7 @@ def add_physics_server(request):
             ManageUsername=request.POST["ManageUsername"],
             #  存入数据库前先进行加密，再更改为UTF-8
             ManagePassword=(encrypt_str(request.POST["ManagePassword"])).decode("UTF-8"),
-            ExpireData=request.POST["ExpireData"],
+            ExpireDate=request.POST["ExpireDate"],
             CPU=request.POST["CPU"],
             Memory=request.POST["Memory"],
             TotalSpace=request.POST["TotalSpace"],
@@ -467,7 +612,7 @@ def change_physics_server_info(request):
             ManageUsername=request.POST["ManageUsername"],
             #  存入数据库前先进行加密，再更改为UTF-8
             ManagePassword=(encrypt_str(request.POST["ManagePassword"])).decode("UTF-8"),
-            ExpireData=request.POST["ExpireData"],
+            ExpireDate=request.POST["ExpireDate"],
             CPU=request.POST["CPU"],
             Memory=request.POST["Memory"],
             TotalSpace=request.POST["TotalSpace"],
@@ -619,6 +764,9 @@ def delete(request):
             elif i[0] == "network_device":
                 del_network_device(get_data['network_device'])
                 return render(request, 'am/network_device_info.html', {'data': get_network_device_data()})
+            elif i[0] == "physics_server":
+                del_physics_server(get_data['physics_server'])
+                return render(request, 'am/physics_server_info.html', {'data': get_physics_server_data()})
             else:
                 pass
     if request.method == "POST":
@@ -662,6 +810,10 @@ def delete(request):
             elif name == "network_device":
                 for nid in post_data.getlist("network_device"):
                     del_network_device(nid)
+                return HttpResponse("successful")
+            elif name == "physics_server":
+                for nid in post_data.getlist("physics_server"):
+                    del_physics_server(nid)
                 return HttpResponse("successful")
             else:
                 pass
