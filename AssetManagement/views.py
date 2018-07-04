@@ -13,10 +13,12 @@ Iv = "Gogen123"
 
 # 获取系统当前时间与服务器过保时间比较，返回是否过保
 def diff_date(date):
-    print(date)
     now_date = int(time.time())
-    print(now_date)
-    return "123"
+    expire_date = int(time.mktime(date.timetuple()))
+    if now_date > expire_date:
+        return "is_expire"
+    else:
+        return "is_not_expire"
 
 
 # 加密
@@ -326,8 +328,25 @@ def search_physics_server(request):
                 and post_data["physics_server_owner"] == "" \
                 and post_data["physics_server_brand"] == "" \
                 and post_data["physics__expire_date"] != "":
-            diff_date("2018-01-01")
-            return "123"
+            date_list = models.PhysicalServer.objects.all().values("id", "ExpireDate")
+            is_expire_id_list = []
+            is_not_expire_id_list = []
+            search_obj = Q()
+            search_obj.connector = "OR"
+            for i in date_list:
+                is_expire = diff_date(i["ExpireDate"])
+                if is_expire == "is_expire":
+                    is_expire_id_list.append(i["id"])
+                else:
+                    is_not_expire_id_list.append(i["id"])
+            if post_data["physics__expire_date"] == "在保":
+                for n in is_not_expire_id_list:
+                    search_obj.children.append(("id", n))
+            else:
+                for n in is_expire_id_list:
+                    search_obj.children.append(("id", n))
+            data = serializers.serialize("json", models.PhysicalServer.objects.filter(search_obj))
+            return HttpResponse(data)
         elif post_data["physics_server_type"] != "" \
                 and post_data["physics_server_owner"] != "" \
                 and post_data["physics_server_brand"] == "" \

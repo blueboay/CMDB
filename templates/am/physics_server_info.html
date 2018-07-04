@@ -295,7 +295,6 @@
             data: data,
             dataType: "json",   {% comment %}指定接收到的数据类型{% endcomment %}
             success: function (arg) {
-                console.log(arg)
                 if(arg.length === 0){
                     alert("没有查询到任何数据");
                     location.reload();
