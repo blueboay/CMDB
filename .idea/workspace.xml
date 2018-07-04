@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d892a79e-fea1-44b9-b31c-f88fd54eac36" name="默认的" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AssetManagement/views.py" afterPath="$PROJECT_DIR$/AssetManagement/views.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/am/physics_server_info.html" afterPath="$PROJECT_DIR$/templates/am/physics_server_info.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -25,8 +26,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/AssetManagement/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-743">
-              <caret line="328" column="61" lean-forward="false" selection-start-line="328" selection-start-column="61" selection-end-line="328" selection-end-column="61" />
+            <state relative-caret-position="364">
+              <caret line="460" column="74" lean-forward="true" selection-start-line="460" selection-start-column="74" selection-end-line="460" selection-end-column="74" />
               <folding>
                 <element signature="e#0#49#0" expanded="true" />
               </folding>
@@ -47,8 +48,8 @@
       <file leaf-file-name="physics_server_info.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/templates/am/physics_server_info.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="177">
-              <caret line="324" column="63" lean-forward="true" selection-start-line="324" selection-start-column="63" selection-end-line="324" selection-end-column="63" />
+            <state relative-caret-position="187">
+              <caret line="336" column="39" lean-forward="true" selection-start-line="336" selection-start-column="39" selection-end-line="336" selection-end-column="39" />
               <folding>
                 <element signature="e#2455#2474#0#HTML" expanded="true" />
                 <element signature="e#2599#2616#0#HTML" expanded="true" />
@@ -837,14 +838,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/AssetManagement/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="155">
-          <caret line="69" column="35" lean-forward="false" selection-start-line="69" selection-start-column="35" selection-end-line="69" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/am/host_info.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="151">
@@ -853,10 +846,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/AssetManagement/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="155">
+          <caret line="69" column="35" lean-forward="false" selection-start-line="69" selection-start-column="35" selection-end-line="69" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/AssetManagement/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-743">
-          <caret line="328" column="61" lean-forward="false" selection-start-line="328" selection-start-column="61" selection-end-line="328" selection-end-column="61" />
+        <state relative-caret-position="364">
+          <caret line="460" column="74" lean-forward="true" selection-start-line="460" selection-start-column="74" selection-end-line="460" selection-end-column="74" />
           <folding>
             <element signature="e#0#49#0" expanded="true" />
           </folding>
@@ -865,8 +866,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/am/physics_server_info.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="177">
-          <caret line="324" column="63" lean-forward="true" selection-start-line="324" selection-start-column="63" selection-end-line="324" selection-end-column="63" />
+        <state relative-caret-position="187">
+          <caret line="336" column="39" lean-forward="true" selection-start-line="336" selection-start-column="39" selection-end-line="336" selection-end-column="39" />
           <folding>
             <element signature="e#2455#2474#0#HTML" expanded="true" />
             <element signature="e#2599#2616#0#HTML" expanded="true" />
