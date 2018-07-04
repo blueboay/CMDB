@@ -295,39 +295,39 @@ def search_physics_server(request):
         if post_data["physics_server_type"] == "" \
                 and post_data["physics_server_owner"] == "" \
                 and post_data["physics_server_brand"] == "" \
-                and post_data["physics__expire_date"] == "":
+                and post_data["physics_expire_date"] == "":
             data = serializers.serialize("json", models.PhysicalServer.objects.all())
             return HttpResponse(data)
         elif post_data["physics_server_type"] != "" \
                 and post_data["physics_server_owner"] != "" \
                 and post_data["physics_server_brand"] != "" \
-                and post_data["physics__expire_date"] != "":
+                and post_data["physics_expire_date"] != "":
             pass
         elif post_data["physics_server_type"] != "" \
                 and post_data["physics_server_owner"] == "" \
                 and post_data["physics_server_brand"] == "" \
-                and post_data["physics__expire_date"] == "":
+                and post_data["physics_expire_date"] == "":
             data = serializers.serialize("json",
                                          models.PhysicalServer.objects.filter(Type=post_data["physics_server_type"]))
             return HttpResponse(data)
         elif post_data["physics_server_type"] == "" \
                 and post_data["physics_server_owner"] != "" \
                 and post_data["physics_server_brand"] == "" \
-                and post_data["physics__expire_date"] == "":
+                and post_data["physics_expire_date"] == "":
             data = serializers.serialize("json",
                                          models.PhysicalServer.objects.filter(Owner=post_data["physics_server_owner"]))
             return HttpResponse(data)
         elif post_data["physics_server_type"] == "" \
                 and post_data["physics_server_owner"] == "" \
                 and post_data["physics_server_brand"] != "" \
-                and post_data["physics__expire_date"] == "":
+                and post_data["physics_expire_date"] == "":
             data = serializers.serialize("json",
                                          models.PhysicalServer.objects.filter(Brand=post_data["physics_server_brand"]))
             return HttpResponse(data)
         elif post_data["physics_server_type"] == "" \
                 and post_data["physics_server_owner"] == "" \
                 and post_data["physics_server_brand"] == "" \
-                and post_data["physics__expire_date"] != "":
+                and post_data["physics_expire_date"] != "":
             date_list = models.PhysicalServer.objects.all().values("id", "ExpireDate")
             is_expire_id_list = []
             is_not_expire_id_list = []
@@ -339,7 +339,7 @@ def search_physics_server(request):
                     is_expire_id_list.append(i["id"])
                 else:
                     is_not_expire_id_list.append(i["id"])
-            if post_data["physics__expire_date"] == "在保":
+            if post_data["physics_expire_date"] == "在保":
                 for n in is_not_expire_id_list:
                     search_obj.children.append(("id", n))
             else:
@@ -350,7 +350,7 @@ def search_physics_server(request):
         elif post_data["physics_server_type"] != "" \
                 and post_data["physics_server_owner"] != "" \
                 and post_data["physics_server_brand"] == "" \
-                and post_data["physics__expire_date"] == "":
+                and post_data["physics_expire_date"] == "":
             q1 = Q()
             q1.connector = "AND"
             q1.children.append(("Type", post_data["physics_server_type"]))
@@ -360,7 +360,7 @@ def search_physics_server(request):
         elif post_data["physics_server_type"] != "" \
                 and post_data["physics_server_owner"] == "" \
                 and post_data["physics_server_brand"] != "" \
-                and post_data["physics__expire_date"] == "":
+                and post_data["physics_expire_date"] == "":
             q1 = Q()
             q1.connector = "AND"
             q1.children.append(("Type", post_data["physics_server_type"]))
@@ -370,12 +370,12 @@ def search_physics_server(request):
         elif post_data["physics_server_type"] != "" \
                 and post_data["physics_server_owner"] == "" \
                 and post_data["physics_server_brand"] == "" \
-                and post_data["physics__expire_date"] != "":
+                and post_data["physics_expire_date"] != "":
             return "123"
         elif post_data["physics_server_type"] == "" \
                 and post_data["physics_server_owner"] != "" \
                 and post_data["physics_server_brand"] != "" \
-                and post_data["physics__expire_date"] == "":
+                and post_data["physics_expire_date"] == "":
             q1 = Q()
             q1.connector = "AND"
             q1.children.append(("Owner", post_data["physics_server_owner"]))
@@ -385,17 +385,17 @@ def search_physics_server(request):
         elif post_data["physics_server_type"] == "" \
                 and post_data["physics_server_owner"] != "" \
                 and post_data["physics_server_brand"] == "" \
-                and post_data["physics__expire_date"] != "":
+                and post_data["physics_expire_date"] != "":
             return "123"
         elif post_data["physics_server_type"] == "" \
                 and post_data["physics_server_owner"] == "" \
                 and post_data["physics_server_brand"] != "" \
-                and post_data["physics__expire_date"] != "":
+                and post_data["physics_expire_date"] != "":
             return "123"
         elif post_data["physics_server_type"] != "" \
                 and post_data["physics_server_owner"] != "" \
                 and post_data["physics_server_brand"] != "" \
-                and post_data["physics__expire_date"] == "":
+                and post_data["physics_expire_date"] == "":
             q1 = Q()
             q1.connector = "AND"
             q1.children.append(("Owner", post_data["physics_server_owner"]))
@@ -406,17 +406,17 @@ def search_physics_server(request):
         elif post_data["physics_server_type"] != "" \
                 and post_data["physics_server_owner"] != "" \
                 and post_data["physics_server_brand"] == "" \
-                and post_data["physics__expire_date"] != "":
+                and post_data["physics_expire_date"] != "":
             return "123"
         elif post_data["physics_server_type"] != "" \
                 and post_data["physics_server_owner"] == "" \
                 and post_data["physics_server_brand"] != "" \
-                and post_data["physics__expire_date"] != "":
+                and post_data["physics_expire_date"] != "":
             return "123"
         elif post_data["physics_server_type"] == "" \
                 and post_data["physics_server_owner"] != "" \
                 and post_data["physics_server_brand"] != "" \
-                and post_data["physics__expire_date"] != "":
+                and post_data["physics_expire_date"] != "":
             return "123"
         else:
             pass
