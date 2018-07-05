@@ -5,8 +5,8 @@ from django.db.models import Q
 import pyDes
 import base64
 import time
+# 用于查询数据分页功能
 from django.core.paginator import Paginator
-from django.utils.datastructures import MultiValueDictKeyError
 
 # Create your views here.
 Key = "Gogenius"
@@ -73,12 +73,14 @@ def get_physics_server_password(data):
 
 # 获取主机信息数据
 def get_host_data(page=1):
-    host_info = models.HostInfo.objects.all()
-    paginator = Paginator(host_info, 13)
+    total_data = models.HostInfo.objects.all()
+    # 指定每页显示多少条数据
+    paginator = Paginator(total_data, 13)
+    # 转换为整数
     page = int(page)
-    host_info = paginator.page(page)
-    # return models.HostInfo.objects.all()
-    return host_info
+    # 显示第多少页的数据
+    total_data = paginator.page(page)
+    return total_data
 
 
 # 获取主机环境所有数据
@@ -199,6 +201,10 @@ def search_server(request):
                     data = serializers.serialize("json", models.HostInfo.objects.filter(search_obj))
                     return HttpResponse(data)
             elif post_data["env_name"] != "" and post_data["group_name"] == "":
+                # total_data = models.HostInfo.objects.filter(Environment=post_data["env_name"])
+                # paginator = Paginator(total_data, 13)
+                # page= int(request.GET["page"])
+                # data = serializers.serialize("json", paginator.page(page))
                 # 返回Json数据格式给前端
                 data = serializers.serialize("json", models.HostInfo.objects.filter(Environment=post_data["env_name"]))
                 return HttpResponse(data)

@@ -164,6 +164,7 @@
         }
     }
     function search(data) {
+        url = "/am/search_server" + data;
         $.ajax({
             url: "/am/search_server",
             type: "post",
