@@ -2,8 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d892a79e-fea1-44b9-b31c-f88fd54eac36" name="默认的" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AssetManagement/urls.py" afterPath="$PROJECT_DIR$/AssetManagement/urls.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AssetManagement/views.py" afterPath="$PROJECT_DIR$/AssetManagement/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/am/physics_server_info.html" afterPath="$PROJECT_DIR$/templates/am/physics_server_info.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CMDB/settings.py" afterPath="$PROJECT_DIR$/CMDB/settings.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/table.css" afterPath="$PROJECT_DIR$/static/table.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/am/host_info.html" afterPath="$PROJECT_DIR$/templates/am/host_info.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/index.html" afterPath="$PROJECT_DIR$/templates/index.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -23,11 +27,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="host_info.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/am/host_info.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1186">
+              <caret line="235" column="44" lean-forward="true" selection-start-line="235" selection-start-column="44" selection-end-line="235" selection-end-column="44" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/AssetManagement/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="364">
-              <caret line="460" column="74" lean-forward="true" selection-start-line="460" selection-start-column="74" selection-end-line="460" selection-end-column="74" />
+            <state relative-caret-position="320">
+              <caret line="932" column="20" lean-forward="true" selection-start-line="932" selection-start-column="20" selection-end-line="932" selection-end-column="20" />
               <folding>
                 <element signature="e#0#49#0" expanded="true" />
               </folding>
@@ -35,37 +49,26 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/AssetManagement/models.py">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="155">
-              <caret line="69" column="35" lean-forward="false" selection-start-line="69" selection-start-column="35" selection-end-line="69" selection-end-column="35" />
-              <folding />
+            <state relative-caret-position="-631">
+              <caret line="43" column="17" lean-forward="true" selection-start-line="43" selection-start-column="17" selection-end-line="43" selection-end-column="17" />
+              <folding>
+                <element signature="n#style#0;n#p#1;n#a#0;n#div#1;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#p#2;n#a#0;n#div#1;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#p#3;n#a#0;n#div#1;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="physics_server_info.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/templates/am/physics_server_info.html">
+      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/AssetManagement/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="336" column="39" lean-forward="true" selection-start-line="336" selection-start-column="39" selection-end-line="336" selection-end-column="39" />
-              <folding>
-                <element signature="e#2455#2474#0#HTML" expanded="true" />
-                <element signature="e#2599#2616#0#HTML" expanded="true" />
-                <element signature="e#2714#2732#0#HTML" expanded="true" />
-                <element signature="e#2761#2778#0#HTML" expanded="true" />
-                <element signature="e#2808#2825#0#HTML" expanded="true" />
-                <element signature="e#2854#2871#0#HTML" expanded="true" />
-                <element signature="e#2900#2917#0#HTML" expanded="true" />
-                <element signature="e#2947#2964#0#HTML" expanded="true" />
-                <element signature="e#2997#3014#0#HTML" expanded="true" />
-                <element signature="e#3043#3060#0#HTML" expanded="true" />
-                <element signature="e#3093#3110#0#HTML" expanded="true" />
-                <element signature="e#3140#3157#0#HTML" expanded="true" />
-                <element signature="e#3187#3205#0#HTML" expanded="true" />
-                <element signature="e#3236#3254#0#HTML" expanded="true" />
-              </folding>
+            <state relative-caret-position="276">
+              <caret line="22" column="75" lean-forward="false" selection-start-line="22" selection-start-column="75" selection-end-line="22" selection-end-column="75" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -84,8 +87,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>hostInfo</find>
-      <find>hostMoreInfo</find>
       <find>hostENVInfo</find>
       <find>hostGroupInfo</find>
       <find>edit_host</find>
@@ -114,6 +115,8 @@
       <find>physics__expire_data</find>
       <find>ExpireData</find>
       <find>physics__expire_date</find>
+      <find>get_host_data</find>
+      <find>/am/host_info</find>
     </findStrings>
     <replaceStrings>
       <replace>physics_server</replace>
@@ -159,7 +162,6 @@
         <option value="$PROJECT_DIR$/CMDB/__init__.py" />
         <option value="$PROJECT_DIR$/templates/am/clone_host.html" />
         <option value="$PROJECT_DIR$/static/am/button.js" />
-        <option value="$PROJECT_DIR$/static/table.css" />
         <option value="$PROJECT_DIR$/templates/am/host_group_info.html" />
         <option value="$PROJECT_DIR$/templates/am/host_env_info.html" />
         <option value="$PROJECT_DIR$/static/am/addhost.css" />
@@ -167,22 +169,23 @@
         <option value="$PROJECT_DIR$/templates/am/clone_network_device.html" />
         <option value="$PROJECT_DIR$/templates/am/edit_host.html" />
         <option value="$PROJECT_DIR$/templates/am/edit_network_device.html" />
-        <option value="$PROJECT_DIR$/templates/am/host_info.html" />
         <option value="$PROJECT_DIR$/templates/am/network_device_info.html" />
-        <option value="$PROJECT_DIR$/templates/index.html" />
         <option value="$PROJECT_DIR$/templates/am/add_network_device.html" />
         <option value="$PROJECT_DIR$/static/am/addNetwork_editNetwork.js" />
         <option value="$PROJECT_DIR$/static/am/button.css" />
-        <option value="$PROJECT_DIR$/CMDB/settings.py" />
-        <option value="$PROJECT_DIR$/AssetManagement/urls.py" />
         <option value="$PROJECT_DIR$/AssetManagement/models.py" />
         <option value="$PROJECT_DIR$/static/am/addPhysicsServer_editPhysicsServer.js" />
         <option value="$PROJECT_DIR$/AssetManagement/migrations/0014_physicalserver.py" />
         <option value="$PROJECT_DIR$/AssetManagement/migrations/0015_auto_20180702_1716.py" />
         <option value="$PROJECT_DIR$/templates/am/add_physics_server.html" />
         <option value="$PROJECT_DIR$/templates/am/edit_physics_server.html" />
-        <option value="$PROJECT_DIR$/AssetManagement/views.py" />
         <option value="$PROJECT_DIR$/templates/am/physics_server_info.html" />
+        <option value="$PROJECT_DIR$/static/table.css" />
+        <option value="$PROJECT_DIR$/AssetManagement/urls.py" />
+        <option value="$PROJECT_DIR$/CMDB/settings.py" />
+        <option value="$PROJECT_DIR$/templates/index.html" />
+        <option value="$PROJECT_DIR$/AssetManagement/views.py" />
+        <option value="$PROJECT_DIR$/templates/am/host_info.html" />
       </list>
     </option>
   </component>
@@ -517,13 +520,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sqllite.py" />
-    <entry file="file://$PROJECT_DIR$/static/jquery.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="11" column="0" lean-forward="true" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/am/add_host_env.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="92">
@@ -548,14 +544,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/am/search.html" />
     <entry file="file://$PROJECT_DIR$/static/am/addHost_editHost.js" />
-    <entry file="file://$PROJECT_DIR$/static/tables.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="437">
-          <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/am/add_host_group.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="23">
@@ -613,14 +601,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="69">
           <caret line="3" column="1" lean-forward="false" selection-start-line="3" selection-start-column="1" selection-end-line="3" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/table.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="483">
-          <caret line="21" column="29" lean-forward="true" selection-start-line="21" selection-start-column="29" selection-end-line="21" selection-end-column="29" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -696,16 +676,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="80" column="37" lean-forward="true" selection-start-line="80" selection-start-column="37" selection-end-line="80" selection-end-column="37" />
-          <folding>
-            <element signature="n#style#0;n#p#3;n#a#0;n#div#1;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/static/am/button.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="115">
@@ -746,14 +716,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CMDB/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="119" column="14" lean-forward="true" selection-start-line="119" selection-start-column="14" selection-end-line="119" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/static/am/jQuery-jcDate.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="578">
@@ -786,14 +748,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="115">
           <caret line="5" column="49" lean-forward="false" selection-start-line="5" selection-start-column="49" selection-end-line="5" selection-end-column="49" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AssetManagement/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="22" column="0" lean-forward="true" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -838,32 +792,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/am/host_info.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="151">
-          <caret line="89" column="94" lean-forward="false" selection-start-line="89" selection-start-column="90" selection-end-line="89" selection-end-column="94" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AssetManagement/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="155">
-          <caret line="69" column="35" lean-forward="false" selection-start-line="69" selection-start-column="35" selection-end-line="69" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AssetManagement/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="364">
-          <caret line="460" column="74" lean-forward="true" selection-start-line="460" selection-start-column="74" selection-end-line="460" selection-end-column="74" />
-          <folding>
-            <element signature="e#0#49#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/am/physics_server_info.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
@@ -883,6 +811,84 @@
             <element signature="e#3140#3157#0#HTML" expanded="true" />
             <element signature="e#3187#3205#0#HTML" expanded="true" />
             <element signature="e#3236#3254#0#HTML" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AssetManagement/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="155">
+          <caret line="69" column="35" lean-forward="false" selection-start-line="69" selection-start-column="35" selection-end-line="69" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/jquery.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="11" column="0" lean-forward="true" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/tables.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="155">
+          <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="18" selection-end-column="2" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/table.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="174">
+          <caret line="57" column="0" lean-forward="true" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CMDB/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="230">
+          <caret line="85" column="3" lean-forward="true" selection-start-line="85" selection-start-column="3" selection-end-line="85" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-631">
+          <caret line="43" column="17" lean-forward="true" selection-start-line="43" selection-start-column="17" selection-end-line="43" selection-end-column="17" />
+          <folding>
+            <element signature="n#style#0;n#p#1;n#a#0;n#div#1;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#p#2;n#a#0;n#div#1;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#p#3;n#a#0;n#div#1;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AssetManagement/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="276">
+          <caret line="22" column="75" lean-forward="false" selection-start-line="22" selection-start-column="75" selection-end-line="22" selection-end-column="75" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/am/host_info.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1186">
+          <caret line="235" column="44" lean-forward="true" selection-start-line="235" selection-start-column="44" selection-end-line="235" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AssetManagement/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="320">
+          <caret line="932" column="20" lean-forward="true" selection-start-line="932" selection-start-column="20" selection-end-line="932" selection-end-column="20" />
+          <folding>
+            <element signature="e#0#49#0" expanded="true" />
           </folding>
         </state>
       </provider>

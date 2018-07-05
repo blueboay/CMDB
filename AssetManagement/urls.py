@@ -20,6 +20,7 @@ urlpatterns = [
     path('check_use', views.check_use, name="check_use"),
     path('check_is_exist', views.check_is_exist, name="check_is_exist"),
     path('get_password', views.get_password, name="get_password"),
+    path('get_total_column', views.get_total_column, name="get_total_column"),
 
     path('search_server', views.search_server, name="search_server"),
     path('search_network_device', views.search_network_device, name="search_network_device"),

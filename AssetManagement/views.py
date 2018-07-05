@@ -5,6 +5,8 @@ from django.db.models import Q
 import pyDes
 import base64
 import time
+from django.core.paginator import Paginator
+from django.utils.datastructures import MultiValueDictKeyError
 
 # Create your views here.
 Key = "Gogenius"
@@ -69,9 +71,14 @@ def get_physics_server_password(data):
     return password.encode("UTF-8")
 
 
-# 获取主机信息所有数据
-def get_host_data():
-    return models.HostInfo.objects.all()
+# 获取主机信息数据
+def get_host_data(page=1):
+    host_info = models.HostInfo.objects.all()
+    paginator = Paginator(host_info, 13)
+    page = int(page)
+    host_info = paginator.page(page)
+    # return models.HostInfo.objects.all()
+    return host_info
 
 
 # 获取主机环境所有数据
@@ -573,7 +580,7 @@ def host_group_info(request):
 
 # 资产列表
 def host_info(request):
-    all_data = render(request, 'am/host_info.html', {'data': get_host_data(),
+    all_data = render(request, 'am/host_info.html', {'data': get_host_data(request.GET["page"]),
                                                      "hostData": get_group_data(),
                                                      "envData": get_env_data()})
     return all_data
@@ -924,3 +931,11 @@ def delete(request):
                 return HttpResponse("successful")
             else:
                 pass
+
+
+# 获取数据行数
+def get_total_column(request):
+    for i in request.POST:
+        if i == "host":
+            total_data = models.HostInfo.objects.count()
+            return HttpResponse(total_data)

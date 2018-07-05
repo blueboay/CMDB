@@ -74,14 +74,24 @@ WSGI_APPLICATION = 'CMDB.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'yuyan_test',
+#         'HOST': '192.168.5.137',
+#         'PORT': '3306',
+#         'USER': 'root',
+#         'PASSWORD': '!GogenIUS123',
+#     }
+# }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'yuyan_test',
-        'HOST': '192.168.5.137',
+        'NAME': 'cmdb',
+        'HOST': '18.50.129.90',
         'PORT': '3306',
-        'USER': 'root',
-        'PASSWORD': '!GogenIUS123',
+        'USER': 'cmdb',
+        'PASSWORD': '!Gogen321',
     }
 }
 
