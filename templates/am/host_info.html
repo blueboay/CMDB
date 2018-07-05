@@ -153,29 +153,19 @@
     function get_group_env() {
         var group_name = $("#filter_group_name").val();
         var env_name = $("#filter_env").val();
-        if (group_name === "分组" && env_name !== "环境"){
-            return {"env_name": env_name, "group_name": ""}
-        }else if (env_name === "环境" && group_name !== "分组"){
-            return {"group_name": group_name, "env_name": ""}
-        }else if (env_name === "环境" &&  group_name === "分组") {
-            return {"group_name": "", "env_name": ""}
-        } else {
-            return {"group_name": group_name, "env_name": env_name}
-        }
+        url = "?env_name=" + env_name + "&" + "group_name=" + group_name;
+        return url;
     }
     function search(data) {
-        url = "/am/search_server" + data;
         $.ajax({
-            url: "/am/search_server",
-            type: "post",
-            data: data,
+            url: "/am/search_server" + data,
+            type: "get",
             dataType: "json",   {% comment %}指定接收到的数据类型{% endcomment %}
             success: function (arg) {
                 if(arg.length === 0){
                     alert("没有查询到任何数据");
                     location.reload();
                 }else {
-                    $("#tbody").html("");   {% comment %}清空原有的表单内容{% endcomment %}
 {#                    将后端数据组合成新的表单内容#}
                     var content = '';
                     $.each(arg, function (index, item) {    {% comment %}index和item为固定写法{% endcomment %}
@@ -196,7 +186,7 @@
                         "</td>" +
                         "</tr>"
                     });
-                    $("#tbody").html(content);  {% comment %}将新的表单添加进网页{% endcomment %}
+                    $("#tbody").html(content);  {% comment %}将新的表单添加替换进网页{% endcomment %}
                     (function () {
                         altRows("alternatecolor");       {% comment %}执行altRows函数，改变显示颜色{% endcomment %}
                     })()
@@ -206,14 +196,15 @@
     }
     $("#filter_group_name, #filter_env").change(function () {
         var data = get_group_env();
-        search(data)
+        search(data);
     });
     $("#search").click(function () {
         var data = $("#other").val();
         if (data === ""){
             alert("请输入查询内容后提交")
         }else {
-            search({"other": data})
+            url = "?other=" + data;
+            search(url)
         }
     });
     function checked() {

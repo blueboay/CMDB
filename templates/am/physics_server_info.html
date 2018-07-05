@@ -302,7 +302,6 @@
                     alert("没有查询到任何数据");
                     location.reload();
                 }else {
-                    $("#tbody").html("");   {% comment %}清空原有的表单内容{% endcomment %}
 {#                    将后端数据组合成新的表单内容#}
                     var content = '';
                     $.each(arg, function (index, item) {    {% comment %}index和item为固定写法{% endcomment %}
@@ -326,7 +325,7 @@
                         "</td>" +
                         "</tr>"
                     });
-                    $("#tbody").html(content);  {% comment %}将新的表单添加进网页{% endcomment %}
+                    $("#tbody").html(content);  {% comment %}将新的表单替换进网页{% endcomment %}
                     (function () {
                         altRows("alternatecolor");       {% comment %}执行altRows函数，改变显示颜色{% endcomment %}
                     })()

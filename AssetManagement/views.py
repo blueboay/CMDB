@@ -174,58 +174,58 @@ def check_use(request):
 
 # 搜索指定服务器
 def search_server(request):
-    post_data = request.POST
-    for i in post_data:
-        if i == "other":
-            search_obj = Q()
-            search_obj.add(Q(ServerName__icontains=post_data["other"]) | Q(IP__contains=post_data["other"]), Q.OR)
-            data = serializers.serialize("json", models.HostInfo.objects.filter(search_obj))
+    get_data = request.GET
+    if "other" in request.GET:
+        search_obj = Q()
+        search_obj.add(Q(ServerName__icontains=request.GET["other"]) | Q(IP__contains=request.GET["other"]),
+                       Q.OR)
+        data = serializers.serialize("json", models.HostInfo.objects.filter(search_obj))
+        return HttpResponse(data)
+    if get_data["env_name"] == "环境" and get_data["group_name"] != "分组":
+        server_name_data = models.HostAndHGroup.objects.filter(GroupName=get_data["group_name"]). \
+            values("ServerName")
+        if server_name_data.__len__() == 0:
+            # 如果没有需要查询的数据就返回空，这里模拟查询一个不存在的ServerName，主要是以空格开头，创建主机的时候不允许以空格开头
+            # 必须返回json格式，否则前端无法接收
+            data = serializers.serialize("json", models.HostInfo.objects.filter(ServerName=" test"))
             return HttpResponse(data)
         else:
-            if post_data["env_name"] == "" and post_data["group_name"] != "":
-                server_name_data = models.HostAndHGroup.objects.filter(GroupName=post_data["group_name"]).\
-                    values("ServerName")
-                if server_name_data.__len__() == 0:
-                    # 如果没有需要查询的数据就返回空，这里模拟查询一个不存在的ServerName，主要是以空格开头，创建主机的时候不允许以空格开头
-                    # 必须返回json格式，否则前端无法接收
-                    data = serializers.serialize("json", models.HostInfo.objects.filter(ServerName=" test"))
-                    return HttpResponse(data)
-                else:
-                    # 使用Django数据的Q类来实现复杂查询
-                    search_obj = Q()
-                    # 指定表达式的连接方式运算符，可以是OR AND NOT
-                    search_obj.connector = "OR"
-                    for server_name in server_name_data:
-                        # 添加表达式
-                        search_obj.children.append(("ServerName", server_name["ServerName"]))
-                    data = serializers.serialize("json", models.HostInfo.objects.filter(search_obj))
-                    return HttpResponse(data)
-            elif post_data["env_name"] != "" and post_data["group_name"] == "":
-                # total_data = models.HostInfo.objects.filter(Environment=post_data["env_name"])
-                # paginator = Paginator(total_data, 13)
-                # page= int(request.GET["page"])
-                # data = serializers.serialize("json", paginator.page(page))
-                # 返回Json数据格式给前端
-                data = serializers.serialize("json", models.HostInfo.objects.filter(Environment=post_data["env_name"]))
-                return HttpResponse(data)
-            elif post_data["env_name"] == "" and post_data["group_name"] == "":
-                data = serializers.serialize("json", models.HostInfo.objects.all())
-                return HttpResponse(data)
-            else:
-                search_obj = Q()
-                q1 = Q()
-                q1.connector = "AND"
-                q1.children.append(("Environment", post_data["env_name"]))
-                q2 = Q()
-                q2.connector = "OR"
-                server_name_data = models.HostAndHGroup.objects.filter(GroupName=post_data["group_name"]).\
-                    values("ServerName")
-                for server_name in server_name_data:
-                    q2.children.append(("ServerName", server_name["ServerName"]))
-                search_obj.add(q1, "AND")
-                search_obj.add(q2, "AND")
-                data = serializers.serialize("json", models.HostInfo.objects.filter(search_obj))
-                return HttpResponse(data)
+            # 使用Django数据的Q类来实现复杂查询
+            search_obj = Q()
+            # 指定表达式的连接方式运算符，可以是OR AND NOT
+            search_obj.connector = "OR"
+            for server_name in server_name_data:
+                # 添加表达式
+                search_obj.children.append(("ServerName", server_name["ServerName"]))
+            data = serializers.serialize("json", models.HostInfo.objects.filter(search_obj))
+            return HttpResponse(data)
+    elif get_data["env_name"] != "环境" and get_data["group_name"] == "分组":
+        # total_data = models.HostInfo.objects.filter(Environment=post_data["env_name"])
+        # paginator = Paginator(total_data, 13)
+        # page= int(request.GET["page"])
+        # data = serializers.serialize("json", paginator.page(page))
+        # 返回Json数据格式给前端
+        data = serializers.serialize("json", models.HostInfo.objects.filter(
+            Environment=get_data["env_name"]))
+        return HttpResponse(data)
+    elif get_data["env_name"] == "环境" and get_data["group_name"] == "分组":
+        data = serializers.serialize("json", models.HostInfo.objects.all())
+        return HttpResponse(data)
+    else:
+        search_obj = Q()
+        q1 = Q()
+        q1.connector = "AND"
+        q1.children.append(("Environment", get_data["env_name"]))
+        q2 = Q()
+        q2.connector = "OR"
+        server_name_data = models.HostAndHGroup.objects.filter(GroupName=get_data["group_name"]). \
+            values("ServerName")
+        for server_name in server_name_data:
+            q2.children.append(("ServerName", server_name["ServerName"]))
+        search_obj.add(q1, "AND")
+        search_obj.add(q2, "AND")
+        data = serializers.serialize("json", models.HostInfo.objects.filter(search_obj))
+        return HttpResponse(data)
 
 
 # 搜索指定网络设备
@@ -945,3 +945,8 @@ def get_total_column(request):
         if i == "host":
             total_data = models.HostInfo.objects.count()
             return HttpResponse(total_data)
+
+
+def test(request):
+    print(request.GET)
+    return HttpResponse("OK")
