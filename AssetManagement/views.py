@@ -1,7 +1,7 @@
 from django.shortcuts import render, HttpResponse
-from django.core import serializers
+from django.core import serializers             # 用于将数据库查询结果转换为Json格式
 from AssetManagement import models
-from django.db.models import Q
+from django.db.models import Q                  # Django高级Q查询
 import pyDes
 import base64
 import time
@@ -14,11 +14,30 @@ Key = "Gogenius"
 Iv = "Gogen123"
 
 
-# 获取系统当前时间与服务器过保时间比较，返回是否过保
+# 密码加密
+def encrypt_str(data):
+    # 加密方法
+    method = pyDes.des(Key, pyDes.CBC, Iv, pad=None, padmode=pyDes.PAD_PKCS5)
+    # 执行加密码
+    k = method.encrypt(data)
+    # 转base64编码并返回
+    return base64.b64encode(k)
+
+
+# 密码解密
+def decrypt_str(data):
+    method = pyDes.des(Key, pyDes.CBC, Iv, pad=None, padmode=pyDes.PAD_PKCS5)
+    # 对base64编码解密
+    k = base64.b64decode(data)
+    # 再执行Des解码并返回
+    return method.decrypt(k)
+
+
+# 获取系统当前时间与服务器过保时间比较，用户判断服务器是否过保
 def diff_date(state):
-    # 获取当前时间,获取的时间戳，取整
+    # 获取当前时间的时间戳，取整
     now_date = int(time.time())
-    # 取出数据库的所有数据，只要id和ExpireDate字段
+    # 取出数据库的所有服务器信息，只要id和ExpireDate字段
     date_list = models.PhysicalServer.objects.all().values("id", "ExpireDate")
     is_expire_id_list = []
     is_not_expire_id_list = []
@@ -35,32 +54,13 @@ def diff_date(state):
         return is_not_expire_id_list
 
 
-# 加密
-def encrypt_str(data):
-    # 加密方法
-    method = pyDes.des(Key, pyDes.CBC, Iv, pad=None, padmode=pyDes.PAD_PKCS5)
-    # 执行加密码
-    k = method.encrypt(data)
-    # 转base64编码并返回
-    return base64.b64encode(k)
-
-
-# 解密
-def decrypt_str(data):
-    method = pyDes.des(Key, pyDes.CBC, Iv, pad=None, padmode=pyDes.PAD_PKCS5)
-    # 对base64编码解密
-    k = base64.b64decode(data)
-    # 再执行Des解码并返回
-    return method.decrypt(k)
-
-
 # 获取主机超级用户密码并改成bytes类型
 def get_host_password(data):
     password = models.HostInfo.objects.filter(id=data).values()[0]["SuperUserPass"]
     return password.encode("UTF-8")
 
 
-# 获取网络设备密码
+# 获取网络设备密码并改成bytes类型
 def get_network_device_password(data):
     password = models.NetworkDevice.objects.filter(id=data).values()[0]["Password"]
     return password.encode("UTF-8")
@@ -95,7 +95,7 @@ def get_env_data():
 
 
 # 获取网络设备表所有数据
-def get_network_device_data(page):
+def get_network_device_data(page=1):
     total_data = models.NetworkDevice.objects.all()
     paginator = Paginator(total_data, 13)
     page = int(page)
@@ -104,7 +104,7 @@ def get_network_device_data(page):
 
 
 # 获取物理服务器所有数据
-def get_physics_server_data(page):
+def get_physics_server_data(page=1):
     total_data = models.PhysicalServer.objects.all()
     paginator = Paginator(total_data, 13)
     page = int(page)
@@ -219,9 +219,6 @@ def search_server(request):
             total_data = models.HostInfo.objects.filter(search_obj)
     elif get_data["env_name"] != "环境" and get_data["group_name"] == "分组":
         total_data = models.HostInfo.objects.filter(Environment=get_data["env_name"])
-        total_number = models.HostInfo.objects.filter(Environment=get_data["env_name"]).count()
-        data = json.dumps({"num": total_number, "data": filter_search(total_data, request.GET["page"]), "tag": "2"})
-        return HttpResponse(data)
     elif get_data["env_name"] == "环境" and get_data["group_name"] == "分组":
         total_data = models.HostInfo.objects.all()
     else:
@@ -238,86 +235,69 @@ def search_server(request):
         search_obj.add(q1, "AND")
         search_obj.add(q2, "AND")
         total_data = models.HostInfo.objects.filter(search_obj)
-    total_number =total_data.count()
+    total_number = total_data.count()
     data = json.dumps({"num": total_number, "data": filter_search(total_data, request.GET["page"]), "tag": "2"})
     return HttpResponse(data)
 
 
-
 # 搜索指定网络设备
 def search_network_device(request):
-    post_data = request.POST
-    for i in post_data:
-        if i == "other":
-            search_obj = Q()
-            search_obj.add(Q(Name__icontains=post_data["other"])
-                           | Q(ManageIP__contains=post_data["other"])
-                           | Q(Position__contains=post_data["other"]), Q.OR)
-            data = serializers.serialize("json", models.NetworkDevice.objects.filter(search_obj))
-            return HttpResponse(data)
+    get_data = request.GET
+    if "other" in request.GET:
+        search_obj = Q()
+        search_obj.add(Q(Name__icontains=get_data["other"])
+                       | Q(ManageIP__contains=get_data["other"])
+                       | Q(Position__contains=get_data["other"]), Q.OR)
+        total_data = models.NetworkDevice.objects.filter(search_obj)
+        total_number = total_data.count()
+        data = json.dumps({"num": total_number, "data": filter_search(total_data, request.GET["page"]), "tag": "1"})
+        return HttpResponse(data)
+    if get_data["network_device_type"] == "类型" and get_data["network_device_owner"] == "所有者" \
+            and get_data["network_device_brand"] == "品牌":
+        total_data = models.NetworkDevice.objects.all()
+    elif get_data["network_device_type"] != "类型" and get_data["network_device_owner"] != "所有者" \
+            and get_data["network_device_brand"] != "品牌":
+        q1 = Q()
+        q1.connector = "AND"
+        q1.children.append(("Type", get_data["network_device_type"]))
+        q1.children.append(("Brand", get_data["network_device_brand"]))
+        q1.children.append(("Owner", get_data["network_device_owner"]))
+        total_data = models.NetworkDevice.objects.filter(q1)
+    elif get_data["network_device_type"] == "类型" and get_data["network_device_owner"] == "所有者" \
+            and get_data["network_device_brand"] != "品牌":
+        total_data = models.NetworkDevice.objects.filter(Brand=get_data["network_device_brand"])
+    elif get_data["network_device_type"] == "类型" and get_data["network_device_owner"] != "所有者" \
+            and get_data["network_device_brand"] == "品牌":
+        total_data = models.NetworkDevice.objects.filter(Owner=get_data["network_device_owner"])
+    elif get_data["network_device_type"] != "类型" and get_data["network_device_owner"] == "所有者" \
+            and get_data["network_device_brand"] == "品牌":
+        total_data = models.NetworkDevice.objects.filter(Type=get_data["network_device_type"])
+    elif get_data["network_device_type"] != "类型" and get_data["network_device_owner"] != "所有者" \
+            and get_data["network_device_brand"] == "品牌":
+        q1 = Q()
+        q1.connector = "AND"
+        q1.children.append(("Type", get_data["network_device_type"]))
+        q1.children.append(("Owner", get_data["network_device_owner"]))
+        total_data = models.NetworkDevice.objects.filter(q1)
+    elif get_data["network_device_type"] != "类型" and get_data["network_device_owner"] == "所有者" \
+            and get_data["network_device_brand"] != "品牌":
+        q1 = Q()
+        q1.connector = "AND"
+        q1.children.append(("Type", get_data["network_device_type"]))
+        q1.children.append(("Brand", get_data["network_device_brand"]))
+        total_data = models.NetworkDevice.objects.filter(q1)
+    elif get_data["network_device_type"] == "类型" and get_data["network_device_owner"] != "所有者" \
+            and get_data["network_device_brand"] != "品牌":
+        q1 = Q()
+        q1.connector = "AND"
+        q1.children.append(("Brand", get_data["network_device_brand"]))
+        q1.children.append(("Owner", get_data["network_device_owner"]))
+        total_data = models.NetworkDevice.objects.filter(q1)
     else:
-        if post_data["network_device_type"] == "" \
-                and post_data["network_device_owner"] == "" \
-                and post_data["network_device_brand"] == "":
-            data = serializers.serialize("json", models.NetworkDevice.objects.all())
-            return HttpResponse(data)
-        elif post_data["network_device_type"] != "" \
-                and post_data["network_device_owner"] != "" \
-                and post_data["network_device_brand"] != "":
-            q1 = Q()
-            q1.connector = "AND"
-            q1.children.append(("Type", post_data["network_device_type"]))
-            q1.children.append(("Brand", post_data["network_device_brand"]))
-            q1.children.append(("Owner", post_data["network_device_owner"]))
-            data = serializers.serialize("json", models.NetworkDevice.objects.filter(q1))
-            return HttpResponse(data)
-        elif post_data["network_device_type"] == "" \
-                and post_data["network_device_owner"] == "" \
-                and post_data["network_device_brand"] != "":
-            data = serializers.serialize("json",
-                                         models.NetworkDevice.objects.filter(Brand=post_data["network_device_brand"]))
-            return HttpResponse(data)
-        elif post_data["network_device_type"] == "" \
-                and post_data["network_device_owner"] != "" \
-                and post_data["network_device_brand"] == "":
-            data = serializers.serialize("json",
-                                         models.NetworkDevice.objects.filter(Owner=post_data["network_device_owner"]))
-            return HttpResponse(data)
-        elif post_data["network_device_type"] != "" \
-                and post_data["network_device_owner"] == "" \
-                and post_data["network_device_brand"] == "":
-            data = serializers.serialize("json",
-                                         models.NetworkDevice.objects.filter(Type=post_data["network_device_type"]))
-            return HttpResponse(data)
-        elif post_data["network_device_type"] != "" \
-                and post_data["network_device_owner"] != "" \
-                and post_data["network_device_brand"] == "":
-            q1 = Q()
-            q1.connector = "AND"
-            q1.children.append(("Type", post_data["network_device_type"]))
-            q1.children.append(("Owner", post_data["network_device_owner"]))
-            data = serializers.serialize("json", models.NetworkDevice.objects.filter(q1))
-            return HttpResponse(data)
-        elif post_data["network_device_type"] != "" \
-                and post_data["network_device_owner"] == "" \
-                and post_data["network_device_brand"] != "":
-            q1 = Q()
-            q1.connector = "AND"
-            q1.children.append(("Type", post_data["network_device_type"]))
-            q1.children.append(("Brand", post_data["network_device_brand"]))
-            data = serializers.serialize("json", models.NetworkDevice.objects.filter(q1))
-            return HttpResponse(data)
-        elif post_data["network_device_type"] == "" \
-                and post_data["network_device_owner"] != "" \
-                and post_data["network_device_brand"] != "":
-            q1 = Q()
-            q1.connector = "AND"
-            q1.children.append(("Brand", post_data["network_device_brand"]))
-            q1.children.append(("Owner", post_data["network_device_owner"]))
-            data = serializers.serialize("json", models.NetworkDevice.objects.filter(q1))
-            return HttpResponse(data)
-        else:
-            pass
+        pass
+    total_number = total_data.count()
+    data = json.dumps({"num": total_number, "data": filter_search(total_data, request.GET["page"]), "tag": "2"})
+    return HttpResponse(data)
 
 
 # 搜索物理服务器

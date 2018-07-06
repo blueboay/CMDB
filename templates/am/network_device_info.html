@@ -132,7 +132,7 @@
                     traditional: true,
                     success: function (arg) {
                         if (arg === "successful"){
-                            location.reload();
+                             window.location.href = "/am/network_device_info?page=1"
                         }
                     },
                     fail: function () {
@@ -146,77 +146,65 @@
         window.location.href = "/am/add_network_device"
     });
 
-    function get_group_env() {
+    function get_group_env(page) {
         var network_device_type = $("#filter_network_device_type").val();
         var network_device_owner = $("#filter_network_device_owner").val();
         var network_device_brand = $("#filter_network_device_brand").val();
-        if (network_device_type === "类型" && network_device_owner === "所有者" && network_device_brand === "品牌"){
-            return {"network_device_type": "", "network_device_owner": "", "network_device_brand": "" }
-        }else if (network_device_type !== "类型" && network_device_owner !== "所有者" && network_device_brand !== "品牌"){
-            return {"network_device_type": network_device_type, "network_device_owner": network_device_owner, "network_device_brand": network_device_brand }
-        }else if (network_device_type === "类型" && network_device_owner !== "所有者" && network_device_brand !== "品牌"){
-            return {"network_device_type": "", "network_device_owner": network_device_owner, "network_device_brand": network_device_brand }
-        }else if (network_device_type !== "类型" && network_device_owner === "所有者" && network_device_brand !== "品牌"){
-            return {"network_device_type": network_device_type, "network_device_owner": "", "network_device_brand": network_device_brand }
-        }else if (network_device_type !== "类型" && network_device_owner !== "所有者" && network_device_brand === "品牌"){
-            return {"network_device_type": network_device_type, "network_device_owner": network_device_owner, "network_device_brand": "" }
-        }else if (network_device_type === "类型" && network_device_owner === "所有者" && network_device_brand !== "品牌"){
-            return {"network_device_type": "", "network_device_owner": "", "network_device_brand": network_device_brand }
-        }else if (network_device_type === "类型" && network_device_owner !== "所有者" && network_device_brand === "品牌"){
-            return {"network_device_type": "", "network_device_owner": network_device_owner, "network_device_brand": "" }
-        }else if (network_device_type !== "类型" && network_device_owner === "所有者" && network_device_brand === "品牌"){
-            return {"network_device_type": network_device_type, "network_device_owner": "", "network_device_brand": "" }
-        }
+        url = "/am/search_network_device" + "?network_device_type=" + network_device_type +
+                "&" + "network_device_owner=" + network_device_owner +
+                "&" + "network_device_brand=" + network_device_brand +
+                "&" + "page=" + page;
+        return url
+
     }
     function search(data) {
         $.ajax({
-            url: "/am/search_network_device",
-            type: "post",
-            data: data,
+            url: data,
+            type: "get",
             dataType: "json",   {% comment %}指定接收到的数据类型{% endcomment %}
             success: function (arg) {
-                console.log(arg);
-                if(arg.length === 0){
-                    alert("没有查询到任何数据");
-                    location.reload();
-                }else {
-{#                    将后端数据组合成新的表单内容#}
-                    var content = '';
-                    $.each(arg, function (index, item) {    {% comment %}index和item为固定写法{% endcomment %}
-                    content += "<tr>" +
-                        "<td><input type='checkbox' name=" +item.pk+"></td>" +
-                        "<td>"+item.fields.Name+"</td>" +
-                        "<td>"+item.fields.ManageIP+"</td>" +
-                        "<td>"+item.fields.Type+"</td>" +
-                        "<td>"+item.fields.Brand+"</td>" +
-                        "<td>"+item.fields.Owner+"</td>" +
-                        "<td>"+item.fields.Position+"</td>" +
-                        "<td>"+item.fields.Note+"</td>" +
-                        "<td>"+
-                            "<a style='margin-right: 4px' id='moreInfo' href=/am/get_password?more_network_device="+item.pk+">获取密码</a>" +
-                            "<a style='margin-right: 4px' id='edit' href=/am/edit?network_device="+item.pk+">编辑</a>" +
-                            "<a style='margin-right: 4px' id='del' href=/am/delete?edit_network_device="+item.pk+" onclick='return checked()'>删除</a>" +
-                        "</td>" +
-                        "</tr>"
-                    });
-                    $("#tbody").html(content);  {% comment %}将新的表单替换进网页{% endcomment %}
-                    (function () {
-                        altRows("alternatecolor");       {% comment %}执行altRows函数，改变显示颜色{% endcomment %}
-                    })()
+{#                将后端数据组合成新的表单内容#}
+                var content = '';
+                $.each(JSON.parse(arg["data"]), function (index, item) {    {% comment %}index和item为固定写法{% endcomment %}
+                content += "<tr>" +
+                    "<td><input type='checkbox' name=" +item.pk+"></td>" +
+                    "<td>"+item.fields.Name+"</td>" +
+                    "<td>"+item.fields.ManageIP+"</td>" +
+                    "<td>"+item.fields.Type+"</td>" +
+                    "<td>"+item.fields.Brand+"</td>" +
+                    "<td>"+item.fields.Owner+"</td>" +
+                    "<td>"+item.fields.Position+"</td>" +
+                    "<td>"+item.fields.Note+"</td>" +
+                    "<td>"+
+                        "<a style='margin-right: 4px' id='moreInfo' href=/am/get_password?more_network_device="+item.pk+">获取密码</a>" +
+                        "<a style='margin-right: 4px' id='edit' href=/am/edit?network_device="+item.pk+">编辑</a>" +
+                        "<a style='margin-right: 4px' id='del' href=/am/delete?edit_network_device="+item.pk+" onclick='return checked()'>删除</a>" +
+                    "</td>" +
+                    "</tr>"
+                });
+                $("#tbody").html(content);  {% comment %}将新的表单替换进网页{% endcomment %}
+                altRows("alternatecolor");       {% comment %}执行altRows函数，改变显示颜色{% endcomment %}
+                var html = "";
+                page = parseInt(arg["num"]/13+0.999999999);
+                for (var i=1;i<=page;i++) {
+                    html += "<li><a href=javascript:void(0) onclick=search_page(this) id="+arg["tag"]+">"+i+"</a></li>"
                 }
+                $("#pagination").html(html);
+                $("#total_number").text("总记录数为："+arg["num"])
             }
         });
     }
     $("#filter_network_device_brand, #filter_network_device_owner, #filter_network_device_type").change(function () {
-        var data = get_group_env();
-        search(data)
+        var url = get_group_env(1);
+        search(url)
     });
     $("#search").click(function () {
         var data = $("#other").val();
         if (data === ""){
             alert("请输入查询内容后提交")
         }else {
-            search({"other": data})
+            url = "/am/search_network_device" + "?other=" + data + "&" + "page=1";
+            search(url)
         }
     });
     function checked() {
@@ -233,7 +221,7 @@
             data: "network_device",
             success: function (arg) {
                 var html = "";
-                page = parseInt(arg/13+0.9);
+                page = parseInt(arg/13+0.999999999);
                 for (var i=1;i<=page;i++) {
                     html += "<li><a href=/am/network_device_info?page="+i+">"+i+"</a></li>"
                 }
@@ -242,5 +230,17 @@
             }
         })
     });
+    function search_page(ths) {
+        var page = ths.text;
+        var id = ths.id;
+        var data = $("#other").val();
+        if (id === "2"){
+            var url = get_group_env(page);
+            search(url)
+        }else {
+            var url = "/am/search_network_device" + "?other=" + data + "&" + "page=" + page;
+            search(url)
+        }
+    }
     </script>
 {% endblock %}

@@ -147,7 +147,7 @@
                     traditional: true,
                     success: function (arg) {
                         if (arg === "successful"){
-                            location.reload();
+                            window.location.href = "/am/physics_server_info?page=1"
                         }
                     },
                     fail: function () {
@@ -243,7 +243,7 @@
             data: "physics_server",
             success: function (arg) {
                 var html = "";
-                page = parseInt(arg/13+0.9);
+                page = parseInt(arg/13+0.999999999);
                 for (var i=1;i<=page;i++) {
                     html += "<li><a href=/am/physics_server_info?page="+i+">"+i+"</a></li>"
                 }
