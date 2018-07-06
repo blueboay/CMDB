@@ -7,6 +7,7 @@ import base64
 import time
 # 用于查询数据分页功能
 from django.core.paginator import Paginator
+import json
 
 # Create your views here.
 Key = "Gogenius"
@@ -172,14 +173,25 @@ def check_use(request):
                     return HttpResponse("E")
 
 
+# 过滤结果返回
+def filter_search(total_data, page):
+    paginator = Paginator(total_data, 13)
+    page = int(page)
+    data = serializers.serialize("json", paginator.page(page))
+    return data
+
+
 # 搜索指定服务器
 def search_server(request):
     get_data = request.GET
     if "other" in request.GET:
+        print(request.GET["page"])
         search_obj = Q()
         search_obj.add(Q(ServerName__icontains=request.GET["other"]) | Q(IP__contains=request.GET["other"]),
                        Q.OR)
-        data = serializers.serialize("json", models.HostInfo.objects.filter(search_obj))
+        total_number = models.HostInfo.objects.filter(search_obj).count()
+        total_data = models.HostInfo.objects.filter(search_obj)
+        data = json.dumps({"num": total_number, "data": filter_search(total_data, request.GET["page"]), "tag": "1"})
         return HttpResponse(data)
     if get_data["env_name"] == "环境" and get_data["group_name"] != "分组":
         server_name_data = models.HostAndHGroup.objects.filter(GroupName=get_data["group_name"]). \
@@ -197,19 +209,19 @@ def search_server(request):
             for server_name in server_name_data:
                 # 添加表达式
                 search_obj.children.append(("ServerName", server_name["ServerName"]))
-            data = serializers.serialize("json", models.HostInfo.objects.filter(search_obj))
+            total_number = models.HostInfo.objects.filter(search_obj).count()
+            total_data = models.HostInfo.objects.filter(search_obj)
+            data = json.dumps({"num": total_number, "data": filter_search(total_data, request.GET["page"]), "tag": "2"})
             return HttpResponse(data)
     elif get_data["env_name"] != "环境" and get_data["group_name"] == "分组":
-        # total_data = models.HostInfo.objects.filter(Environment=post_data["env_name"])
-        # paginator = Paginator(total_data, 13)
-        # page= int(request.GET["page"])
-        # data = serializers.serialize("json", paginator.page(page))
-        # 返回Json数据格式给前端
-        data = serializers.serialize("json", models.HostInfo.objects.filter(
-            Environment=get_data["env_name"]))
+        total_data = models.HostInfo.objects.filter(Environment=get_data["env_name"])
+        total_number = models.HostInfo.objects.filter(Environment=get_data["env_name"]).count()
+        data = json.dumps({"num": total_number, "data": filter_search(total_data, request.GET["page"]), "tag": "2"})
         return HttpResponse(data)
     elif get_data["env_name"] == "环境" and get_data["group_name"] == "分组":
-        data = serializers.serialize("json", models.HostInfo.objects.all())
+        total_number = models.HostInfo.objects.count()
+        total_data = models.HostInfo.objects.all()
+        data = json.dumps({"num": total_number, "data": filter_search(total_data, request.GET["page"]), "tag": "2"})
         return HttpResponse(data)
     else:
         search_obj = Q()
@@ -224,7 +236,9 @@ def search_server(request):
             q2.children.append(("ServerName", server_name["ServerName"]))
         search_obj.add(q1, "AND")
         search_obj.add(q2, "AND")
-        data = serializers.serialize("json", models.HostInfo.objects.filter(search_obj))
+        total_data = models.HostInfo.objects.filter(search_obj)
+        total_number = models.HostInfo.objects.filter(search_obj).count()
+        data = json.dumps({"num": total_number, "data": filter_search(total_data, request.GET["page"]), "tag": "2"})
         return HttpResponse(data)
 
 
@@ -945,8 +959,3 @@ def get_total_column(request):
         if i == "host":
             total_data = models.HostInfo.objects.count()
             return HttpResponse(total_data)
-
-
-def test(request):
-    print(request.GET)
-    return HttpResponse("OK")
