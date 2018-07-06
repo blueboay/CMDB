@@ -119,6 +119,11 @@
              {% endfor %}
         </tbody>
     </table>
+    <div id="table_bottom">
+        <span id="total_number"></span>
+        <ul class="pagination" id="pagination">
+        </ul>
+    </div>
 {% endblock %}
 {% block js %}
     <script src="/static/tables.js"></script>
@@ -156,193 +161,72 @@
         window.location.href = "/am/add_physics_server"
     });
 
-    function get_group_env() {
+    function get_group_env(page) {
         var physics_server_type = $("#filter_physics_server_type").val();
         var physics_server_owner = $("#filter_physics_server_owner").val();
         var physics_server_brand = $("#filter_physics_server_brand").val();
         var physics_expire_date = $("#filter_expire_date").val();
-        if (physics_server_type === "类型"
-            && physics_server_owner === "所有者"
-            && physics_server_brand === "品牌"
-            && physics_expire_date === "保修状态"){
-            return {"physics_server_type": "",
-                "physics_server_owner": "",
-                "physics_server_brand": "",
-                "physics_expire_date": "" }
-        }else if (physics_server_type !== "类型"
-            && physics_server_owner !== "所有者"
-            && physics_server_brand !== "品牌"
-            && physics_expire_date !== "保修状态"){
-            return {"physics_server_type": physics_server_type,
-                "physics_server_owner": physics_server_owner,
-                "physics_server_brand": physics_server_brand,
-                "physics_expire_date": physics_expire_date }
-        }else if (physics_server_type !== "类型"
-            && physics_server_owner === "所有者"
-            && physics_server_brand === "品牌"
-            && physics_expire_date === "保修状态"){
-            return {"physics_server_type": physics_server_type,
-                "physics_server_owner": "",
-                "physics_server_brand": "",
-                "physics_expire_date": "" }
-        }else if (physics_server_type === "类型"
-            && physics_server_owner !== "所有者"
-            && physics_server_brand === "品牌"
-            && physics_expire_date === "保修状态"){
-            return {"physics_server_type": "",
-                "physics_server_owner": physics_server_owner,
-                "physics_server_brand": "",
-                "physics_expire_date": "" }
-        }else if (physics_server_type === "类型"
-            && physics_server_owner === "所有者"
-            && physics_server_brand !== "品牌"
-            && physics_expire_date === "保修状态"){
-            return {"physics_server_type": "",
-                "physics_server_owner": "",
-                "physics_server_brand": physics_server_brand,
-                "physics_expire_date": "" }
-        }else if (physics_server_type === "类型"
-            && physics_server_owner === "所有者"
-            && physics_server_brand === "品牌"
-            && physics_expire_date !== "保修状态"){
-            return {"physics_server_type": "",
-                "physics_server_owner": "",
-                "physics_server_brand": "",
-                "physics_expire_date": physics_expire_date }
-        }else if (physics_server_type !== "类型"
-            && physics_server_owner !== "所有者"
-            && physics_server_brand === "品牌"
-            && physics_expire_date === "保修状态"){
-            return {"physics_server_type": physics_server_type,
-                "physics_server_owner": physics_server_owner,
-                "physics_server_brand": "",
-                "physics_expire_date": "" }
-        }else if (physics_server_type !== "类型"
-            && physics_server_owner === "所有者"
-            && physics_server_brand !== "品牌"
-            && physics_expire_date === "保修状态"){
-            return {"physics_server_type": physics_server_type,
-                "physics_server_owner": "",
-                "physics_server_brand": physics_server_brand,
-                "physics_expire_date": "" }
-        }else if (physics_server_type !== "类型"
-            && physics_server_owner === "所有者"
-            && physics_server_brand === "品牌"
-            && physics_expire_date !== "保修状态"){
-            return {"physics_server_type": physics_server_type,
-                "physics_server_owner": "",
-                "physics_server_brand": "",
-                "physics_expire_date": physics_expire_date }
-        }else if (physics_server_type === "类型"
-            && physics_server_owner !== "所有者"
-            && physics_server_brand !== "品牌"
-            && physics_expire_date === "保修状态"){
-            return {"physics_server_type": "",
-                "physics_server_owner": physics_server_owner,
-                "physics_server_brand": physics_server_brand,
-                "physics_expire_date": "" }
-        }else if (physics_server_type === "类型"
-            && physics_server_owner !== "所有者"
-            && physics_server_brand === "品牌"
-            && physics_expire_date !== "保修状态"){
-            return {"physics_server_type": "",
-                "physics_server_owner": physics_server_owner,
-                "physics_server_brand": "",
-                "physics_expire_date": physics_expire_date }
-        }else if (physics_server_type === "类型"
-            && physics_server_owner === "所有者"
-            && physics_server_brand !== "品牌"
-            && physics_expire_date !== "保修状态"){
-            return {"physics_server_type": "",
-                "physics_server_owner": "",
-                "physics_server_brand": physics_server_brand,
-                "physics_expire_date": physics_expire_date }
-        }else if (physics_server_type !== "类型"
-            && physics_server_owner !== "所有者"
-            && physics_server_brand !== "品牌"
-            && physics_expire_date === "保修状态"){
-            return {"physics_server_type": physics_server_type,
-                "physics_server_owner": physics_server_owner,
-                "physics_server_brand": physics_server_brand,
-                "physics_expire_date": "" }
-        }else if (physics_server_type !== "类型"
-            && physics_server_owner !== "所有者"
-            && physics_server_brand === "品牌"
-            && physics_expire_date !== "保修状态"){
-            return {"physics_server_type": physics_server_type,
-                "physics_server_owner": physics_server_owner,
-                "physics_server_brand": "",
-                "physics_expire_date": physics_expire_date }
-        }else if (physics_server_type !== "类型"
-            && physics_server_owner === "所有者"
-            && physics_server_brand !== "品牌"
-            && physics_expire_date !== "保修状态"){
-            return {"physics_server_type": physics_server_type,
-                "physics_server_owner": "",
-                "physics_server_brand": physics_server_brand,
-                "physics_expire_date": physics_expire_date }
-        }else if (physics_server_type === "类型"
-            && physics_server_owner !== "所有者"
-            && physics_server_brand !== "品牌"
-            && physics_expire_date !== "保修状态"){
-            return {"physics_server_type": "",
-                "physics_server_owner": physics_server_owner,
-                "physics_server_brand": physics_server_brand,
-                "physics_expire_date": physics_expire_date }
-        }
+        url = "/am/search_physics_server" +
+                "?physics_server_type=" + physics_server_type +
+                "&" + "physics_server_owner=" + physics_server_owner +
+                "&" + "physics_server_brand=" + physics_server_brand +
+                "&" + "physics_expire_date=" + physics_expire_date +
+                "&" + "page=" + page;
+        return url
     }
     function search(data) {
+        console.log(data)
         $.ajax({
-            url: "/am/search_physics_server",
-            type: "post",
-            data: data,
+            url: data,
+            type: "get",
             dataType: "json",   {% comment %}指定接收到的数据类型{% endcomment %}
             success: function (arg) {
-                if(arg.length === 0){
-                    alert("没有查询到任何数据");
-                    location.reload();
-                }else {
-{#                    将后端数据组合成新的表单内容#}
-                    var content = '';
-                    $.each(arg, function (index, item) {    {% comment %}index和item为固定写法{% endcomment %}
-                    content += "<tr>" +
-                        "<td><input type='checkbox' name=" +item.pk+"></td>" +
-                        "<td>"+item.fields.Model+"</td>" +
-                        "<td>"+item.fields.SN+"</td>" +
-                        "<td>"+item.fields.Type+"</td>" +
-                        "<td>"+item.fields.Brand+"</td>" +
-                        "<td>"+item.fields.Owner+"</td>" +
-                        "<td>"+item.fields.ExpireDate+"</td>" +
-                        "<td>"+item.fields.Position+"</td>" +
-                        "<td>"+item.fields.CPU+"</td>" +
-                        "<td>"+item.fields.Memory+"</td>" +
-                        "<td>"+item.fields.TotalSpace+"</td>" +
-                        "<td>"+item.fields.Note+"</td>" +
-                        "<td>"+
-                            "<a style='margin-right: 4px' id='moreInfo' href=/am/get_password?physics_server="+item.pk+">获取登录信息</a>" +
-                            "<a style='margin-right: 4px' id='edit' href=/am/edit?physics_server="+item.pk+">编辑</a>" +
-                            "<a style='margin-right: 4px' id='del' href=/am/delete?physics_server="+item.pk+" onclick='return checked()'>删除</a>" +
-                        "</td>" +
-                        "</tr>"
-                    });
-                    $("#tbody").html(content);  {% comment %}将新的表单替换进网页{% endcomment %}
-                    (function () {
-                        altRows("alternatecolor");       {% comment %}执行altRows函数，改变显示颜色{% endcomment %}
-                    })()
+{#                将后端数据组合成新的表单内容#}
+                var content = '';
+                $.each(JSON.parse(arg["data"]), function (index, item) {    {% comment %}index和item为固定写法{% endcomment %}
+                content += "<tr>" +
+                    "<td><input type='checkbox' name=" +item.pk+"></td>" +
+                    "<td>"+item.fields.Model+"</td>" +
+                    "<td>"+item.fields.SN+"</td>" +
+                    "<td>"+item.fields.Type+"</td>" +
+                    "<td>"+item.fields.Brand+"</td>" +
+                    "<td>"+item.fields.Owner+"</td>" +
+                    "<td>"+item.fields.ExpireDate+"</td>" +
+                    "<td>"+item.fields.Position+"</td>" +
+                    "<td>"+item.fields.CPU+"</td>" +
+                    "<td>"+item.fields.Memory+"</td>" +
+                    "<td>"+item.fields.TotalSpace+"</td>" +
+                    "<td>"+item.fields.Note+"</td>" +
+                    "<td>"+
+                        "<a style='margin-right: 4px' id='moreInfo' href=/am/get_password?physics_server="+item.pk+">获取登录信息</a>" +
+                        "<a style='margin-right: 4px' id='edit' href=/am/edit?physics_server="+item.pk+">编辑</a>" +
+                        "<a style='margin-right: 4px' id='del' href=/am/delete?physics_server="+item.pk+" onclick='return checked()'>删除</a>" +
+                    "</td>" +
+                    "</tr>"
+                });
+                $("#tbody").html(content);  {% comment %}将新的表单替换进网页{% endcomment %}
+                altRows("alternatecolor");       {% comment %}执行altRows函数，改变显示颜色{% endcomment %}
+                var html = "";
+                page = parseInt(arg["num"]/13+0.999999999);
+                for (var i=1;i<=page;i++) {
+                    html += "<li><a href=javascript:void(0) onclick=search_page(this) id="+arg["tag"]+">"+i+"</a></li>"
                 }
+                $("#pagination").html(html);
+                $("#total_number").text("总记录数为："+arg["num"])
             }
         });
     }
     $("#filter_physics_server_brand, #filter_physics_server_owner, #filter_physics_server_type, #filter_expire_date").change(function () {
-        var data = get_group_env();
-        search(data)
+        var url = get_group_env(1);
+        search(url)
     });
     $("#search").click(function () {
         var data = $("#other").val();
         if (data === ""){
             alert("请输入查询内容后提交")
         }else {
-            search({"other": data})
+            var url = "/am/search_physics_server" + "?other=" + data + "&" + "page=1";
+            search(url)
         }
     });
     function checked() {
@@ -350,6 +234,34 @@
             return true
         }else {
             return false
+        }
+    }
+    $(document).ready(function(){
+        $.ajax({
+            url: "/am/get_total_column",
+            type: "post",
+            data: "physics_server",
+            success: function (arg) {
+                var html = "";
+                page = parseInt(arg/13+0.9);
+                for (var i=1;i<=page;i++) {
+                    html += "<li><a href=/am/physics_server_info?page="+i+">"+i+"</a></li>"
+                }
+                $("#pagination").html(html);
+                $("#total_number").text("总记录数为："+arg)
+            }
+        })
+    });
+    function search_page(ths) {
+        var page = ths.text;
+        var id = ths.id;
+        var data = $("#other").val();
+        if (id === "2") {
+            var url = get_group_env(page);
+            search(url)
+        } else {
+            var url = "/am/search_physics_server" + "?other=" + data + "&" + "page=" + page;
+            search(url)
         }
     }
     </script>

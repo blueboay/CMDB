@@ -183,9 +183,7 @@
                     "</tr>"
                 });
                 $("#tbody").html(content);  {% comment %}将新的表单添加替换进网页{% endcomment %}
-                (function () {
-                    altRows("alternatecolor");       {% comment %}执行altRows函数，改变显示颜色{% endcomment %}
-                })();
+                altRows("alternatecolor");       {% comment %}执行altRows函数，改变显示颜色{% endcomment %}
                 var html = "";
                 page = parseInt(arg["num"]/13+0.999999999);
                 for (var i=1;i<=page;i++) {
