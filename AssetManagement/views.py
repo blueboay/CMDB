@@ -642,7 +642,9 @@ def change_host_info(request):
             Keepass=request.POST["Keepass"],
             Note=request.POST["Note"],
         )
-        return HttpResponse(host_info(request))
+        return render(request, 'am/host_info.html', {'data': get_host_data(),
+                                                     "hostData": get_group_data(),
+                                                     "envData": get_env_data()})
 
 
 # 编辑网络设备信息
@@ -660,7 +662,7 @@ def change_network_device_info(request):
             Position=request.POST["Position"],
             Note=request.POST["Note"],
         )
-        return HttpResponse(network_device_info(request))
+        return render(request, "am/network_device_info.html", {"data": get_network_device_data()})
 
 
 # 编辑物理服务器信息
@@ -684,7 +686,7 @@ def change_physics_server_info(request):
             TotalSpace=request.POST["TotalSpace"],
             Note=request.POST["Note"],
         )
-        return HttpResponse(physics_server_info(request))
+        return render(request, "am/physics_server_info.html", {"data": get_physics_server_data()})
 
 
 # 添加主机分组
@@ -895,3 +897,4 @@ def get_total_column(request):
         else:
             total_data = models.NetworkDevice.objects.count()
         return HttpResponse(total_data)
+

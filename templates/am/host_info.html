@@ -3,6 +3,7 @@
 {% block head %}
     <link rel="stylesheet" type="text/css" href="/static/table.css">
     <link rel="stylesheet" type="text/css" href="/static/am/button.css">
+    <link rel="stylesheet" type="text/css" href="/static/am/verification.css">
     <style>
     #opeartion-filter{
         float: left;
@@ -87,7 +88,7 @@
                      <td>{{ i.Keepass }}</td>
                      <td>{{ i.Note }}</td>
                      <td>
-                         <a id="moreInfo" href="{% url "get_password" %}?host={{ i.id }}">获取密码</a>
+                         <a class="get_password" href="javascript:void(0)">获取密码</a>
                          <a id="edit" href="{% url "edit" %}?editHost={{ i.id }}">编辑</a>
                          <a id="clone" href="{% url "edit" %}?cloneHost={{ i.id }}">克隆</a>
                          <a id="del" href="{% url "delete" %}?host={{ i.id }}" onclick="return checked()">删除</a>
@@ -101,10 +102,35 @@
         <ul class="pagination" id="pagination">
         </ul>
     </div>
+
+{% endblock %}
+
+{% block down %}
+    <div id="verification_block"></div>
+    <form method="post" id="verification_form" action="http://www.baidu.com">
+        <div>
+            <span id="verification_title">手机验证</span>
+        </div>
+        <div id="verification_body">
+            <p style="font-size: 12px;">
+                <span id="verification_phone">你绑定的手机：133****0502</span>
+            </p>
+            <p style="font-size: 12px;">
+                <label for="verification_code_2" id="verification_code_1">校验码：</label>
+                <input type="text" id="verification_code_2">
+                <span id="verification_get">点击获取</span>
+            </p>
+        </div>
+        <div id="verification_bottom">
+            <input type="submit" value="确定">
+            <input type="button" value="取消" id="close">
+        </div>
+    </form>
 {% endblock %}
 
 {% block js %}
     <script src="/static/tables.js"></script>
+    <script src="/static/am/verification.js"></script>
     <script>
 {#    批量删除按钮#}
     $("#delButton").click(function () {
@@ -175,7 +201,7 @@
                     "<td>"+item.fields.Keepass+"</td>" +
                     "<td>"+item.fields.Note+"</td>" +
                     "<td>"+
-                        "<a style='margin-right: 4px' id='moreInfo' href=/am/get_password?host="+item.pk+">获取密码</a>" +
+                        "<a style='margin-right: 4px' class='get_password' href=javascript:void(0)>获取密码</a>" +
                         "<a style='margin-right: 4px' id='edit' href=/am/edit?host="+item.pk+">编辑</a>" +
                         "<a style='margin-right: 4px' id='clone' href=/am/edit?clone="+item.pk+">克隆</a>" +
                         "<a style='margin-right: 4px' id='del' href=/am/delete?host="+item.pk+" onclick='return checked()'>删除</a>" +
@@ -242,5 +268,9 @@
             search(url)
         }
     }
+    $(".get_password").click(function () {
+        $("#verification_block").css("display", "inherit");
+        $("#verification_form").css("display", "inherit")
+    })
     </script>
 {% endblock %}

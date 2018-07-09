@@ -111,7 +111,7 @@
                      <td>{{ i.TotalSpace }}</td>
                      <td>{{ i.Note }}</td>
                      <td>
-                         <a id="moreInfo" href="{% url "get_password" %}?physics_server={{ i.id }}">获取登录信息</a>
+                         <a class="get_password" href="javascript:void(0)">获取登录信息</a>
                          <a id="edit" href="{% url "edit" %}?physics_server={{ i.id }}">编辑</a>
                          <a id="del" href="{% url "delete" %}?physics_server={{ i.id }}" onclick="return checked()">删除</a>
                      </td>
@@ -175,7 +175,6 @@
         return url
     }
     function search(data) {
-        console.log(data)
         $.ajax({
             url: data,
             type: "get",
@@ -198,7 +197,7 @@
                     "<td>"+item.fields.TotalSpace+"</td>" +
                     "<td>"+item.fields.Note+"</td>" +
                     "<td>"+
-                        "<a style='margin-right: 4px' id='moreInfo' href=/am/get_password?physics_server="+item.pk+">获取登录信息</a>" +
+                        "<a style='margin-right: 4px' class='get_password' href=javascript:void(0)>获取登录信息</a>" +
                         "<a style='margin-right: 4px' id='edit' href=/am/edit?physics_server="+item.pk+">编辑</a>" +
                         "<a style='margin-right: 4px' id='del' href=/am/delete?physics_server="+item.pk+" onclick='return checked()'>删除</a>" +
                     "</td>" +
