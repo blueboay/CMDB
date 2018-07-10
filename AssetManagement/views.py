@@ -8,6 +8,9 @@ import time
 # 用于查询数据分页功能
 from django.core.paginator import Paginator
 import json
+import requests
+import random
+import redis
 
 # Create your views here.
 Key = "Gogenius"
@@ -540,7 +543,31 @@ def host_info(request):
 
 # 获取密码
 def get_password(request):
-    return HttpResponse("此功能还未开发")
+    phone_number = "13357110502"
+    conn = redis.Redis(host='18.50.129.90', port=6379, db=0)
+    if request.method == "POST":
+        if conn.exists(phone_number):
+            return HttpResponse(json.dumps({"code": 501}))
+        else:
+            api = "http://122.225.193.229:8093/sms/send"
+            headers = {'content-type': "application/json", 'Authorization': 'APP appid = 4abf1a,token = 9480295ab2e2eddb8'}
+            code = ""
+            for n in range(6):
+                code += str(random.randint(0, 9))
+            text = json.dumps({"phone": phone_number, "msg": "数据无价，谨慎操作。请妥善保管好你的验证码："+ code})
+            response = requests.post(url=api, data=text, headers=headers)
+            if json.loads(response.text)["code"] == 200:
+                conn.set(phone_number, code, 300)
+            return HttpResponse(response.text)
+    if request.method == "GET":
+        code_user = request.GET["code_number"]
+        code_server = conn.get(phone_number)
+        if code_server == None:
+            return HttpResponse("404")
+        elif int(code_server) == int(code_user):
+            return HttpResponse((decrypt_str(get_host_password(request.GET["host_id"]))).decode("UTF-8"))
+        else:
+            return HttpResponse("403")
 
 
 # 添加主机

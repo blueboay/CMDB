@@ -8,9 +8,9 @@
     opacity: 0.5;
     display: none;
 }
-#verification_form{
+#verification_div{
     z-index: 100;
-    width: 350px;
+    width: 500px;
     background-color: white;
     opacity: 1;
     position: fixed;
@@ -35,20 +35,33 @@
     text-align: right;
     border-top: 1px solid #e5e5e5;
 }
-#verification_phone, #verification_code_1{
+#passwd{
+    padding: 10px 20px 10px;
+    border-top: 1px solid #e5e5e5;
+}
+#verification_phone, #verification_code_info{
     color: #666;
 }
-#verification_code_2{
+#verification_code{
     border: 1px solid #cccccc;
     width: 100px;
     height: 24px;
 }
-#verification_get{
+#verification_get, #close, #get_password{
     border: 1px solid #ddd;
     background-color: #fff;
     padding: 5px 16px;
     cursor: pointer;
+    font-size: 12px;
 }
 #verification_body{
-    padding-bottom: 15px;
+    padding-bottom: 20px;
+    padding-top: 5px;
+    padding-left: 50px;
+}
+label.error, span.error{
+    color: red;
+}
+#verification_fail, #send_fail, #repeat, #send_success, #no_code, #valid_code{
+    display: none;
 }

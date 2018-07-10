@@ -21,6 +21,8 @@ Gunicorn+Ngnx+Supervisor
 #### 安装项目依赖Python模块
     python3.4 -m pip install pyDes
     python3.4 -m pip install PyMySQL
+    python3.4 -m pip install requests
+    python3.4 -m pip install redis
 ### 部署步骤二：修改配置
 创建Supervisor配置文件：
 
