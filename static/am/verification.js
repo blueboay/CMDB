@@ -11,6 +11,7 @@ $(".get_password").click(function () {
     $("#verification_block").css("display", "inherit");
     $("#verification_div").css("display", "inherit");
     $("#verification_code").val("");
+    $("#passwd_value").text("");
     hide_info();
     host_id = $(this).attr("id")
 });
