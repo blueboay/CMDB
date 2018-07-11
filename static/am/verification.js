@@ -7,21 +7,20 @@ function hide_info() {
     $("#valid_code").css("display", "none");
     $("#not_exist").css("display", "none");
 }
-$(".get_password").click(function () {
-    $("#verification_block").css("display", "inherit");
-    $("#verification_div").css("display", "inherit");
-    $("#verification_code").val("");
-    $("#passwd_value").text("");
-    hide_info();
-    host_id = $(this).attr("id")
-});
 $('body').on("mouseover", "#get_password, #close, #verification_get", function () {
     $(this).css("background-color", "#8482823b")
+}).on("click", ".get_password", function () {
+    $("#verification_block").css("display", "inherit");
+    $("#verification_div").css("display", "inherit");
+    hide_info();
+    host_id = $(this).attr("id")
 }).on("mouseout", "#get_password, #close, #verification_get", function () {
     $(this).css("background-color", "white")
 }).on("click", "#close", function () {
     $("#verification_block").css("display", "none");
-    $("#verification_div").css("display", "none")
+    $("#verification_div").css("display", "none");
+    $("#verification_code").val("");
+    $("#passwd_value").text("");
 }).on("click", "#verification_get", function () {
     hide_info();
     $.ajax({
