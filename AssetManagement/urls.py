@@ -19,7 +19,6 @@ urlpatterns = [
     path('check_repeat', views.check_repeat, name="check_repeat"),
     path('check_use', views.check_use, name="check_use"),
     path('check_is_exist', views.check_is_exist, name="check_is_exist"),
-    path('get_password', views.get_password, name="get_password"),
     path('get_total_column', views.get_total_column, name="get_total_column"),
 
     path('search_server', views.search_server, name="search_server"),
@@ -31,4 +30,6 @@ urlpatterns = [
     path('change_host_info', views.change_host_info, name="changeHostInfo"),
     path('change_network_device_info', views.change_network_device_info, name="change_network_device_info"),
     path('change_physics_server_info', views.change_physics_server_info, name="change_physics_server_info"),
+
+    path('get_login_info', views.get_login_info, name="get_login_info"),
 ]

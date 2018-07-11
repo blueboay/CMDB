@@ -65,3 +65,9 @@ label.error, span.error{
 #verification_fail, #send_fail, #repeat, #send_success, #no_code, #valid_code{
     display: none;
 }
+.alignment{
+    display: inline-block;
+    width: 70px;
+    text-align: justify;
+    text-align-last: justify;
+}

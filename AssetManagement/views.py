@@ -541,20 +541,24 @@ def host_info(request):
     return all_data
 
 
-# 获取密码
-def get_password(request):
+# 获取服务器，网络设备，硬件服务器登录管理信息
+def get_login_info(request):
     phone_number = "13357110502"
     conn = redis.Redis(host='18.50.129.90', port=6379, db=0)
     if request.method == "POST":
         if conn.exists(phone_number):
             return HttpResponse(json.dumps({"code": 501}))
         else:
-            api = "http://122.225.193.229:8093/sms/send"
-            headers = {'content-type': "application/json", 'Authorization': 'APP appid = 4abf1a,token = 9480295ab2e2eddb8'}
+            # 云片网接口
+            # api = "http://122.225.193.229:8093/sms/send"
+            # 电信接口
+            api = "http://122.225.193.229:8093/sms/sendDx"
+            headers = {'content-type': "application/json",
+                       'Authorization': 'APP appid = 4abf1a,token = 9480295ab2e2eddb8'}
             code = ""
             for n in range(6):
                 code += str(random.randint(0, 9))
-            text = json.dumps({"phone": phone_number, "msg": "数据无价，谨慎操作。请妥善保管好你的验证码："+ code})
+            text = json.dumps({"phone": phone_number, "msg": "数据无价，谨慎操作。请妥善保管好你的验证码：" + code})
             response = requests.post(url=api, data=text, headers=headers)
             if json.loads(response.text)["code"] == 200:
                 conn.set(phone_number, code, 300)
@@ -565,7 +569,19 @@ def get_password(request):
         if code_server == None:
             return HttpResponse("404")
         elif int(code_server) == int(code_user):
-            return HttpResponse((decrypt_str(get_host_password(request.GET["host_id"]))).decode("UTF-8"))
+            if "host_id" in request.GET:
+                return HttpResponse((decrypt_str(get_host_password(request.GET["host_id"]))).decode("UTF-8"))
+            if "network_id" in request.GET:
+                password = models.NetworkDevice.objects.filter(id=request.GET["network_id"]).values()[0]["Password"]
+                return HttpResponse((decrypt_str(password)).decode("UTF-8"))
+            if "physics_id" in request.GET:
+                password = models.PhysicalServer.objects.filter(id=request.GET["physics_id"]).values()[0]["ManagePassword"]
+                username = models.PhysicalServer.objects.filter(id=request.GET["physics_id"]).values()[0]["ManageUsername"]
+                url = models.PhysicalServer.objects.filter(id=request.GET["physics_id"]).values()[0]["ManageURL"]
+                return HttpResponse(json.dumps({"password": (decrypt_str(password)).decode("UTF-8"),
+                                                "username": username,
+                                                "url": url}))
+
         else:
             return HttpResponse("403")
 

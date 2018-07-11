@@ -13,7 +13,7 @@ $('body').on("mouseover", "#get_password, #close, #verification_get", function (
     $("#verification_block").css("display", "inherit");
     $("#verification_div").css("display", "inherit");
     hide_info();
-    host_id = $(this).attr("id")
+    data_id = $(this).attr("id")
 }).on("mouseout", "#get_password, #close, #verification_get", function () {
     $(this).css("background-color", "white")
 }).on("click", "#close", function () {
@@ -21,10 +21,14 @@ $('body').on("mouseover", "#get_password, #close, #verification_get", function (
     $("#verification_div").css("display", "none");
     $("#verification_code").val("");
     $("#passwd_value").text("");
+    $("#username_value").text("");
+    $("#address_value").text("");
+}).on("click", "#verification_code", function () {
+    hide_info();
 }).on("click", "#verification_get", function () {
     hide_info();
     $.ajax({
-        url: "/am/get_password",
+        url: "/am/get_login_info",
         data: {"phone_number": "13357110502"},
         type: "post",
         dataType: "json",
@@ -38,30 +42,4 @@ $('body').on("mouseover", "#get_password, #close, #verification_get", function (
             }
         }
     })
-}).on("click", "#verification_code", function () {
-    hide_info();
-}).on("click", "#get_password", function () {
-    var code_number = $("#verification_code").val();
-    if (code_number.length === 0){
-        hide_info();
-        $("#no_code").css("display", "inherit")
-    }else if(isNaN(Number(code_number))){
-        hide_info();
-        $("#valid_code").css("display", "inherit")
-    }else {
-        $.ajax({
-            url: "/am/get_password",
-            data: {"code_number": code_number, "host_id": host_id},
-            type: "get",
-            success: function (arg) {
-                if (arg === "404"){
-                    $("#not_exist").css("display", "inherit")
-                }else if (arg === "403"){
-                    $("#verification_fail").css("display", "inherit")
-                }else {
-                    $("#passwd_value").text(arg)
-                }
-            }
-        })
-    }
 });

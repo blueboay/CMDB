@@ -3,6 +3,7 @@
 {% block head %}
     <link rel="stylesheet" type="text/css" href="/static/table.css">
     <link rel="stylesheet" type="text/css" href="/static/am/button.css">
+    <link rel="stylesheet" type="text/css" href="/static/am/verification.css">
     <style>
     #opeartion-filter{
         float: left;
@@ -96,7 +97,7 @@
                      <td>{{ i.Position }}</td>
                      <td>{{ i.Note }}</td>
                      <td>
-                         <a class="get_password" href="javascript:void(0)">获取密码</a>
+                         <a class="get_password" href="javascript:void(0)" id="{{ i.id }}">获取密码</a>
                          <a id="edit" href="{% url "edit" %}?network_device={{ i.id }}">编辑</a>
                          <a id="del" href="{% url "delete" %}?network_device={{ i.id }}" onclick="return checked()">删除</a>
                      </td>
@@ -110,8 +111,44 @@
         </ul>
     </div>
 {% endblock %}
+
+{% block down %}
+    <div id="verification_block"></div>
+    <div id="verification_div">
+        <div>
+            <span id="verification_title">手机验证</span>
+        </div>
+        <div id="verification_body">
+            <p style="font-size: 12px;">
+                <span id="verification_phone">你绑定的手机：133****0502</span>
+            </p>
+            <p style="font-size: 12px;">
+                <label for="verification_code" id="verification_code_info">校验码：</label>
+                <input type="text" id="verification_code" name="name_verification_code">
+                <span id="verification_get">获取验证码</span><br>
+                <span class="error" id="verification_fail">验证失败</span>
+                <span class="error" id="send_fail">系统异常，发送失败</span>
+                <span class="error" id="repeat">请勿在5分钟内重复发送</span>
+                <span class="error" id="send_success">发送成功，5分钟有效时长</span>
+                <span class="error" id="no_code">请输入验证码</span>
+                <span class="error" id="valid_code">请输入有效验证码</span>
+                <span class="error" id="not_exist">验证码未发送</span>
+            </p>
+        </div>
+        <div id="verification_bottom">
+            <span id="get_password">获取密码</span>
+            <span id="close">取消</span>
+        </div>
+        <div id="passwd">
+            <span class="alignment">密码</span>：
+            <span id="passwd_value"></span>
+        </div>
+    </div>
+{% endblock %}
+
 {% block js %}
     <script src="/static/tables.js"></script>
+    <script src="/static/am/verification.js"></script>
     <script>
 {#    批量删除按钮#}
     $("#delButton").click(function () {
@@ -176,7 +213,7 @@
                     "<td>"+item.fields.Position+"</td>" +
                     "<td>"+item.fields.Note+"</td>" +
                     "<td>"+
-                        "<a style='margin-right: 4px' class='get_password' href=javascript:void(0)>获取密码</a>" +
+                        "<a style='margin-right: 4px' class='get_password' href=javascript:void(0) id="+item.pk+">获取密码</a>" +
                         "<a style='margin-right: 4px' id='edit' href=/am/edit?network_device="+item.pk+">编辑</a>" +
                         "<a style='margin-right: 4px' id='del' href=/am/delete?edit_network_device="+item.pk+" onclick='return checked()'>删除</a>" +
                     "</td>" +
@@ -242,5 +279,30 @@
             search(url)
         }
     }
+    $("body").on("click", "#get_password", function () {
+        var code_number = $("#verification_code").val();
+        if (code_number.length === 0){
+            hide_info();
+            $("#no_code").css("display", "inherit")
+        }else if(isNaN(Number(code_number))){
+            hide_info();
+            $("#valid_code").css("display", "inherit")
+        }else {
+            $.ajax({
+                url: "/am/get_login_info",
+                data: {"code_number": code_number, "network_id": data_id},
+                type: "get",
+                success: function (arg) {
+                    if (arg === "404"){
+                        $("#not_exist").css("display", "inherit")
+                    }else if (arg === "403"){
+                        $("#verification_fail").css("display", "inherit")
+                    }else {
+                        $("#passwd_value").text(arg)
+                    }
+                }
+            })
+        }
+    });
     </script>
 {% endblock %}
