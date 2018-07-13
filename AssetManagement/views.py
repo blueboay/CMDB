@@ -941,3 +941,25 @@ def get_total_column(request):
             total_data = models.NetworkDevice.objects.count()
         return HttpResponse(total_data)
 
+
+# 密码更改API
+def change_password_api(request):
+    # 后期这里认证接口换成数据库用户认证，并需要通过权限检查
+    id = request.GET["id"]
+    ip = request.GET["ip"]
+    new_password = request.GET["new_password"]
+    login_username = request.GET["login_username"]
+    login_password = request.GET["login_password"]
+    if login_username == "admin" and login_password == "admin":
+        q = Q()
+        q.connector = "AND"
+        q.children.append(("id", id))
+        q.children.append(("IP", ip))
+        host = models.HostInfo.objects.filter(q)
+        if host.__len__() == 1:
+            models.HostInfo.objects.filter(id=id).update(SuperUserPass=encrypt_str(new_password).decode("UTF-8"))
+            return HttpResponse("modify successful")
+        else:
+            return HttpResponse("404")
+    else:
+        return HttpResponse("403")
