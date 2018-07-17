@@ -11,10 +11,33 @@ import json
 import requests
 import random
 import redis
+import string
+from random import choice
+import paramiko
 
 # Create your views here.
 Key = "Gogenius"
 Iv = "Gogen123"
+
+
+# 连接服务器
+def conn_server(ip, port, username, password, new_password):
+    ssh = paramiko.SSHClient()
+    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    ssh.connect(hostname=ip, port=port, username=username, password=password)
+    stdin, stdout, stderr = ssh.exec_command("echo %s | passwd --stdin root" %(new_password))
+    result = stdout.readlines()
+    ssh.close()
+    return result
+
+
+# 生成新密码
+def get_passwd(length=20):
+    passwd_format = string.digits + string.ascii_letters
+    passwd = []
+    while (len(passwd) < length):
+        passwd.append(choice(passwd_format))
+    return ''.join(passwd)
 
 
 # 密码加密
@@ -942,24 +965,17 @@ def get_total_column(request):
         return HttpResponse(total_data)
 
 
-# 密码更改API
+# 密码更改
 def change_password(request):
-    # 后期这里认证接口换成数据库用户认证，并需要通过权限检查
-    id = request.GET["id"]
-    ip = request.GET["ip"]
-    new_password = request.GET["new_password"]
-    login_username = request.GET["login_username"]
-    login_password = request.GET["login_password"]
-    if login_username == "admin" and login_password == "admin":
-        q = Q()
-        q.connector = "AND"
-        q.children.append(("id", id))
-        q.children.append(("IP", ip))
-        host = models.HostInfo.objects.filter(q)
-        if host.__len__() == 1:
-            models.HostInfo.objects.filter(id=id).update(SuperUserPass=encrypt_str(new_password).decode("UTF-8"))
-            return HttpResponse("modify successful")
-        else:
-            return HttpResponse("404")
+    id = request.GET["host_id"]
+    password = decrypt_str(get_host_password(id)).decode("UTF-8")
+    username = models.HostInfo.objects.filter(id=id).values("SuperUser")[0]["SuperUser"]
+    ip = models.HostInfo.objects.filter(id=id).values("IP")[0]["IP"]
+    port = models.HostInfo.objects.filter(id=id).values("RemotePort")[0]["RemotePort"]
+    new_password = get_passwd()
+    result = conn_server(ip, port, username, password, new_password)
+    if "所有的身份验证令牌已经成功更新" in result[1]:
+        models.HostInfo.objects.filter(id=id).update(SuperUserPass=(encrypt_str(new_password)).decode("UTF-8"))
+        return HttpResponse("OK")
     else:
-        return HttpResponse("403")
+        return HttpResponse("Error")

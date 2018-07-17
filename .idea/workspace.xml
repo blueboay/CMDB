@@ -2,14 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d892a79e-fea1-44b9-b31c-f88fd54eac36" name="默认的" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AssetManagement/urls.py" afterPath="$PROJECT_DIR$/AssetManagement/urls.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AssetManagement/views.py" afterPath="$PROJECT_DIR$/AssetManagement/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/am/button.css" afterPath="$PROJECT_DIR$/static/am/button.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/am/button.js" afterPath="$PROJECT_DIR$/static/am/button.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/am/verification.js" afterPath="$PROJECT_DIR$/static/am/verification.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/am/host_info.html" afterPath="$PROJECT_DIR$/templates/am/host_info.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/am/network_device_info.html" afterPath="$PROJECT_DIR$/templates/am/network_device_info.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/am/physics_server_info.html" afterPath="$PROJECT_DIR$/templates/am/physics_server_info.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -28,7 +21,40 @@
     <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/AssetManagement/views.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-2081">
+              <caret line="15" column="15" lean-forward="true" selection-start-line="15" selection-start-column="15" selection-end-line="15" selection-end-column="15" />
+              <folding>
+                <element signature="e#0#49#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/AssetManagement/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="207">
+              <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="4" selection-end-line="9" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="host_info.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/am/host_info.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="3335">
+              <caret line="232" column="119" lean-forward="false" selection-start-line="232" selection-start-column="112" selection-end-line="232" selection-end-column="119" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -42,7 +68,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>add</find>
       <find>jcDate</find>
       <find>change</find>
       <find>chan</find>
@@ -68,10 +93,11 @@
       <find>NaN</find>
       <find>get_host_data</find>
       <find>decrypt_str</find>
-      <find>get_host_password</find>
       <find>get_password</find>
       <find>update</find>
       <find>,:before</find>
+      <find>get_host_password</find>
+      <find>values</find>
     </findStrings>
     <replaceStrings>
       <replace>physics_server</replace>
@@ -134,7 +160,6 @@
         <option value="$PROJECT_DIR$/templates/index.html" />
         <option value="$PROJECT_DIR$/static/am/bootstrap.min.css" />
         <option value="$PROJECT_DIR$/static/am/bootstrap.css" />
-        <option value="$PROJECT_DIR$/AssetManagement/views.py" />
         <option value="$PROJECT_DIR$/AssetManagement/urls.py" />
         <option value="$PROJECT_DIR$/templates/am/physics_server_info.html" />
         <option value="$PROJECT_DIR$/static/am/button.js" />
@@ -142,6 +167,7 @@
         <option value="$PROJECT_DIR$/static/am/button.css" />
         <option value="$PROJECT_DIR$/templates/am/network_device_info.html" />
         <option value="$PROJECT_DIR$/static/am/verification.js" />
+        <option value="$PROJECT_DIR$/AssetManagement/views.py" />
       </list>
     </option>
   </component>
@@ -412,8 +438,8 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32918552" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32918552" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="运行" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26809955" sideWeight="0.49356222" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23444206" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="运行" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26809955" sideWeight="0.49356222" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23444206" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="manage.py@CMDB" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32918552" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -663,14 +689,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/AssetManagement/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="76" column="13" lean-forward="false" selection-start-line="76" selection-start-column="4" selection-end-line="76" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/AssetManagement/admin.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="69">
@@ -773,16 +791,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/AssetManagement/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4368">
-          <caret line="951" column="35" lean-forward="true" selection-start-line="951" selection-start-column="35" selection-end-line="951" selection-end-column="35" />
-          <folding>
-            <element signature="e#0#49#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/static/am/button.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="207">
@@ -833,9 +841,27 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/am/host_info.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="460">
-          <caret line="233" column="85" lean-forward="false" selection-start-line="233" selection-start-column="73" selection-end-line="233" selection-end-column="85" />
+        <state relative-caret-position="3335">
+          <caret line="232" column="119" lean-forward="false" selection-start-line="232" selection-start-column="112" selection-end-line="232" selection-end-column="119" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AssetManagement/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="207">
+          <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="4" selection-end-line="9" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AssetManagement/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2081">
+          <caret line="15" column="15" lean-forward="true" selection-start-line="15" selection-start-column="15" selection-end-line="15" selection-end-column="15" />
+          <folding>
+            <element signature="e#0#49#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
