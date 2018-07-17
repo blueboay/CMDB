@@ -4,6 +4,7 @@
     <link rel="stylesheet" type="text/css" href="/static/table.css">
     <link rel="stylesheet" type="text/css" href="/static/am/button.css">
     <link rel="stylesheet" type="text/css" href="/static/am/verification.css">
+    <link rel="stylesheet" type="text/css" href="/static/am/bootstrap.css">
     <style>
     #opeartion-filter{
         float: left;
@@ -88,10 +89,18 @@
                      <td>{{ i.Keepass }}</td>
                      <td>{{ i.Note }}</td>
                      <td>
-                         <a class="get_password" href="javascript:void(0)" id="{{ i.id }}">获取密码</a>
                          <a id="edit" href="{% url "edit" %}?editHost={{ i.id }}">编辑</a>
-                         <a id="clone" href="{% url "edit" %}?cloneHost={{ i.id }}">克隆</a>
                          <a id="del" href="{% url "delete" %}?host={{ i.id }}" onclick="return checked()">删除</a>
+                         <div class="btn-group">
+	                         <button type="button" class="btn btn-success dropdown-toggle btn-xs" data-toggle="dropdown">
+		                         更多<span class="caret"></span>
+	                         </button>
+                             <ul class="dropdown-menu" role="menu">
+                                 <li><a id="clone" href="{% url "edit" %}?cloneHost={{ i.id }}">克隆</a></li>
+		                         <li><a id="change_password" href="{% url "change_password" %}?host_id={{ i.id }}">修改密码</a></li>
+		                         <li><a class="get_password" href="javascript:void(0)" id="{{ i.id }}">获取密码</a></li>
+                             </ul>
+                         </div>
                      </td>
                  </tr>
              {% endfor %}
@@ -142,6 +151,7 @@
 {% block js %}
     <script src="/static/tables.js"></script>
     <script src="/static/am/verification.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script>
 {#    批量删除按钮#}
     $("#delButton").click(function () {
@@ -212,10 +222,18 @@
                     "<td>"+item.fields.Keepass+"</td>" +
                     "<td>"+item.fields.Note+"</td>" +
                     "<td>"+
-                        "<a style='margin-right: 4px' class='get_password' href=javascript:void(0) id="+item.pk+">获取密码</a>" +
                         "<a style='margin-right: 4px' id='edit' href=/am/edit?editHost="+item.pk+">编辑</a>" +
-                        "<a style='margin-right: 4px' id='clone' href=/am/edit?cloneHost="+item.pk+">克隆</a>" +
                         "<a style='margin-right: 4px' id='del' href=/am/delete?host="+item.pk+" onclick='return checked()'>删除</a>" +
+                        "<div class='btn-group'>" +
+                            "<button type='button' class='btn btn-success dropdown-toggle btn-xs' data-toggle='dropdown'>" +
+                                "更多<span class='caret'></span>" +
+                            "</button>" +
+                            "<ul class='dropdown-menu' role='menu'>" +
+                                "<li><a style='margin-right: 4px' id='clone' href=/am/edit?cloneHost="+item.pk+">克隆</a></li>" +
+                                "<li><a style='margin-right: 4px' id='change_password' href=/am/change_password?host_id="+item.pk+">修改密码</a></li>" +
+                                "<li><a style='margin-right: 4px' class='get_password' href=javascript:void(0) id="+item.pk+">获取密码</a></li>" +
+                            "</ul>" +
+                        "</div>" +
                     "</td>" +
                     "</tr>"
                 });

@@ -1,7 +1,7 @@
-#edit, .get_password, #clone{
+#edit, .get_password_network, .get_password_physics{
     background-color: #18a689;
     color: #FFFFFF;
-    padding: 1px 5px;
+    padding: 2px 5px;
     font-size: 12px;
     line-height: 1.5;
     display: inline-block;
@@ -12,7 +12,7 @@
 #del{
     background-color: #ed5565;
     color: #FFFFFF;
-    padding: 1px 5px;
+    padding: 2px 5px;
     font-size: 12px;
     line-height: 1.5;
     display: inline-block;

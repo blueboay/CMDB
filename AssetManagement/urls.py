@@ -32,5 +32,5 @@ urlpatterns = [
     path('change_physics_server_info', views.change_physics_server_info, name="change_physics_server_info"),
 
     path('get_login_info', views.get_login_info, name="get_login_info"),
-    path('change_password_api', views.change_password_api, name="change_password_api"),
+    path('change_password', views.change_password, name="change_password"),
 ]

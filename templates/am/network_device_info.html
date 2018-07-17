@@ -97,7 +97,7 @@
                      <td>{{ i.Position }}</td>
                      <td>{{ i.Note }}</td>
                      <td>
-                         <a class="get_password" href="javascript:void(0)" id="{{ i.id }}">获取密码</a>
+                         <a class="get_password_network" href="javascript:void(0)" id="{{ i.id }}">获取密码</a>
                          <a id="edit" href="{% url "edit" %}?network_device={{ i.id }}">编辑</a>
                          <a id="del" href="{% url "delete" %}?network_device={{ i.id }}" onclick="return checked()">删除</a>
                      </td>
@@ -213,7 +213,7 @@
                     "<td>"+item.fields.Position+"</td>" +
                     "<td>"+item.fields.Note+"</td>" +
                     "<td>"+
-                        "<a style='margin-right: 4px' class='get_password' href=javascript:void(0) id="+item.pk+">获取密码</a>" +
+                        "<a style='margin-right: 4px' class='get_password_network' href=javascript:void(0) id="+item.pk+">获取密码</a>" +
                         "<a style='margin-right: 4px' id='edit' href=/am/edit?network_device="+item.pk+">编辑</a>" +
                         "<a style='margin-right: 4px' id='del' href=/am/delete?edit_network_device="+item.pk+" onclick='return checked()'>删除</a>" +
                     "</td>" +

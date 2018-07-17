@@ -1,6 +1,6 @@
-$('body').on('mouseover', '#addButton, .get_password, #edit, #search, #backButton, #editButton, #clone', function(){
+$('body').on('mouseover', '#addButton, .get_password_physics, .get_password_network, #edit, #search, #backButton, #editButton', function(){
     $(this).css({"background-color": "#15806B"});
-}).on('mouseout', '#addButton, .get_password, #edit, #search, #backButton, #editButton, #clone', function(){
+}).on('mouseout', '#addButton, #edit, .get_password_physics, .get_password_network, #search, #backButton, #editButton', function(){
     $(this).css({"background-color": "#18a689"});
 }).on('mouseover', '#delButton, #del', function () {
     $(this).css({"background-color": "#BB4352"});

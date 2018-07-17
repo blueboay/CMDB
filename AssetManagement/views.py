@@ -943,7 +943,7 @@ def get_total_column(request):
 
 
 # 密码更改API
-def change_password_api(request):
+def change_password(request):
     # 后期这里认证接口换成数据库用户认证，并需要通过权限检查
     id = request.GET["id"]
     ip = request.GET["ip"]

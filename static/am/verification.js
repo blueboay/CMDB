@@ -9,7 +9,7 @@ function hide_info() {
 }
 $('body').on("mouseover", "#get_password, #close, #verification_get", function () {
     $(this).css("background-color", "#8482823b")
-}).on("click", ".get_password", function () {
+}).on("click", ".get_password, .get_password_network, .get_password_physics", function () {
     $("#verification_block").css("display", "inherit");
     $("#verification_div").css("display", "inherit");
     hide_info();
