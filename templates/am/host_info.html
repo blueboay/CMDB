@@ -98,7 +98,7 @@
 	                         </button>
                              <ul class="dropdown-menu" role="menu">
                                  <li><a id="clone" href="{% url "edit" %}?cloneHost={{ i.id }}">克隆</a></li>
-		                         <li><a id="change_password" href="{% url "change_password" %}?host_id={{ i.id }}" onclick="return updata_password()">修改密码</a></li>
+		                         <li><a class="change_password" href="javascript:void(0)" id="{{ i.id }}">修改密码</a></li>
 		                         <li><a class="get_password" href="javascript:void(0)" id="{{ i.id }}">获取密码</a></li>
                              </ul>
                          </div>
@@ -182,6 +182,31 @@
             }
         }
     });
+{#    批量更新密码按钮#}
+    $("#updata_passwd").click(function () {
+        var data = [];
+        $("tbody input").each(function () {
+            if ($(this).prop("checked")){
+                data.push($(this).attr("name"));
+            }
+        });
+        if (data.length === 0){
+            alert("你没有选择任何主机");
+        }else{
+            if (confirm("确认更改选中主机密码？")){
+                $.ajax({
+                    url: "/am/change_password",
+                    type: "get",
+                    data: {"host_id": data},
+                    traditional: true,
+                    dataType: "json",
+                    success: function (arg) {
+                        console.log(arg)
+                    }
+                });
+            }
+        }
+    });
     function updata_password() {
         var a = confirm("确认更改主机密码？");
         if (!a){
@@ -237,7 +262,7 @@
                             "</button>" +
                             "<ul class='dropdown-menu' role='menu'>" +
                                 "<li><a style='margin-right: 4px' id='clone' href=/am/edit?cloneHost="+item.pk+">克隆</a></li>" +
-                                "<li><a style='margin-right: 4px' id='change_password' href=/am/change_password?host_id="+item.pk+">修改密码</a></li>" +
+                                "<li><a style='margin-right: 4px' class='change_password' href=javascript:void(0) id="+item.pk+">修改密码</a></li>" +
                                 "<li><a style='margin-right: 4px' class='get_password' href=javascript:void(0) id="+item.pk+">获取密码</a></li>" +
                             "</ul>" +
                         "</div>" +
@@ -326,6 +351,20 @@
                     }
                 }
             })
+        }
+    }).on("click", ".change_password", function () {
+        var data = $(this).attr("id");
+        if (confirm("确认更改主机密码？")){
+            $.ajax({
+                url: "/am/change_password",
+                type: "get",
+                data: {"host_id": data},
+                traditional: true,
+                dataType: "json",
+                success: function (arg) {
+                    console.log(arg)
+                }
+            });
         }
     });
     </script>

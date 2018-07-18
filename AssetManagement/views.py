@@ -967,15 +967,17 @@ def get_total_column(request):
 
 # 密码更改
 def change_password(request):
-    id = request.GET["host_id"]
-    password = decrypt_str(get_host_password(id)).decode("UTF-8")
-    username = models.HostInfo.objects.filter(id=id).values("SuperUser")[0]["SuperUser"]
-    ip = models.HostInfo.objects.filter(id=id).values("IP")[0]["IP"]
-    port = models.HostInfo.objects.filter(id=id).values("RemotePort")[0]["RemotePort"]
-    new_password = get_passwd()
-    result = conn_server(ip, port, username, password, new_password)
-    if "所有的身份验证令牌已经成功更新" in result[1]:
-        models.HostInfo.objects.filter(id=id).update(SuperUserPass=(encrypt_str(new_password)).decode("UTF-8"))
-        return HttpResponse("OK")
-    else:
-        return HttpResponse("Error")
+    host_name_dict = {}
+    for id in request.GET.getlist("host_id"):
+        password = decrypt_str(get_host_password(id)).decode("UTF-8")
+        username = models.HostInfo.objects.filter(id=id).values("SuperUser")[0]["SuperUser"]
+        ip = models.HostInfo.objects.filter(id=id).values("IP")[0]["IP"]
+        port = models.HostInfo.objects.filter(id=id).values("RemotePort")[0]["RemotePort"]
+        new_password = get_passwd()
+        result = conn_server(ip, port, username, password, new_password)
+        if "所有的身份验证令牌已经成功更新" in result[1]:
+            models.HostInfo.objects.filter(id=id).update(SuperUserPass=(encrypt_str(new_password)).decode("UTF-8"))
+            host_name_dict.update({get_host_name(id): "成功"})
+        else:
+            host_name_dict.update({get_host_name(id): "失败"})
+    return HttpResponse(json.dumps(host_name_dict))
