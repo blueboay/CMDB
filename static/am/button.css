@@ -31,7 +31,7 @@
     cursor: pointer;
     display: inline-block;
 }
-#delButton{
+#delButton, #updata_passwd{
     background-color: #ed5565;
     color: #FFFFFF;
     border-radius: 3px;

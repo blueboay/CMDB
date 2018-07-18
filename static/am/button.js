@@ -2,8 +2,8 @@ $('body').on('mouseover', '#addButton, .get_password_physics, .get_password_netw
     $(this).css({"background-color": "#15806B"});
 }).on('mouseout', '#addButton, #edit, .get_password_physics, .get_password_network, #search, #backButton, #editButton', function(){
     $(this).css({"background-color": "#18a689"});
-}).on('mouseover', '#delButton, #del', function () {
+}).on('mouseover', '#delButton, #del, #updata_passwd', function () {
     $(this).css({"background-color": "#BB4352"});
-}).on('mouseout', '#delButton, #del', function () {
+}).on('mouseout', '#delButton, #del, #updata_passwd', function () {
     $(this).css({"background-color": "#ed5565"});
 });

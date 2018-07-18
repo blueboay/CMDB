@@ -40,6 +40,7 @@
         <div id="add_del">
             <a id="addButton">新增主机</a>
             <a id="delButton">删除选中主机</a>
+            <a id="updata_passwd">批量更新密码</a>
         </div>
         <div id="opeartion-filter">
             <label for="filter_env"></label>
@@ -97,7 +98,7 @@
 	                         </button>
                              <ul class="dropdown-menu" role="menu">
                                  <li><a id="clone" href="{% url "edit" %}?cloneHost={{ i.id }}">克隆</a></li>
-		                         <li><a id="change_password" href="{% url "change_password" %}?host_id={{ i.id }}">修改密码</a></li>
+		                         <li><a id="change_password" href="{% url "change_password" %}?host_id={{ i.id }}" onclick="return updata_password()">修改密码</a></li>
 		                         <li><a class="get_password" href="javascript:void(0)" id="{{ i.id }}">获取密码</a></li>
                              </ul>
                          </div>
@@ -151,7 +152,7 @@
 {% block js %}
     <script src="/static/tables.js"></script>
     <script src="/static/am/verification.js"></script>
-	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="/static/am/bootstrap.js"></script>
     <script>
 {#    批量删除按钮#}
     $("#delButton").click(function () {
@@ -181,6 +182,12 @@
             }
         }
     });
+    function updata_password() {
+        var a = confirm("确认更改主机密码？");
+        if (!a){
+            return false
+        }
+    }
 {#    新增按钮#}
     $("#addButton").click(function () {
         $.ajax({
@@ -263,9 +270,8 @@
         }
     });
     function checked() {
-        if (confirm("再次确认删除？")){
-            return true
-        }else {
+        var a = confirm("再次确认删除？");
+        if (!a){
             return false
         }
     }

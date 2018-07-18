@@ -697,8 +697,8 @@ def change_host_info(request):
             IP=request.POST["IP"],
             RemotePort=request.POST["RemotePort"],
             SuperUser=request.POST["SuperUser"],
-            #  存入数据库前先进行加密，再更改为UTF-8
-            SuperUserPass=(encrypt_str(request.POST["SuperUserPass"])).decode("UTF-8"),
+            # #  存入数据库前先进行加密，再更改为UTF-8
+            # SuperUserPass=(encrypt_str(request.POST["SuperUserPass"])).decode("UTF-8"),
             Environment=request.POST["Environment"],
             OSType=request.POST["OSType"],
             OSVersion=request.POST["OSVersion"],

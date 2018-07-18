@@ -276,9 +276,8 @@
         }
     });
     function checked() {
-        if (confirm("再次确认删除？")){
-            return true
-        }else {
+        var a = confirm("再次确认删除？");
+        if (!a){
             return false
         }
     }
