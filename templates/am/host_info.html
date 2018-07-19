@@ -147,6 +147,14 @@
             <span id="passwd_value"></span>
         </div>
     </div>
+    <div id="caseBlanche" style="display: none">
+        <div id="rond">
+            <div id="test"></div>
+        </div>
+        <div id="load">
+            <p>loading</p>
+        </div>
+    </div>
 {% endblock %}
 
 {% block js %}
@@ -355,6 +363,7 @@
     }).on("click", ".change_password", function () {
         var data = $(this).attr("id");
         if (confirm("确认更改主机密码？")){
+{#            $("#verification_block").css("display", "inherit");#}
             $.ajax({
                 url: "/am/change_password",
                 type: "get",

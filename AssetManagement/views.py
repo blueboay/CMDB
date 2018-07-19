@@ -14,6 +14,7 @@ import redis
 import string
 from random import choice
 import paramiko
+import socket
 
 # Create your views here.
 Key = "Gogenius"
@@ -24,10 +25,22 @@ Iv = "Gogen123"
 def conn_server(ip, port, username, password, new_password):
     ssh = paramiko.SSHClient()
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh.connect(hostname=ip, port=port, username=username, password=password)
-    stdin, stdout, stderr = ssh.exec_command("echo %s | passwd --stdin root" %(new_password))
-    result = stdout.readlines()
-    ssh.close()
+    try:
+        ssh.connect(hostname=ip, port=port, username=username, password=password, timeout=5)
+    except socket.timeout:
+        result = "连接超时"
+    except paramiko.ssh_exception.NoValidConnectionsError:
+        result = "端口错误"
+    except paramiko.ssh_exception.AuthenticationException:
+        result = "认证失败"
+    else:
+        stdin, stdout, stderr = ssh.exec_command("echo %s | passwd --stdin root" %(new_password))
+        if len(stderr.readlines()) > 0:
+            result = "修改失败"
+        else:
+            result = "修改成功"
+    finally:
+        ssh.close()
     return result
 
 
@@ -698,7 +711,7 @@ def change_host_info(request):
             RemotePort=request.POST["RemotePort"],
             SuperUser=request.POST["SuperUser"],
             # #  存入数据库前先进行加密，再更改为UTF-8
-            # SuperUserPass=(encrypt_str(request.POST["SuperUserPass"])).decode("UTF-8"),
+            SuperUserPass=(encrypt_str(request.POST["SuperUserPass"])).decode("UTF-8"),
             Environment=request.POST["Environment"],
             OSType=request.POST["OSType"],
             OSVersion=request.POST["OSVersion"],
@@ -975,9 +988,15 @@ def change_password(request):
         port = models.HostInfo.objects.filter(id=id).values("RemotePort")[0]["RemotePort"]
         new_password = get_passwd()
         result = conn_server(ip, port, username, password, new_password)
-        if "所有的身份验证令牌已经成功更新" in result[1]:
-            models.HostInfo.objects.filter(id=id).update(SuperUserPass=(encrypt_str(new_password)).decode("UTF-8"))
-            host_name_dict.update({get_host_name(id): "成功"})
+        if result == "连接超时":
+            host_name_dict.update({get_host_name(id): "连接超时"})
+        elif result == "端口错误":
+            host_name_dict.update({get_host_name(id): "端口错误"})
+        elif result == "认证失败":
+            host_name_dict.update({get_host_name(id): "认证失败"})
+        elif result == "修改失败":
+            host_name_dict.update({get_host_name(id): "修改失败"})
         else:
-            host_name_dict.update({get_host_name(id): "失败"})
+            models.HostInfo.objects.filter(id=id).update(SuperUserPass=(encrypt_str(new_password)).decode("UTF-8"))
+            host_name_dict.update({get_host_name(id): "修改成功"})
     return HttpResponse(json.dumps(host_name_dict))
