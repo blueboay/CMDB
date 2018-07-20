@@ -147,13 +147,22 @@
             <span id="passwd_value"></span>
         </div>
     </div>
-    <div id="caseBlanche" style="display: none">
-        <div id="rond">
-            <div id="test"></div>
-        </div>
-        <div id="load">
-            <p>loading</p>
-        </div>
+    <div id="load_block"></div>
+    <div class="load-container">
+       <div class="loader"></div>
+        <p>密码修改中请稍后...</p>
+    </div>
+    <div id="change_result" style="display: none;">
+        <table class="altrowstable" id="alternatecolor1">
+            <thead>
+                <tr>
+                    <th style="width: 300px">主机名称</th>
+                    <th style="width: 200px">执行结果</th>
+                </tr>
+            </thead>
+            <tbody id="tbody1">
+            </tbody>
+        </table>
     </div>
 {% endblock %}
 
@@ -202,6 +211,8 @@
             alert("你没有选择任何主机");
         }else{
             if (confirm("确认更改选中主机密码？")){
+                $("#load_block").css("display", "inherit");
+                $(".load-container").css("display", "inherit");
                 $.ajax({
                     url: "/am/change_password",
                     type: "get",
@@ -209,7 +220,17 @@
                     traditional: true,
                     dataType: "json",
                     success: function (arg) {
-                        console.log(arg)
+                        $(".load-container").css("display", "none");
+                        $("#change_result").css("display", "inherit");
+                        var content = '';
+                        $.each(arg, function (index, item) {
+                            content += "<tr>" +
+                                "<td>"+index+"</td>" +
+                                "<td>"+item+"</td>" +
+                                "</tr>"
+                            });
+                        $("#tbody1").html(content);
+                        altRows('alternatecolor1');
                     }
                 });
             }
@@ -363,7 +384,8 @@
     }).on("click", ".change_password", function () {
         var data = $(this).attr("id");
         if (confirm("确认更改主机密码？")){
-{#            $("#verification_block").css("display", "inherit");#}
+            $("#load_block").css("display", "inherit");
+            $(".load-container").css("display", "inherit");
             $.ajax({
                 url: "/am/change_password",
                 type: "get",
@@ -371,7 +393,18 @@
                 traditional: true,
                 dataType: "json",
                 success: function (arg) {
-                    console.log(arg)
+                    $(".load-container").css("display", "none");
+                    $("#change_result").css("display", "inherit");
+                    var content = '';
+                    $.each(arg, function (index, item) {
+                        content +=
+                            "<tr>" +
+                            "<td>"+index+"</td>" +
+                            "<td>"+item+"</td>" +
+                            "</tr>"
+                        });
+                    $("#tbody1").html(content);
+                    altRows('alternatecolor1');
                 }
             });
         }
