@@ -6,4 +6,11 @@ $('body').on('mouseover', '#addButton, .get_password_physics, .get_password_netw
     $(this).css({"background-color": "#BB4352"});
 }).on('mouseout', '#delButton, #del, #updata_passwd', function () {
     $(this).css({"background-color": "#ed5565"});
+}).on("mouseover", "#queren", function () {
+    $(this).css({"background-color": "#ddd"});
+}).on("mouseout", "#queren", function () {
+    $(this).css({"background-color": "white"});
+}).on("click", "#queren", function () {
+    $("#load_block").css("display", "none");
+    $("#change_result").css("display", "none");
 });

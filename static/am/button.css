@@ -58,4 +58,10 @@
     width: 25%;
     height: 28px;
 }
+#queren{
+    line-height: 40px;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 3px;
+}
 
