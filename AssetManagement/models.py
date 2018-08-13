@@ -64,6 +64,7 @@ class NetworkDevice(models.Model):
     WebManageUser = models.CharField('Web远程管理用户', max_length=64, null=True, blank=True)
     WebManageIP = models.CharField('Web远程管理IP', max_length=64, null=True, blank=True)
     WebPassword = models.CharField('Web远程管理密码', max_length=128, null=True, blank=True)
+    ConsoleUser = models.CharField('Console管理用户名', max_length=128, null=True, blank=True)
     ConsolePassword = models.CharField('Console管理密码', max_length=128, null=True, blank=True)
     Type = models.CharField('类型', max_length=32)
     # HomeNetwork = models.CharField('所属网络', max_length=32)

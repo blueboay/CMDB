@@ -672,12 +672,14 @@ def get_login_info(request):
                 webuser = models.NetworkDevice.objects.filter(id=request.GET["network_id"]).values()[0]["WebManageUser"]
                 sship = models.NetworkDevice.objects.filter(id=request.GET["network_id"]).values()[0]["ManageIP"]
                 weburl = models.NetworkDevice.objects.filter(id=request.GET["network_id"]).values()[0]["WebManageIP"]
+                conuser = models.NetworkDevice.objects.filter(id=request.GET["network_id"]).values()[0]["ConsoleUser"]
                 return HttpResponse(json.dumps({"password": (decrypt_str(password)).decode("UTF-8"),
                                                 "webpassword": (decrypt_str(webPassword)).decode("UTF-8"),
-                                                "webuser": user,
-                                                "sshuser": webuser,
+                                                "webuser": webuser,
+                                                "sshuser": user,
                                                 "sship": sship,
                                                 "weburl": weburl,
+                                                "conuser": conuser,
                                                 "conpassword": (decrypt_str(conPassword)).decode("UTF-8")}))
             if "physics_id" in request.GET:
                 password = models.PhysicalServer.objects.filter(id=request.GET["physics_id"]).values()[0]["ManagePassword"]
@@ -733,6 +735,7 @@ def add_network_device(request):
             WebManageUser=request.POST["webUser"],
             WebManageIP=request.POST["webIP"],
             WebPassword=(encrypt_str(request.POST["webPassword"])).decode("UTF-8"),
+            ConsoleUser=request.POST["consoleUser"],
             ConsolePassword=(encrypt_str(request.POST["consolePassword"])).decode("UTF-8"),
             Type=request.POST["Type"],
             Brand=request.POST["Brand"],
@@ -815,6 +818,7 @@ def change_network_device_info(request):
             WebManageUser=request.POST["webUser"],
             WebManageIP=request.POST["webIP"],
             WebPassword=(encrypt_str(request.POST["webPassword"])).decode("UTF-8"),
+            ConsoleUser=request.POST["consoleUser"],
             ConsolePassword=(encrypt_str(request.POST["consolePassword"])).decode("UTF-8"),
             Type=request.POST["Type"],
             Brand=request.POST["Brand"],

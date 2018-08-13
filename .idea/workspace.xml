@@ -2,12 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d892a79e-fea1-44b9-b31c-f88fd54eac36" name="默认的" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AssetManagement/migrations/0021_auto_20180813_1432.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AssetManagement/migrations/0022_auto_20180813_1548.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AssetManagement/migrations/0023_auto_20180813_1725.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AssetManagement/models.py" afterPath="$PROJECT_DIR$/AssetManagement/models.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AssetManagement/views.py" afterPath="$PROJECT_DIR$/AssetManagement/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/am/verification.css" afterPath="$PROJECT_DIR$/static/am/verification.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/am/verification.js" afterPath="$PROJECT_DIR$/static/am/verification.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/am/add_network_device.html" afterPath="$PROJECT_DIR$/templates/am/add_network_device.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/am/edit_network_device.html" afterPath="$PROJECT_DIR$/templates/am/edit_network_device.html" />
@@ -30,58 +28,7 @@
     <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="network_device_info.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/am/network_device_info.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="404">
-              <caret line="352" column="7" lean-forward="true" selection-start-line="352" selection-start-column="7" selection-end-line="352" selection-end-column="7" />
-              <folding>
-                <element signature="e#2545#2562#0#HTML" expanded="true" />
-                <element signature="e#2660#2678#0#HTML" expanded="true" />
-                <element signature="e#2709#2727#0#HTML" expanded="true" />
-                <element signature="e#2763#2780#0#HTML" expanded="true" />
-                <element signature="e#2809#2826#0#HTML" expanded="true" />
-                <element signature="e#2855#2872#0#HTML" expanded="true" />
-                <element signature="e#2902#2919#0#HTML" expanded="true" />
-                <element signature="e#2948#2966#0#HTML" expanded="true" />
-                <element signature="e#2997#3015#0#HTML" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="verification.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/static/am/verification.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="368">
-              <caret line="33" column="16" lean-forward="true" selection-start-line="33" selection-start-column="16" selection-end-line="33" selection-end-column="16" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/AssetManagement/views.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="298">
-              <caret line="677" column="67" lean-forward="true" selection-start-line="677" selection-start-column="67" selection-end-line="677" selection-end-column="67" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/AssetManagement/models.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="212">
-              <caret line="64" column="15" lean-forward="false" selection-start-line="64" selection-start-column="4" selection-end-line="64" selection-end-column="15" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="375" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -95,7 +42,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>host_info</find>
       <find>title</find>
       <find>change_p</find>
       <find>click</find>
@@ -122,8 +68,9 @@
       <find>addHost</find>
       <find>print</find>
       <find>ManageIP</find>
-      <find>add_network_device</find>
       <find>change_network_device_info</find>
+      <find>webuser_value</find>
+      <find>add_network_device</find>
       <find>get_login_info</find>
     </findStrings>
     <replaceStrings>
@@ -188,13 +135,13 @@
         <option value="$PROJECT_DIR$/templates/am/clone_host.html" />
         <option value="$PROJECT_DIR$/templates/am/host_info.html" />
         <option value="$PROJECT_DIR$/templates/am/physics_server_info.html" />
+        <option value="$PROJECT_DIR$/static/am/verification.css" />
+        <option value="$PROJECT_DIR$/templates/am/add_network_device.html" />
         <option value="$PROJECT_DIR$/AssetManagement/models.py" />
         <option value="$PROJECT_DIR$/templates/am/edit_network_device.html" />
-        <option value="$PROJECT_DIR$/templates/am/add_network_device.html" />
-        <option value="$PROJECT_DIR$/static/am/verification.css" />
         <option value="$PROJECT_DIR$/AssetManagement/views.py" />
-        <option value="$PROJECT_DIR$/templates/am/network_device_info.html" />
         <option value="$PROJECT_DIR$/static/am/verification.js" />
+        <option value="$PROJECT_DIR$/templates/am/network_device_info.html" />
       </list>
     </option>
   </component>
@@ -204,7 +151,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="671" />
     <option name="y" value="92" />
     <option name="width" value="1400" />
@@ -226,8 +173,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -457,8 +404,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-9" y="-9" width="1938" height="1048" extended-state="7" />
-    <editor active="true" />
+    <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="调试" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -466,13 +412,12 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32918552" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32918552" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="运行" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26809955" sideWeight="0.49356222" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2693133" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="运行" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26809955" sideWeight="0.49356222" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27306867" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="manage.py@CMDB" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32918552" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="找到" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32918552" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299356" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -483,6 +428,7 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="找到" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32918552" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -729,7 +675,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="247">
           <caret line="22" column="14" lean-forward="false" selection-start-line="22" selection-start-column="14" selection-end-line="22" selection-end-column="14" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -737,7 +682,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="414">
           <caret line="18" column="17" lean-forward="true" selection-start-line="18" selection-start-column="17" selection-end-line="18" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -753,7 +697,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="345">
           <caret line="15" column="3" lean-forward="true" selection-start-line="15" selection-start-column="3" selection-end-line="15" selection-end-column="3" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -800,10 +743,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/AssetManagement/urls.py">
+    <entry file="file://$PROJECT_DIR$/static/am/verification.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="505">
-          <caret line="33" column="24" lean-forward="false" selection-start-line="33" selection-start-column="10" selection-end-line="33" selection-end-column="24" />
+        <state relative-caret-position="248">
+          <caret line="25" column="20" lean-forward="true" selection-start-line="25" selection-start-column="20" selection-end-line="25" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/am/add_network_device.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="243">
+          <caret line="42" column="7" lean-forward="true" selection-start-line="42" selection-start-column="7" selection-end-line="42" selection-end-column="7" />
           <folding />
         </state>
       </provider>
@@ -811,31 +761,23 @@
     <entry file="file://$PROJECT_DIR$/templates/am/edit_network_device.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="322">
-          <caret line="20" column="8" lean-forward="true" selection-start-line="20" selection-start-column="8" selection-end-line="20" selection-end-column="8" />
+          <caret line="35" column="48" lean-forward="false" selection-start-line="35" selection-start-column="37" selection-end-line="35" selection-end-column="48" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/am/add_network_device.html">
+    <entry file="file://$PROJECT_DIR$/AssetManagement/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-263">
-          <caret line="41" column="8" lean-forward="true" selection-start-line="41" selection-start-column="8" selection-end-line="41" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/am/verification.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="248">
-          <caret line="25" column="20" lean-forward="true" selection-start-line="25" selection-start-column="20" selection-end-line="25" selection-end-column="20" />
+        <state relative-caret-position="381">
+          <caret line="33" column="24" lean-forward="false" selection-start-line="33" selection-start-column="10" selection-end-line="33" selection-end-column="24" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/AssetManagement/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="212">
-          <caret line="64" column="15" lean-forward="false" selection-start-line="64" selection-start-column="4" selection-end-line="64" selection-end-column="15" />
+        <state relative-caret-position="335">
+          <caret line="66" column="15" lean-forward="false" selection-start-line="66" selection-start-column="4" selection-end-line="66" selection-end-column="15" />
           <folding />
         </state>
       </provider>
@@ -843,33 +785,23 @@
     <entry file="file://$PROJECT_DIR$/AssetManagement/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="298">
-          <caret line="677" column="67" lean-forward="true" selection-start-line="677" selection-start-column="67" selection-end-line="677" selection-end-column="67" />
+          <caret line="681" column="56" lean-forward="false" selection-start-line="681" selection-start-column="49" selection-end-line="681" selection-end-column="56" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/am/network_device_info.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="404">
-          <caret line="352" column="7" lean-forward="true" selection-start-line="352" selection-start-column="7" selection-end-line="352" selection-end-column="7" />
-          <folding>
-            <element signature="e#2545#2562#0#HTML" expanded="true" />
-            <element signature="e#2660#2678#0#HTML" expanded="true" />
-            <element signature="e#2709#2727#0#HTML" expanded="true" />
-            <element signature="e#2763#2780#0#HTML" expanded="true" />
-            <element signature="e#2809#2826#0#HTML" expanded="true" />
-            <element signature="e#2855#2872#0#HTML" expanded="true" />
-            <element signature="e#2902#2919#0#HTML" expanded="true" />
-            <element signature="e#2948#2966#0#HTML" expanded="true" />
-            <element signature="e#2997#3015#0#HTML" expanded="true" />
-          </folding>
+        <state relative-caret-position="374">
+          <caret line="351" column="60" lean-forward="true" selection-start-line="351" selection-start-column="60" selection-end-line="351" selection-end-column="60" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/static/am/verification.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="368">
-          <caret line="33" column="16" lean-forward="true" selection-start-line="33" selection-start-column="16" selection-end-line="33" selection-end-column="16" />
+        <state relative-caret-position="473">
+          <caret line="30" column="33" lean-forward="true" selection-start-line="30" selection-start-column="33" selection-end-line="30" selection-end-column="33" />
           <folding />
         </state>
       </provider>

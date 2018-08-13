@@ -157,6 +157,10 @@
                 <span id="sship_value"></span>
             </div>
             <div>
+                <span class="alignment">Web地址</span>：
+                <span id="weburl_value"></span>
+            </div>
+            <div>
                 <span class="alignment">Web用户</span>：
                 <span id="webuser_value"></span>
             </div>
@@ -165,8 +169,8 @@
                 <span id="webpasswd_value"></span>
             </div>
             <div>
-                <span class="alignment">Web地址</span>：
-                <span id="weburl_value"></span>
+                <span class="alignment">Con用户</span>：
+                <span id="conuser_value"></span>
             </div>
             <div>
                 <span class="alignment">Con密码</span>：
@@ -345,7 +349,8 @@
                         $("#user_value").text(arg.sshuser);
                         $("#webuser_value").text(arg.webuser);
                         $("#sship_value").text(arg.sship);
-                        $("#weburl_value").text(arg.weburl)
+                        $("#weburl_value").text(arg.weburl);
+                        $("#conuser_value").text(arg.conuser)
                     }
                 }
             })
