@@ -21,12 +21,32 @@
         <span id="id_error_info" class="error_info">名称不能以空格开头</span>
     </p>
     <p>
-        <label for="id_IP" class="name">管理IP：</label>
+        <label for="id_User" class="name">SSH远程管理用户：</label>
+        <input type="text" name="User" id="id_User">
+    </p>
+    <p>
+        <label for="id_IP" class="name">SSH远程管理IP：</label>
         <input type="text" name="IP" id="id_IP">
     </p>
     <p>
-        <label for="id_Password" class="name">密码：</label>
+        <label for="id_Password" class="name">SSH远程管理密码：</label>
         <input type="password" name="Password" id="id_Password">
+    </p>
+    <p>
+        <label for="id_webUser" class="name">Web远程管理用户：</label>
+        <input type="text" name="webUser" id="id_webUser">
+    </p>
+    <p>
+        <label for="id_webIP" class="name">Web远程管理地址：</label>
+        <input type="text" name="webIP" id="id_webIP">
+    </p>
+    <p>
+        <label for="id_webPassword" class="name">Web远程管理密码：</label>
+        <input type="password" name="webPassword" id="id_webPassword">
+    </p>
+    <p>
+        <label for="id_consolebPassword" class="name">Console密码：</label>
+        <input type="password" name="consolePassword" id="id_consolebPassword">
     </p>
     <p>
         <label for="id_Type" class="name">类型：</label>
@@ -36,6 +56,8 @@
             <option>路由器</option>
             <option>防火墙</option>
             <option>AD</option>
+            <option>AC</option>
+            <option>其它</option>
         </select>
     </p>
     <p>
@@ -48,6 +70,7 @@
             <option>爱快</option>
             <option>大华</option>
             <option>TP-LINK</option>
+            <option>其它</option>
         </select>
     </p>
     <p>

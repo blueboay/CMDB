@@ -8,12 +8,32 @@
         <span id="id_error_info" class="error_info">名称不能以空格开头</span>
     </p>
     <p>
-        <label for="id_IP" class="name">管理IP：</label>
+        <label for="id_User" class="name">SSH远程管理用户：</label>
+        <input type="text" name="User" id="id_User" value="{{ data.ManageUser }}">
+    </p>
+    <p>
+        <label for="id_IP" class="name">SSH远程管理IP：</label>
         <input type="text" name="IP" id="id_IP" value="{{ data.ManageIP }}">
     </p>
     <p>
-        <label for="id_Password" class="name">密码：</label>
+        <label for="id_Password" class="name">SSH远程管理密码：</label>
         <input type="password" name="Password" id="id_Password" value="{{ password }}">
+    </p>
+    <p>
+        <label for="id_webUser" class="name">Web远程管理用户：</label>
+        <input type="text" name="webUser" id="id_webUser" value="{{ data.WebManageUser }}">
+    </p>
+    <p>
+        <label for="id_webIP" class="name">Web远程管理地址：</label>
+        <input type="text" name="webIP" id="id_webIP" value="{{ data.WebManageIP }}">
+    </p>
+    <p>
+        <label for="id_webPassword" class="name">Web远程管理密码：</label>
+        <input type="password" name="webPassword" id="id_webPassword" value="{{ web_password }}">
+    </p>
+    <p>
+        <label for="id_consolebPassword" class="name">Console密码：</label>
+        <input type="password" name="consolePassword" id="id_consolebPassword" value="{{ console_password }}">
     </p>
     <p>
         <label for="id_Type" class="name">类型：</label>
@@ -38,6 +58,16 @@
                 <option selected="selected">AD</option>
             {% else %}
                 <option>AD</option>
+            {% endif %}
+            {% if data.Type == "AC" %}
+                <option selected="selected">AC</option>
+            {% else %}
+                <option>AC</option>
+            {% endif %}
+            {% if data.Type == "其它" %}
+                <option selected="selected">其它</option>
+            {% else %}
+                <option>其它</option>
             {% endif %}
         </select>
     </p>
@@ -74,6 +104,11 @@
                 <option selected="selected">TP-LINK</option>
             {% else %}
                 <option>TP-LINK</option>
+            {% endif %}
+            {% if data.Brand == "其它" %}
+                <option selected="selected">其它</option>
+            {% else %}
+                <option>其它</option>
             {% endif %}
         </select>
     </p>

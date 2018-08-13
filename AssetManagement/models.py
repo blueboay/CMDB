@@ -58,8 +58,13 @@ class UserInfo(models.Model):
 
 class NetworkDevice(models.Model):
     Name = models.CharField('型号名称', max_length=32)
-    ManageIP = models.CharField('管理IP', max_length=64, null=True, blank=True)
-    Password = models.CharField('密码', max_length=128, null=True, blank=True)
+    ManageUser = models.CharField('SSH远程管理用户', max_length=64, null=True, blank=True)
+    ManageIP = models.CharField('SSH远程管理IP', max_length=64, null=True, blank=True)
+    Password = models.CharField('SSH远程密码', max_length=128, null=True, blank=True)
+    WebManageUser = models.CharField('Web远程管理用户', max_length=64, null=True, blank=True)
+    WebManageIP = models.CharField('Web远程管理IP', max_length=64, null=True, blank=True)
+    WebPassword = models.CharField('Web远程管理密码', max_length=128, null=True, blank=True)
+    ConsolePassword = models.CharField('Console管理密码', max_length=128, null=True, blank=True)
     Type = models.CharField('类型', max_length=32)
     # HomeNetwork = models.CharField('所属网络', max_length=32)
     Brand = models.CharField('品牌', max_length=32)

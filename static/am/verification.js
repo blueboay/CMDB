@@ -22,7 +22,12 @@ $('body').on("mouseover", "#get_password, #close, #verification_get", function (
     $("#verification_code").val("");
     $("#passwd_value").text("");
     $("#username_value").text("");
-    $("#address_value").text("");
+    $("#webpasswd_value").text("");
+    $("#conpasswd_value").text("");
+    $("#user_value").text("");
+    $("#webuser_value").text("");
+    $("#sship_value").text("");
+    $("#weburl_value").text("");
 }).on("click", "#verification_code", function () {
     hide_info();
 }).on("click", "#verification_get", function () {

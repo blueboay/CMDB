@@ -99,9 +99,21 @@ def get_host_password(data):
     return password.encode("UTF-8")
 
 
-# 获取网络设备密码并改成bytes类型
+# 获取网络设备普通远程管理密码并改成bytes类型
 def get_network_device_password(data):
     password = models.NetworkDevice.objects.filter(id=data).values()[0]["Password"]
+    return password.encode("UTF-8")
+
+
+# 获取网络设备web远程管理密码并改成bytes类型
+def get_network_device_web_password(data):
+    password = models.NetworkDevice.objects.filter(id=data).values()[0]["WebPassword"]
+    return password.encode("UTF-8")
+
+
+# 获取网络设备普通console管理密码并改成bytes类型
+def get_network_device_console_password(data):
+    password = models.NetworkDevice.objects.filter(id=data).values()[0]["ConsolePassword"]
     return password.encode("UTF-8")
 
 
@@ -654,7 +666,19 @@ def get_login_info(request):
                 return HttpResponse((decrypt_str(get_host_password(request.GET["host_id"]))).decode("UTF-8"))
             if "network_id" in request.GET:
                 password = models.NetworkDevice.objects.filter(id=request.GET["network_id"]).values()[0]["Password"]
-                return HttpResponse((decrypt_str(password)).decode("UTF-8"))
+                webPassword = models.NetworkDevice.objects.filter(id=request.GET["network_id"]).values()[0]["WebPassword"]
+                conPassword = models.NetworkDevice.objects.filter(id=request.GET["network_id"]).values()[0]["ConsolePassword"]
+                user = models.NetworkDevice.objects.filter(id=request.GET["network_id"]).values()[0]["ManageUser"]
+                webuser = models.NetworkDevice.objects.filter(id=request.GET["network_id"]).values()[0]["WebManageUser"]
+                sship = models.NetworkDevice.objects.filter(id=request.GET["network_id"]).values()[0]["ManageIP"]
+                weburl = models.NetworkDevice.objects.filter(id=request.GET["network_id"]).values()[0]["WebManageIP"]
+                return HttpResponse(json.dumps({"password": (decrypt_str(password)).decode("UTF-8"),
+                                                "webpassword": (decrypt_str(webPassword)).decode("UTF-8"),
+                                                "webuser": user,
+                                                "sshuser": webuser,
+                                                "sship": sship,
+                                                "weburl": weburl,
+                                                "conpassword": (decrypt_str(conPassword)).decode("UTF-8")}))
             if "physics_id" in request.GET:
                 password = models.PhysicalServer.objects.filter(id=request.GET["physics_id"]).values()[0]["ManagePassword"]
                 username = models.PhysicalServer.objects.filter(id=request.GET["physics_id"]).values()[0]["ManageUsername"]
@@ -702,9 +726,14 @@ def add_network_device(request):
     if request.method == "POST":
         models.NetworkDevice.objects.create(
             Name=request.POST["Name"],
+            ManageUser=request.POST["User"],
             ManageIP=request.POST["IP"],
             #  存入数据库前先进行加密，再更改为UTF-8
             Password=(encrypt_str(request.POST["Password"])).decode("UTF-8"),
+            WebManageUser=request.POST["webUser"],
+            WebManageIP=request.POST["webIP"],
+            WebPassword=(encrypt_str(request.POST["webPassword"])).decode("UTF-8"),
+            ConsolePassword=(encrypt_str(request.POST["consolePassword"])).decode("UTF-8"),
             Type=request.POST["Type"],
             Brand=request.POST["Brand"],
             Owner=request.POST["Owner"],
@@ -779,9 +808,14 @@ def change_network_device_info(request):
         get_data = request.GET
         models.NetworkDevice.objects.filter(id=get_data["id"]).update(
             Name=request.POST["Name"],
+            ManageUser=request.POST["User"],
             ManageIP=request.POST["IP"],
             #  存入数据库前先进行加密，再更改为UTF-8
             Password=(encrypt_str(request.POST["Password"])).decode("UTF-8"),
+            WebManageUser=request.POST["webUser"],
+            WebManageIP=request.POST["webIP"],
+            WebPassword=(encrypt_str(request.POST["webPassword"])).decode("UTF-8"),
+            ConsolePassword=(encrypt_str(request.POST["consolePassword"])).decode("UTF-8"),
             Type=request.POST["Type"],
             Brand=request.POST["Brand"],
             Owner=request.POST["Owner"],
@@ -926,8 +960,12 @@ def edit(request):
                 data = models.NetworkDevice.objects.get(id=get_data["network_device"])
                 # 将获取的密码进行解密，再更改为UTF-8
                 decrypt_password = (decrypt_str(get_network_device_password(get_data["network_device"])))
+                decrypt_web_password = (decrypt_str(get_network_device_web_password(get_data["network_device"])))
+                decrypt_console_password = (decrypt_str(get_network_device_console_password(get_data["network_device"])))
                 return render(request, "am/edit_network_device.html", {"data": data,
-                                                                       "password": decrypt_password.decode("UTF-8")})
+                                                                       "password": decrypt_password.decode("UTF-8"),
+                                                                       "web_password": decrypt_web_password.decode("UTF-8"),
+                                                                       "console_password": decrypt_console_password.decode("UTF-8")})
             elif i[0] == "physics_server":
                 data = models.PhysicalServer.objects.get(id=get_data["physics_server"])
                 # 将获取的密码进行解密，再更改为UTF-8
