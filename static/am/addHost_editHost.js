@@ -29,6 +29,9 @@ $().ready(function() {
             HostGroup: {
                 required: true
             },
+            Use: {
+                required: true
+            },
             Zabbix: {
                 required: true
             },
@@ -70,6 +73,9 @@ $().ready(function() {
             },
             HostGroup: {
                 required: "请至少选中一项"
+            },
+            Use: {
+                required: "请选择使用状态"
             },
             Zabbix: {
                 required: "请至少任选其一"

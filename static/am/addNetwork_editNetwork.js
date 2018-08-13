@@ -4,12 +4,6 @@ $().ready(function() {
             Name: {
                 required: true
             },
-            IP: {
-                required: true
-            },
-            Password: {
-                required: true
-            },
             Type: {
                 required: true
             },
@@ -26,12 +20,6 @@ $().ready(function() {
         messages: {
             Name: {
                 required: "请输入设备型号"
-            },
-            IP: {
-                required: "请输入设备管理IP"
-            },
-            Password: {
-                required: "请输入设备访问密码"
             },
             Type: {
                 required: "请选择设备类型"

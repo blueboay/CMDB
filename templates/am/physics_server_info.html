@@ -275,6 +275,17 @@
             search(url)
         }
     });
+    $("#other").keyup(function () {
+        if(event.keyCode === 13){
+            var data = $("#other").val();
+            if (data === ""){
+                alert("请输入查询内容后提交")
+            }else {
+                var url = "/am/search_physics_server" + "?other=" + data + "&" + "page=1";
+                search(url)
+            }
+        }
+    });
     function checked() {
         var a = confirm("再次确认删除？");
         if (!a){

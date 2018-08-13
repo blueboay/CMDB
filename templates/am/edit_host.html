@@ -49,6 +49,18 @@
         </select>
     </p>
     <p>
+        <label class="name">是否使用：</label>
+        <select name="Use">
+            {% if use == "已使用"%}
+                <option selected="selected">已使用</option>
+                <option>未使用</option>
+            {% else %}
+                <option>已使用</option>
+                <option selected="selected">未使用</option>
+            {% endif %}
+        </select>
+    </p>
+    <p>
         <label for="id_OSType" class="name">操作系统类型：</label>
         <input type="text" name="OSType" id="id_OSType" value="{{ data.OSType }}">
     </p>

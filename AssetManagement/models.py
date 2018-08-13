@@ -20,6 +20,7 @@ class HostInfo(models.Model):
     Salt = models.CharField('是否加入自动化运维', max_length=32)
     Jumpserver = models.CharField('是否加入堡垒机', max_length=32)
     Keepass = models.CharField('是否记录密码', max_length=32)
+    Use = models.CharField('是否使用', max_length=32, null=True, blank=True)
     Note = models.CharField('备注信息', max_length=1024, null=True, blank=True)
 
     def __str__(self):
@@ -57,8 +58,8 @@ class UserInfo(models.Model):
 
 class NetworkDevice(models.Model):
     Name = models.CharField('型号名称', max_length=32)
-    ManageIP = models.CharField('管理IP', max_length=64)
-    Password = models.CharField('密码', max_length=128)
+    ManageIP = models.CharField('管理IP', max_length=64, null=True, blank=True)
+    Password = models.CharField('密码', max_length=128, null=True, blank=True)
     Type = models.CharField('类型', max_length=32)
     # HomeNetwork = models.CharField('所属网络', max_length=32)
     Brand = models.CharField('品牌', max_length=32)

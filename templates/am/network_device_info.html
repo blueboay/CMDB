@@ -57,6 +57,7 @@
                 <option>深信服</option>
                 <option>爱快</option>
                 <option>大华</option>
+                <option>TP-LINK</option>
             </select>
             <label for="filter_network_device_owner"></label>
             <select name="network_device_owner" id="filter_network_device_owner">
@@ -240,8 +241,19 @@
         if (data === ""){
             alert("请输入查询内容后提交")
         }else {
-            url = "/am/search_network_device" + "?other=" + data + "&" + "page=1";
+            var url = "/am/search_network_device" + "?other=" + data + "&" + "page=1";
             search(url)
+        }
+    });
+    $("#other").keyup(function () {
+        if(event.keyCode === 13){
+            var data = $("#other").val();
+            if (data === ""){
+                alert("请输入查询内容后提交")
+            }else {
+                var url = "/am/search_network_device" + "?other=" + data + "&" + "page=1";
+                search(url)
+            }
         }
     });
     function checked() {

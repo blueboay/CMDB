@@ -8,13 +8,13 @@
     <style>
     #opeartion-filter{
         float: left;
-        width: 30%;
+        width: 40%;
         height: 28px;
     }
     #opeartion-search{
         float: right;
         height: 28px;
-        width: 40%;
+        width: 30%;
     }
     #opeartion-search input[type="text"]{
         height: 22px;
@@ -56,6 +56,12 @@
                 {% for i in hostData %}
                     <option>{{ i.GroupName }}</option>
                 {% endfor %}
+            </select>
+            <label for="filter_Use"></label>
+            <select name="Use" id="filter_Use">
+                <option>使用状态</option>
+                <option>已使用</option>
+                <option>未使用</option>
             </select>
         </div>
         <div id="opeartion-search">
@@ -264,7 +270,12 @@
     function get_group_env(page) {
         var group_name = $("#filter_group_name").val();
         var env_name = $("#filter_env").val();
-        url = "/am/search_server" + "?env_name=" + env_name + "&" + "group_name=" + group_name + "&" + "page=" + page;
+        var use = $("#filter_Use").val();
+        url = "/am/search_server" +
+            "?env_name=" + env_name +
+            "&" + "group_name=" + group_name +
+            "&" + "use=" + use +
+            "&" + "page=" + page;
         return url;
     }
     function search(data) {
@@ -313,7 +324,7 @@
             }
         });
     }
-    $("#filter_group_name, #filter_env").change(function () {
+    $("#filter_group_name, #filter_env, #filter_Use").change(function () {
         var url = get_group_env(1);
         search(url);
     });
@@ -324,6 +335,17 @@
         }else {
             var url = "/am/search_server" + "?other=" + data + "&" + "page=1";
             search(url)
+        }
+    });
+    $("#other").keyup(function () {
+        if(event.keyCode === 13){
+            var data = $("#other").val();
+            if (data === ""){
+                alert("请输入查询内容后提交")
+            }else {
+                var url = "/am/search_server" + "?other=" + data + "&" + "page=1";
+                search(url)
+            }
         }
     });
     function checked() {

@@ -239,7 +239,7 @@ def search_server(request):
         total_data = models.HostInfo.objects.filter(search_obj)
         data = json.dumps({"num": total_number, "data": filter_search(total_data, request.GET["page"]), "tag": "1"})
         return HttpResponse(data)
-    if get_data["env_name"] == "环境" and get_data["group_name"] != "分组":
+    if get_data["env_name"] == "环境" and get_data["group_name"] != "分组" and get_data["use"] == "使用状态":
         server_name_data = models.HostAndHGroup.objects.filter(GroupName=get_data["group_name"]). \
             values("ServerName")
         if server_name_data.__len__() == 0:
@@ -256,11 +256,13 @@ def search_server(request):
                 # 添加表达式
                 search_obj.children.append(("ServerName", server_name["ServerName"]))
             total_data = models.HostInfo.objects.filter(search_obj)
-    elif get_data["env_name"] != "环境" and get_data["group_name"] == "分组":
+    elif get_data["env_name"] != "环境" and get_data["group_name"] == "分组" and get_data["use"] == "使用状态":
         total_data = models.HostInfo.objects.filter(Environment=get_data["env_name"])
-    elif get_data["env_name"] == "环境" and get_data["group_name"] == "分组":
+    elif get_data["env_name"] == "环境" and get_data["group_name"] == "分组" and get_data["use"] == "使用状态":
         total_data = models.HostInfo.objects.all()
-    else:
+    elif get_data["env_name"] == "环境" and get_data["group_name"] == "分组" and get_data["use"] != "使用状态":
+        total_data = models.HostInfo.objects.filter(Use=get_data["use"])
+    elif get_data["env_name"] != "环境" and get_data["group_name"] != "分组" and get_data["use"] == "使用状态":
         search_obj = Q()
         q1 = Q()
         q1.connector = "AND"
@@ -273,6 +275,49 @@ def search_server(request):
             q2.children.append(("ServerName", server_name["ServerName"]))
         search_obj.add(q1, "AND")
         search_obj.add(q2, "AND")
+        total_data = models.HostInfo.objects.filter(search_obj)
+    elif get_data["env_name"] != "环境" and get_data["group_name"] == "分组" and get_data["use"] != "使用状态":
+        search_obj = Q()
+        q1 = Q()
+        q1.connector = "AND"
+        q1.children.append(("Environment", get_data["env_name"]))
+        q3 = Q()
+        q3.connector = "AND"
+        q3.children.append(("Use", get_data["use"]))
+        search_obj.add(q1, "AND")
+        search_obj.add(q3, "AND")
+        total_data = models.HostInfo.objects.filter(search_obj)
+    elif get_data["env_name"] == "环境" and get_data["group_name"] != "分组" and get_data["use"] != "使用状态":
+        search_obj = Q()
+        q2 = Q()
+        q2.connector = "OR"
+        server_name_data = models.HostAndHGroup.objects.filter(GroupName=get_data["group_name"]). \
+            values("ServerName")
+        for server_name in server_name_data:
+            q2.children.append(("ServerName", server_name["ServerName"]))
+        q3 = Q()
+        q3.connector = "AND"
+        q3.children.append(("Use", get_data["use"]))
+        search_obj.add(q2, "AND")
+        search_obj.add(q3, "AND")
+        total_data = models.HostInfo.objects.filter(search_obj)
+    else:
+        search_obj = Q()
+        q1 = Q()
+        q1.connector = "AND"
+        q1.children.append(("Environment", get_data["env_name"]))
+        q2 = Q()
+        q2.connector = "OR"
+        server_name_data = models.HostAndHGroup.objects.filter(GroupName=get_data["group_name"]). \
+            values("ServerName")
+        for server_name in server_name_data:
+            q2.children.append(("ServerName", server_name["ServerName"]))
+        q3 = Q()
+        q3.connector = "AND"
+        q3.children.append(("Use", get_data["use"]))
+        search_obj.add(q1, "AND")
+        search_obj.add(q2, "AND")
+        search_obj.add(q3, "AND")
         total_data = models.HostInfo.objects.filter(search_obj)
     total_number = total_data.count()
     data = json.dumps({"num": total_number, "data": filter_search(total_data, request.GET["page"]), "tag": "2"})
@@ -640,6 +685,7 @@ def add_host(request):
             #  存入数据库前先进行加密，再更改为UTF-8
             SuperUserPass=(encrypt_str(request.POST["SuperUserPass"])).decode("UTF-8"),
             Environment=request.POST["Environment"],
+            Use=request.POST["Use"],
             OSType=request.POST["OSType"],
             OSVersion=request.POST["OSVersion"],
             Zabbix=request.POST["Zabbix"],
@@ -713,6 +759,7 @@ def change_host_info(request):
             # #  存入数据库前先进行加密，再更改为UTF-8
             SuperUserPass=(encrypt_str(request.POST["SuperUserPass"])).decode("UTF-8"),
             Environment=request.POST["Environment"],
+            Use=request.POST["Use"],
             OSType=request.POST["OSType"],
             OSVersion=request.POST["OSVersion"],
             Zabbix=request.POST["Zabbix"],
@@ -831,6 +878,7 @@ def edit(request):
                 data = models.HostInfo.objects.get(id=get_data["editHost"])
                 server_name = get_host_name(get_data["editHost"])
                 groups = models.HostAndHGroup.objects.filter(ServerName=server_name).values("GroupName")
+                use = models.HostInfo.objects.filter(id=get_data["editHost"]).values("Use")[0]["Use"]
                 groups_list = []
                 for group in groups:
                     groups_list.append(group["GroupName"])
@@ -843,6 +891,7 @@ def edit(request):
                 decrypt_password = (decrypt_str(get_host_password(get_data["editHost"]))).decode("UTF-8")
                 return render(request, "am/edit_host.html", {"data": data,
                                                              "envData": get_env_data(),
+                                                             "use": use,
                                                              "hostGroupData": get_group_data(),
                                                              "usegroupdata": groups_list,
                                                              "ZabbixData": zabbix_data,
