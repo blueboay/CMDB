@@ -673,18 +673,18 @@ def get_login_info(request):
                 password = models.NetworkDevice.objects.filter(id=request.GET["network_id"]).values()[0]["Password"]
                 webPassword = models.NetworkDevice.objects.filter(id=request.GET["network_id"]).values()[0]["WebPassword"]
                 conPassword = models.NetworkDevice.objects.filter(id=request.GET["network_id"]).values()[0]["ConsolePassword"]
-                user = models.NetworkDevice.objects.filter(id=request.GET["network_id"]).values()[0]["ManageUser"]
-                webuser = models.NetworkDevice.objects.filter(id=request.GET["network_id"]).values()[0]["WebManageUser"]
-                sship = models.NetworkDevice.objects.filter(id=request.GET["network_id"]).values()[0]["ManageIP"]
-                weburl = models.NetworkDevice.objects.filter(id=request.GET["network_id"]).values()[0]["WebManageIP"]
-                conuser = models.NetworkDevice.objects.filter(id=request.GET["network_id"]).values()[0]["ConsoleUser"]
+                # user = models.NetworkDevice.objects.filter(id=request.GET["network_id"]).values()[0]["ManageUser"]
+                # webuser = models.NetworkDevice.objects.filter(id=request.GET["network_id"]).values()[0]["WebManageUser"]
+                # sship = models.NetworkDevice.objects.filter(id=request.GET["network_id"]).values()[0]["ManageIP"]
+                # weburl = models.NetworkDevice.objects.filter(id=request.GET["network_id"]).values()[0]["WebManageIP"]
+                # conuser = models.NetworkDevice.objects.filter(id=request.GET["network_id"]).values()[0]["ConsoleUser"]
                 return HttpResponse(json.dumps({"password": (decrypt_str(password)).decode("UTF-8"),
                                                 "webpassword": (decrypt_str(webPassword)).decode("UTF-8"),
-                                                "webuser": webuser,
-                                                "sshuser": user,
-                                                "sship": sship,
-                                                "weburl": weburl,
-                                                "conuser": conuser,
+                                                # "webuser": webuser,
+                                                # "sshuser": user,
+                                                # "sship": sship,
+                                                # "weburl": weburl,
+                                                # "conuser": conuser,
                                                 "conpassword": (decrypt_str(conPassword)).decode("UTF-8")}))
             if "physics_id" in request.GET:
                 password = models.PhysicalServer.objects.filter(id=request.GET["physics_id"]).values()[0]["ManagePassword"]
