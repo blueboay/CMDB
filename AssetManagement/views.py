@@ -46,12 +46,23 @@ def conn_server(ip, port, username, password, new_password):
 
 
 # 生成新密码
+# def get_passwd(length=20):
+#     passwd_format = string.digits + string.ascii_letters
+#     passwd = []
+#     while (len(passwd) < length):
+#         passwd.append(choice(passwd_format))
+#     return ''.join(passwd)
 def get_passwd(length=20):
-    passwd_format = string.digits + string.ascii_letters
-    passwd = []
-    while (len(passwd) < length):
-        passwd.append(choice(passwd_format))
-    return ''.join(passwd)
+    passwds = []
+    while True:
+        passwd = set(random.sample(string.ascii_letters + string.digits, length))
+        print(passwd)
+        if len(passwd.intersection(string.ascii_uppercase)) >= 1 and \
+                        len(passwd.intersection(string.ascii_lowercase)) >= 3 and \
+                        len(passwd.intersection(string.digits)) >= 3:
+            passwds.append(''.join(passwd))
+            break
+    return passwds[0]
 
 
 # 密码加密
