@@ -35,6 +35,7 @@ def conn_server(ip, port, username, password, new_password):
         result = "认证失败"
     else:
         stdin, stdout, stderr = ssh.exec_command("echo %s | passwd --stdin root" %(new_password))
+        print(stderr.readlines())
         if len(stderr.readlines()) > 0:
             result = "修改失败"
         else:
@@ -641,9 +642,9 @@ def host_info(request):
 
 # 获取服务器，网络设备，硬件服务器登录管理信息
 def get_login_info(request):
-    phone_number = "13357110502"
     conn = redis.Redis(host='18.50.129.90', port=6379, db=0)
     if request.method == "POST":
+        phone_number = request.POST["phone_number"]
         if conn.exists(phone_number):
             return HttpResponse(json.dumps({"code": 501}))
         else:
@@ -662,6 +663,7 @@ def get_login_info(request):
                 conn.set(phone_number, code, 300)
             return HttpResponse(response.text)
     if request.method == "GET":
+        phone_number = request.GET["phone"]
         code_user = request.GET["code_number"]
         code_server = conn.get(phone_number)
         if code_server == None:
@@ -673,18 +675,8 @@ def get_login_info(request):
                 password = models.NetworkDevice.objects.filter(id=request.GET["network_id"]).values()[0]["Password"]
                 webPassword = models.NetworkDevice.objects.filter(id=request.GET["network_id"]).values()[0]["WebPassword"]
                 conPassword = models.NetworkDevice.objects.filter(id=request.GET["network_id"]).values()[0]["ConsolePassword"]
-                # user = models.NetworkDevice.objects.filter(id=request.GET["network_id"]).values()[0]["ManageUser"]
-                # webuser = models.NetworkDevice.objects.filter(id=request.GET["network_id"]).values()[0]["WebManageUser"]
-                # sship = models.NetworkDevice.objects.filter(id=request.GET["network_id"]).values()[0]["ManageIP"]
-                # weburl = models.NetworkDevice.objects.filter(id=request.GET["network_id"]).values()[0]["WebManageIP"]
-                # conuser = models.NetworkDevice.objects.filter(id=request.GET["network_id"]).values()[0]["ConsoleUser"]
                 return HttpResponse(json.dumps({"password": (decrypt_str(password)).decode("UTF-8"),
                                                 "webpassword": (decrypt_str(webPassword)).decode("UTF-8"),
-                                                # "webuser": webuser,
-                                                # "sshuser": user,
-                                                # "sship": sship,
-                                                # "weburl": weburl,
-                                                # "conuser": conuser,
                                                 "conpassword": (decrypt_str(conPassword)).decode("UTF-8")}))
             if "physics_id" in request.GET:
                 password = models.PhysicalServer.objects.filter(id=request.GET["physics_id"]).values()[0]["ManagePassword"]
@@ -693,7 +685,6 @@ def get_login_info(request):
                 return HttpResponse(json.dumps({"password": (decrypt_str(password)).decode("UTF-8"),
                                                 "username": username,
                                                 "url": url}))
-
         else:
             return HttpResponse("403")
 
@@ -794,7 +785,7 @@ def change_host_info(request):
             RemotePort=request.POST["RemotePort"],
             SuperUser=request.POST["SuperUser"],
             # #  存入数据库前先进行加密，再更改为UTF-8
-            SuperUserPass=(encrypt_str(request.POST["SuperUserPass"])).decode("UTF-8"),
+            # SuperUserPass=(encrypt_str(request.POST["SuperUserPass"])).decode("UTF-8"),
             Environment=request.POST["Environment"],
             Use=request.POST["Use"],
             OSType=request.POST["OSType"],

@@ -129,7 +129,12 @@
         </div>
         <div id="verification_body">
             <p style="font-size: 12px;">
-                <span id="verification_phone">你绑定的手机：133****0502</span>
+{#                <span id="verification_phone">你绑定的手机：133****0502</span>#}
+                <span class="name">选择手机号：</span>
+                <input type="radio" name="phonenumber" id="id_133" value="13357110502" checked="checked">
+                <label for="id_133">133****0502</label>
+                <input type="radio" name="phonenumber" id="id_135" value="13588158890">
+                <label for="id_135">135****8890</label>
             </p>
             <p style="font-size: 12px;">
                 <label for="verification_code" id="verification_code_info">校验码：</label>
@@ -383,6 +388,7 @@
         }
     }
     $("body").on("click", "#get_password", function () {
+        var phone = $('input:radio[name="phonenumber"]:checked').val();
         var code_number = $("#verification_code").val();
         if (code_number.length === 0){
             hide_info();
@@ -393,7 +399,7 @@
         }else {
             $.ajax({
                 url: "/am/get_login_info",
-                data: {"code_number": code_number, "host_id": data_id},
+                data: {"code_number": code_number, "host_id": data_id, "phone": phone},
                 type: "get",
                 success: function (arg) {
                     if (arg === "404"){
